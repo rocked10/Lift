@@ -4,7 +4,7 @@ import {
     Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet
 } from "react-native";
 import { ListItem } from 'react-native-elements';
-import {globalStyles } from "../styles/global";
+import { globalStyles, loginStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import Card from "../shared/card";
 import WorkoutForm from "./workoutForm";
@@ -18,6 +18,7 @@ export default function Workout({ navigation, route }) {
     const [workouts, setWorkouts] = useState([]);
 
     const handleAddWorkout = (workout) => {
+        console.log(JSON.parse(JSON.stringify(workout)));
         DB.addWorkout(userId, workout);
         setModalOpen(false);
     }
@@ -29,9 +30,9 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.text}>Start Working Out!</Text>
-            <Button title="Add Workout" onPress={() => setModalOpen(true)}/>
+            <Button title="Add Workout" onPress={() => setModalOpen(true)} />
 
-            <View style={{padding: 8}}>
+            <View style={{ padding: 8 }}>
                 <Modal visible={modalOpen} animationType='slide' >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={styles.modalContent}>
@@ -54,19 +55,20 @@ export default function Workout({ navigation, route }) {
                         let items = item.exercises.map(item2 => {
                             return (
                                 <ListItem key={Math.random()}
-                                          containerStyle={{padding: 0, backgroundColor: '#eee'}}>
-                                    <Text style={globalStyles.cardText}>{item2.exercise}</Text>
+                                          containerStyle={{padding: 0, backgroundColor: '#eee'}}
+                                >
+                                    <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
                                 </ListItem>
                             );
                         });
 
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
-                                title: item.title,
+                                title: item.workoutTitle,
                                 exercises: item.exercises,
                             })}>
                                 <Card>
-                                    <Text style={globalStyles.titleText}>{item.title}</Text>
+                                    <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
                                     {items}
                                 </Card>
                             </TouchableOpacity>

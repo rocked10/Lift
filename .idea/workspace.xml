@@ -2,20 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/customButton.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/table/Table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/table/TableCell.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/table/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/signup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workoutDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workoutForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/exerciseDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/exerciseDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +79,7 @@
       <workItem from="1622799590924" duration="7248000" />
       <workItem from="1622878119598" duration="14325000" />
       <workItem from="1622963100337" duration="13888000" />
+      <workItem from="1623044196794" duration="4140000" />
     </task>
     <servers />
   </component>

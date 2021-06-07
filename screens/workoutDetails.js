@@ -13,6 +13,38 @@ export default function WorkoutDetails({ route, navigation }) {
         console.log(userId);
     }
 
+    const WeightAndReps = ({tableData}) => {
+        return (
+            <FlatList 
+                data={ tableData }
+                renderItem={({ item }) => (
+                    <View>
+                        <Card>
+                            <Text style={globalStyles.cardText}>
+                                Set {item[0].row + 1} {item[0].value} kg {item[1].value} reps 
+                            </Text>
+                        </Card>
+                    </View>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />  
+        );
+    }
+
+    function chunkArray(arr, n) {
+        return arr.reduce((acc, item, index) => {
+            const remainder = index % n;
+            if (remainder === 0) return [...acc, [item]];
+            const updatedArr = [...acc];
+            const subArrIndexToUpdate = (index - remainder) / n;
+            updatedArr[subArrIndexToUpdate] = [
+                ...updatedArr[subArrIndexToUpdate],
+                item,
+            ];
+            return updatedArr;
+        }, []);
+    }
+
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.titleText}>{ title }</Text>
@@ -22,11 +54,9 @@ export default function WorkoutDetails({ route, navigation }) {
                     <View>
                         <Card>
                             <Text style={globalStyles.titleText}>
-                                { item.exercise }
+                                { item.exerciseName }
                             </Text>
-                            <Text style={globalStyles.cardText}>
-                                { item.sets } x { item.reps } { item.weight }
-                            </Text>
+                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} />
                         </Card>
                     </View>
                 )}

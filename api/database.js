@@ -7,7 +7,7 @@ const db = firebase.database();
 export const addWorkout = (userId, workout) => {
     db.ref(`workouts/${userId}`).push().set({
         exercises: workout.exercises,
-        title: workout.title,
+        workoutTitle: workout.workoutTitle,
     }, (error) => {
         if (error) {
             console.log("Write failed");
