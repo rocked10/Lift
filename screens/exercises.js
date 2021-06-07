@@ -1,11 +1,34 @@
 import React from 'react';
-import { View, Text } from "react-native";
+import {View, Text, SectionList, TextInput} from "react-native";
 import { globalStyles } from "../styles/global";
 
 export default function Exercises() {
+    const DATA = [
+        {
+            title: "Olympic Lifts",
+            data: ["Clean and Jerk", "Snatch", "Power Snatch"]
+        },
+        {
+            title: "Barbell",
+            data: ["Back Squat", "Front Squat", "Bench Press"]
+        }
+    ];
+
     return (
         <View style={globalStyles.container}>
-            <Text>Exercises</Text>
+            <TextInput
+                placeholder='Search'
+                style={globalStyles.input}
+            />
+
+            <SectionList
+                sections={DATA}
+                keyExtractor={(item, index) => item + index}
+                renderItem={({ item }) => <Text>{item}</Text>}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text>{title}</Text>
+                )}
+            />
         </View>
     );
 }

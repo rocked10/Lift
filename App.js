@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Alert } from 'react-native';
-import AppLoading from 'expo';
 import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
@@ -9,7 +8,7 @@ import firebaseApp from "./api/firebase";
 export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState('false');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const userDetails = (details) => {
     setEmail(details.email.toLowerCase());

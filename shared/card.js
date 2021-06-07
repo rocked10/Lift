@@ -1,9 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Card = (props) => {
     return (
         <View style={styles.card}>
+            <TouchableOpacity>
+                <MaterialIcons
+                    style={styles.cardIcon}
+                    name='edit'
+                    size={26}
+                />
+            </TouchableOpacity>
             <View style={styles.cardContent}>
                 {props.children}
             </View>
@@ -30,4 +38,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 18,
         marginVertical: 10,
     },
+
+    cardIcon: {
+        marginLeft: 'auto',
+        marginRight: 5,
+    }
 });

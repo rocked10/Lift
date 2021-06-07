@@ -9,7 +9,7 @@ import {
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,
     APP_ID,
-    MEASUREMENT_ID
+    MEASUREMENT_ID,
 } from "@env";
 
 const firebaseConfig = {

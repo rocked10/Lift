@@ -1,10 +1,17 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Text, View, Button } from 'react-native';
 import { globalStyles } from "../styles/global";
 import Card from "../shared/card";
+import * as DB from '../api/database';
 
 export default function WorkoutDetails({ route, navigation }) {
     const { title, exercises } = route.params;
+
+    const handleShare = () => {
+        console.log("Button pressed!");
+        const userId = DB.findUser('abc@gmail.com');
+        console.log(userId);
+    }
 
     return (
         <View style={globalStyles.container}>
@@ -25,6 +32,8 @@ export default function WorkoutDetails({ route, navigation }) {
                 )}
                 keyExtractor={(item, index) => index.toString()}
             />
+
+            <Button title='Share with' onPress={handleShare}/>
         </View>
     )
 }

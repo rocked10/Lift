@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, View, Button, StatusBar } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Formik, FieldArray, Form } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import { ListItem } from "react-native-elements";
 import { globalStyles } from "../styles/global";
 

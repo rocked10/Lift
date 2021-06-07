@@ -1,36 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity,
+import React, { useState, useEffect } from 'react';
+import {
+    View, Text, Button, FlatList, TouchableOpacity,
     Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet
 } from "react-native";
 import { ListItem } from 'react-native-elements';
-import {globalStyles, loginStyles} from "../styles/global";
+import {globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import Card from "../shared/card";
 import WorkoutForm from "./workoutForm";
+import firebaseApp from "../api/firebase";
+import * as DB from '../api/database';
+import * as Auth from '../api/auth.js'
 
 export default function Workout({ navigation, route }) {
     const [modalOpen, setModalOpen] = useState(false);
+    const [userId, setUserId] = useState(Auth.getCurrentUserId());
+    const [workouts, setWorkouts] = useState([]);
 
-    const [workouts, setWorkouts] = useState([
-        {title: 'Workout 1', exercises: [{
-            exercise: 'test 1', sets: '4', reps: '6', weight: '100kg'
-            }, {exercise: 'test 2', sets: '4', reps: '2', weight: '100kg'}], key: '1'},
-        {title: 'Workout 2', exercises: [{
-                exercise: 'test 3', sets: '4', reps: '6', weight: '100kg'
-            }], key: '2'},
-        {title: 'Workout 3', exercises: [{
-                exercise: 'test 4', sets: '4', reps: '6', weight: '100kg'
-            }], key: '3'},
-    ]);
-
-    const addWorkout = (workout) => {
-        workout.key = Math.floor(Math.random() * 100).toString();
-        console.log(workout);
-        setWorkouts((currentWorkouts) => {
-            return [workout, ...currentWorkouts]
-        });
+    const handleAddWorkout = (workout) => {
+        DB.addWorkout(userId, workout);
         setModalOpen(false);
     }
+
+    useEffect(() => {
+        return DB.subscribe(userId, setWorkouts);
+    }, []);
 
     return (
         <View style={globalStyles.container}>
@@ -47,37 +41,39 @@ export default function Workout({ navigation, route }) {
                                 style={{ ...styles.modalToggle, ...styles.modalClose }}
                                 onPress={() => setModalOpen(false)}
                             />
-
-                            <WorkoutForm addWorkout={addWorkout} />
+                            <WorkoutForm addWorkout={handleAddWorkout} />
                         </View>
                     </TouchableWithoutFeedback>
                 </Modal>
             </View>
 
             <FlatList
-                data={workouts}
+                data={workouts ? Object.values(workouts) : null}
                 renderItem={({ item }) => {
-                    let items = item.exercises.map(item2 => {
-                        return (
-                            <ListItem key={ Math.random() }
-                                      containerStyle={{padding: 0, backgroundColor: '#eee'}}>
-                                <Text style={globalStyles.cardText}>{item2.exercise}</Text>
-                            </ListItem>
-                        );
-                    });
+                    if (item.exercises !== undefined) {
+                        let items = item.exercises.map(item2 => {
+                            return (
+                                <ListItem key={Math.random()}
+                                          containerStyle={{padding: 0, backgroundColor: '#eee'}}>
+                                    <Text style={globalStyles.cardText}>{item2.exercise}</Text>
+                                </ListItem>
+                            );
+                        });
 
-                    return (
-                        <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
-                            title: item.title,
-                            exercises: item.exercises,
-                        })}>
-                            <Card>
-                                <Text style={globalStyles.titleText}>{item.title}</Text>
-                                { items }
-                            </Card>
-                        </TouchableOpacity>
-                    );
+                        return (
+                            <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
+                                title: item.title,
+                                exercises: item.exercises,
+                            })}>
+                                <Card>
+                                    <Text style={globalStyles.titleText}>{item.title}</Text>
+                                    {items}
+                                </Card>
+                            </TouchableOpacity>
+                        );
+                    }
                 }}
+                keyExtractor={(item, index) => item + index}
             />
 
             <StatusBar />
