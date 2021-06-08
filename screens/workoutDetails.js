@@ -9,8 +9,8 @@ export default function WorkoutDetails({ route, navigation }) {
 
     const handleShare = () => {
         console.log("Button pressed!");
-        const userId = DB.findUser('abc@gmail.com');
-        console.log(userId);
+        console.log(DB.findUserId('test2@gmail.com'));
+        console.log(DB.getUserType());
     }
 
     const WeightAndReps = ({tableData}) => {

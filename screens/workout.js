@@ -18,7 +18,6 @@ export default function Workout({ navigation, route }) {
     const [workouts, setWorkouts] = useState([]);
 
     const handleAddWorkout = (workout) => {
-        console.log(JSON.parse(JSON.stringify(workout)));
         DB.addWorkout(userId, workout);
         setModalOpen(false);
     }

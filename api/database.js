@@ -1,6 +1,7 @@
 import React from 'react';
 import firebaseApp from "./firebase";
 import firebase from 'firebase';
+import * as Auth from '../api/auth';
 
 const db = firebase.database();
 
@@ -21,16 +22,15 @@ export const subscribe = (userId, onValueChanged) => {
     const workouts = db.ref(`workouts/${userId}`);
     workouts.on("value", (snapshot) => {
         onValueChanged(snapshot.val())
-        // console.log(snapshot.val());
     });
     return () => workouts.off("value");
 }
 
 export const addUserProfile = (userId, name, email, role) => {
-    db.ref(`users/${role}`).push().set({
-        userId: userId,
+    db.ref(`users/${userId}`).set({
         name: name,
         email: email,
+        role: role,
     }, (error) => {
         if (error) {
             console.log("User not saved");
@@ -40,12 +40,34 @@ export const addUserProfile = (userId, name, email, role) => {
     });
 }
 
-export const findUser = (email) => {
-    const users = db.ref('users/coaches');
-    let res = '';
-    users.orderByChild('email').equalTo(email).on('value', (snapshot) => {
-        console.log(snapshot.val());
-        res = Object.values(snapshot.val())[0].userId;
-    })
-    return res;
+export const findUserId = (email) => {
+    const ref = db.ref('users');
+    let uid = '';
+    ref.orderByChild('email').equalTo(email)
+        .on('value', (snapshot) => {
+            if (snapshot.val()) {
+                uid = Object.keys(snapshot.val())[0]
+            } else {
+                console.log('User not found');
+            }
+        })
+    return uid;
+}
+
+export const getUserType = () => {
+    const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
+    let role = '';
+    ref.once('value', (snapshot) => {
+       role = snapshot.val().role;
+    });
+    return role;
+}
+
+export const getUserName = () => {
+    const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
+    let name = '';
+    ref.once('value', (snapshot) => {
+        name = snapshot.val().name;
+    });
+    return name;
 }
