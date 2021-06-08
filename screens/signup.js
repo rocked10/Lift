@@ -27,7 +27,7 @@ export default function Signup() {
                             );
 
                             // Add User Profile
-                            DB.addUserProfile(Auth.getCurrentUserId(), values.username, values.email, "coaches");
+                            DB.addUserProfile(Auth.getCurrentUserId(), values.username, values.email, values.role);
                         })
                         .catch((error) => {
                             console.log(error.message);

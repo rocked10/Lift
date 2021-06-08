@@ -89,6 +89,7 @@ export default function WorkoutForm({ addWorkout }) {
             <FlatList
                 data={exercises}
                 keyExtractor={(item, index) => index}
+                // showsVerticalScrollIndicator={false}
                 removeClippedSubviews={false}
                 renderItem={({ item, index }) =>
                     <ExerciseDetails
