@@ -16,6 +16,6 @@ export default function editWorkout({ route, navigation }) {
     const { title, exercises } = route.params;
 
     return (
-        <WorkoutForm _workoutTitle={title} _exercises={exercises} />
+        <WorkoutForm _workoutTitle={title} _exercises={exercises} alreadyPreFilled={true} />
     )
 }

@@ -14,7 +14,8 @@ export default function WorkoutForm({
                 ]
             },
         ],
-        addWorkout = () => console.log('lmao')
+        submissionHandler = () => console.log('lmao'),
+        alreadyPreFilled = false,
     }) 
         
     {
@@ -92,6 +93,14 @@ export default function WorkoutForm({
         })
     }
 
+    const submitButton = () => {
+        if (! alreadyPreFilled) {
+            return <CustomButton title='add workout' onPress={() => submissionHandler({ workoutTitle, exercises })} />
+        } else {
+            return <CustomButton title='save workout' onPress={() => console.log('lmao')} />
+        }
+    }
+
     return (
         <View style={{ flex: 1, marginVertical: 10, padding: 8 }}>
             <TextInput
@@ -120,9 +129,9 @@ export default function WorkoutForm({
             // stickyHeaderIndices={[0]}
             />
 
-
             <CustomButton title='add exercise' onPress={addExercise} />
-            <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
+            {submitButton()}
+            
         </View>
 
     );

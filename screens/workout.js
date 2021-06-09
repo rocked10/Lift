@@ -22,15 +22,13 @@ export default function Workout({ navigation, route }) {
         setModalOpen(false);
     }
 
-    const handleEditWorkout = () => {
-        console.log('hello')
-    }
     // console.log(workouts) 
 
     useEffect(() => {
         return DB.subscribe(userId, setWorkouts);
     }, []);
 
+    
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.text}>Start Working Out!</Text>
@@ -46,7 +44,7 @@ export default function Workout({ navigation, route }) {
                                 style={{ ...styles.modalToggle, ...styles.modalClose }}
                                 onPress={() => setModalOpen(false)}
                             />
-                            <WorkoutForm addWorkout={handleAddWorkout} />
+                            <WorkoutForm submissionHandler={handleAddWorkout} />
                         </View>
                     </TouchableWithoutFeedback>
                 </Modal>
