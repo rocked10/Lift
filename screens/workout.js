@@ -18,14 +18,9 @@ export default function Workout({ navigation, route }) {
     const [workouts, setWorkouts] = useState([]);
 
     const handleAddWorkout = (workout) => {
-        DB.addWorkout(userId, workout);
+        DB.addWorkout(userId, workout).then();
         setModalOpen(false);
     }
-
-    const handleEditWorkout = () => {
-        console.log('hello')
-    }
-    // console.log(workouts) 
 
     useEffect(() => {
         return DB.subscribe(userId, setWorkouts);
@@ -78,6 +73,7 @@ export default function Workout({ navigation, route }) {
                                             {
                                                 title: item.workoutTitle, 
                                                 exercises: item.exercises,
+                                                id: item.id,
                                             }
                                         )}>
                                             <MaterialIcons

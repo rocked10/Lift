@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {
-    View, Text, Button, FlatList, TouchableOpacity,
-    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet
-} from "react-native";
-import { ListItem } from 'react-native-elements';
-import { globalStyles, loginStyles } from "../styles/global";
-import { MaterialIcons } from "@expo/vector-icons";
-import Card from "../shared/card";
 import WorkoutForm from "./workoutForm";
-import firebaseApp from "../api/firebase";
-import * as DB from '../api/database';
-import * as Auth from '../api/auth.js'
+import * as Auth from "../api/auth";
+import * as DB from "../api/database";
 
 export default function editWorkout({ route, navigation }) {
-    const { title, exercises } = route.params;
+    const { title, exercises, id } = route.params;
+
+    const handleEditWorkout = (workout) => {
+        DB.editWorkout(Auth.getCurrentUserId(), id, workout).then();
+        // navigation.navigate('WorkoutDetails', {
+        //     title: workout.title,
+        //     exercises: workout.exercises,
+        // })
+    }
 
     return (
-        <WorkoutForm _workoutTitle={title} _exercises={exercises} />
-    )
+        <WorkoutForm _workoutTitle={title} _exercises={exercises} addWorkout={handleEditWorkout} />
+    );
 }

@@ -5,17 +5,31 @@ import * as Auth from '../api/auth';
 
 const db = firebase.database();
 
-export const addWorkout = (userId, workout) => {
-    db.ref(`workouts/${userId}`).push().set({
-        exercises: workout.exercises,
-        workoutTitle: workout.workoutTitle,
-    }, (error) => {
-        if (error) {
-            console.log("Write failed");
-        } else {
-            console.log("Data saved");
-        }
-    })
+export const addWorkout = async (userId, workout) => {
+    try {
+        const ref = db.ref(`workouts/${userId}`).push();
+        await ref.set({
+            exercises: workout.exercises,
+            workoutTitle: workout.workoutTitle,
+            id: ref.key,
+        });
+        console.log("Data saved");
+    } catch (error) {
+        console.log("Write failed");
+    }
+}
+
+export const editWorkout = async (userId, workoutId, workout) => {
+    try {
+        const ref = db.ref(`workouts/${userId}/${workoutId}`);
+        await ref.update({
+            exercises: workout.exercises,
+            workoutTitle: workout.workoutTitle,
+        });
+        console.log("Data updated");
+    } catch (error) {
+        console.log("Update failed");
+    }
 }
 
 export const subscribe = (userId, onValueChanged) => {
