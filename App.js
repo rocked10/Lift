@@ -5,6 +5,7 @@ import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
 import firebaseApp from "./api/firebase";
+// import * as Font from 'expo-font'
 
 export default function App() {
   const [email, setEmail] = useState('');

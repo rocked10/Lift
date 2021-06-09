@@ -5,14 +5,16 @@ import { TextInput, View, Button, FlatList, StatusBar, Text, StyleSheet, Touchab
 import { Table, TableCell } from './table'
 import CustomButton from "../shared/customButton"
 import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Card from "../shared/card";
 
-function ExerciseName({ onChangeText }) {
+function ExerciseName({ value, onChangeText }) {
     return (
         <TextInput
             style={styles.exerciseName}
-            onChangeText={onChangeText} 
+            onChangeText={onChangeText}
             placeholder='Enter exercise'
+            defaultValue={value}
         />
     )
 }
@@ -22,7 +24,7 @@ function HeaderCell({ title }) {
         <TableCell
             value={title}
             editable={false}
-            additionalStyles={{backgroundColor: '#ccc'}} />
+            additionalStyles={{ backgroundColor: '#ccc' }} />
     );
 }
 
@@ -36,10 +38,15 @@ function TopRow() {
     )
 }
 
-export default function ExerciseDetails({ tableData, onUpdate, deleteSet, addSet, updateExerciseName }) {
+export default function ExerciseDetails({ exerciseName, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName }) {
     return (
         <Card>
-            <ExerciseName onChangeText={(text) => updateExerciseName(text) } />
+            <View style={styles.cardHeader}>
+                <ExerciseName value={exerciseName} onChangeText={(text) => updateExerciseName(text)} />
+                <TouchableOpacity style={styles.deleteExercise} onPress={() => deleteExercise()}>
+                    <MaterialIcons name="delete" size={24} color="black" />
+                </TouchableOpacity>
+            </View>
             <Table
                 headerComponent={TopRow}
                 rows={tableData.length / 2}
@@ -49,7 +56,7 @@ export default function ExerciseDetails({ tableData, onUpdate, deleteSet, addSet
                 deleteRow={deleteSet}
                 keyboardType='phone-pad'
             />
-            
+
             <CustomButton title='add set' onPress={() => addSet()} />
         </Card>
     )
@@ -77,6 +84,13 @@ const styles = StyleSheet.create({
         borderRadius: 14,
         alignSelf: 'flex-start',
         marginBottom: '3%'
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    deleteExercise: {
+        alignSelf: 'flex-start'
     }
 
 })
