@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { FlatList, Text, View, Button } from 'react-native';
 import { globalStyles } from "../styles/global";
 import Card from "../shared/card";
@@ -6,11 +6,24 @@ import * as DB from '../api/database';
 
 export default function WorkoutDetails({ route, navigation }) {
     const { title, exercises } = route.params;
+    const [role, setRole] = useState('');
+
+    useEffect(() => {
+        DB.getUserType(setRole);
+    }, [role]);
 
     const handleShare = () => {
         console.log("Button pressed!");
-        console.log(DB.findUserId('test2@gmail.com'));
-        console.log(DB.getUserType());
+    }
+
+    const ShareButton = () => {
+        if (role === 'Athlete') {
+            return (
+                <Button title='Share with' onPress={handleShare}/>
+            );
+        } else {
+            return null;
+        }
     }
 
     const WeightAndReps = ({tableData}) => {
@@ -63,7 +76,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 keyExtractor={(item, index) => index.toString()}
             />
 
-            <Button title='Share with' onPress={handleShare}/>
+            <ShareButton />
         </View>
     )
 }

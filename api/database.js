@@ -54,20 +54,16 @@ export const findUserId = (email) => {
     return uid;
 }
 
-export const getUserType = () => {
+export const getUserType = (onValueChanged) => {
     const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
-    let role = '';
     ref.once('value', (snapshot) => {
-       role = snapshot.val().role;
+        onValueChanged(snapshot.val().role);
     });
-    return role;
 }
 
-export const getUserName = () => {
+export const getUserName = (onValueChanged) => {
     const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
-    let name = '';
     ref.once('value', (snapshot) => {
-        name = snapshot.val().name;
+        onValueChanged(snapshot.val().name);
     });
-    return name;
 }

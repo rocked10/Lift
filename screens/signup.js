@@ -81,8 +81,8 @@ export default function Signup() {
                             }
 
                         >
-                            <SelectPicker.Item label="Coach" value="coaches" />
-                            <SelectPicker.Item label="Athlete" value="athletes" />
+                            <SelectPicker.Item label="Coach" value="Coach" />
+                            <SelectPicker.Item label="Athlete" value="Athlete" />
                         </SelectPicker>
 
                         <Button title='SIGNUP' onPress={props.handleSubmit} />
