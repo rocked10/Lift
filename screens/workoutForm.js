@@ -3,18 +3,25 @@ import { TextInput, View, Button, StatusBar, Text, FlatList, StyleSheet } from "
 import ExerciseDetails from "../shared/exerciseDetails"
 import CustomButton from "../shared/customButton"
 
-export default function WorkoutForm({ addWorkout }) {
-    const [workoutTitle, setWorkoutTitle] = useState('')
+export default function WorkoutForm({
+        _workoutTitle = '',
+        _exercises = [
+            {
+                exerciseName: '',
+                tableData: [
+                    { row: 0, column: 0, value: 0 },
+                    { row: 0, column: 1, value: 0 },
+                ]
+            },
+        ],
+        addWorkout = () => console.log('lmao')
+    }) 
+        
+    {
+    const [workoutTitle, setWorkoutTitle] = useState(_workoutTitle)
+    const [exercises, setExercises] = useState(_exercises)
 
-    const [exercises, setExercises] = useState([
-        {
-            exerciseName: '',
-            tableData: [
-                { row: 0, column: 0, value: 0 },
-                { row: 0, column: 1, value: 0 },
-            ]
-        },
-    ])
+    // exerciseNum is zero indexed starting from top of exercises list 
 
     const updateExerciseName = exerciseNum => name => {
         setExercises(prev => {
@@ -40,6 +47,15 @@ export default function WorkoutForm({ addWorkout }) {
         });
     }
 
+    const deleteExercise = exerciseNum => {
+        setExercises(prev => {
+            const newExercises = [...prev]
+            newExercises.splice(exerciseNum, 1)
+
+            return newExercises
+        });
+    }
+
     const onUpdate = exerciseNum => row => column => value =>
         setExercises(prev => {
             const newExercises = [...prev]
@@ -50,8 +66,6 @@ export default function WorkoutForm({ addWorkout }) {
 
             return newExercises
         })
-
-    // exerciseNum is zero indexed starting from top of list 
 
     const addSet = exerciseNum => {
         const row = exercises[exerciseNum].tableData.length / 2;
@@ -84,6 +98,7 @@ export default function WorkoutForm({ addWorkout }) {
                 style={styles.workoutTitle}
                 onChangeText={(text) => { setWorkoutTitle(text) }}
                 placeholder='Workout Title'
+                defaultValue={workoutTitle}
             />
 
             <FlatList
@@ -93,8 +108,10 @@ export default function WorkoutForm({ addWorkout }) {
                 removeClippedSubviews={false}
                 renderItem={({ item, index }) =>
                     <ExerciseDetails
+                        exerciseName={item.exerciseName}
                         tableData={item.tableData}
                         onUpdate={onUpdate(index)}
+                        deleteExercise={() => deleteExercise(index)}
                         deleteSet={deleteSet(index)}
                         addSet={() => addSet(index)}
                         updateExerciseName={updateExerciseName(index)}

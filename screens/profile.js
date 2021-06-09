@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button } from "react-native";
 import { globalStyles } from "../styles/global";
 import firebase from 'firebase';
@@ -6,9 +6,16 @@ import * as Auth from '../api/auth';
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import CustomButton from '../shared/customButton'
+import * as DB from '../api/database'
 
 
 export default function Profile({ navigation }) {
+    const [role, setRole] = useState('');
+
+    useEffect(() => {
+        DB.getUserType(setRole);
+    }, [role]);
+
     const signOut = () => {
         firebase.auth().signOut()
             .then(() => {
@@ -17,10 +24,7 @@ export default function Profile({ navigation }) {
                 console.log(error);
             });
     }
-
-    const userEmail = Auth.getCurrentUserEmail();
-    // const username = Auth.getCurrentUsername(); 
-
+    
     return (
         <View style={globalStyles.container}>
             {/* <Text>Profile</Text>
@@ -35,7 +39,7 @@ export default function Profile({ navigation }) {
                         />
                     </View>
                     <Text style={styles.username}>Jeremy</Text>
-                    <Text style={styles.role}>Athlete</Text>
+                    <Text style={styles.role}>{ role }</Text>
                     <View style={styles.editProfile}>
                         <Button title='edit profile' onPress={() => navigation.navigate('Settings')} />
                     </View>
@@ -62,8 +66,16 @@ export default function Profile({ navigation }) {
                     <FontAwesome name="trophy" size={24} color="gold" />
                 </View>
 
-
+                {/* <Button title='register' onPress={() => 
+                    DB.addUserProfile(
+                        Auth.getCurrentUserId(),
+                        'ghi',
+                        'ghi@gmail.com',
+                        'Athlete'
+                    )} /> */}
             </ScrollView>
+
+            
 
             {/* <TouchableOpacity
                 onPress={signOut}

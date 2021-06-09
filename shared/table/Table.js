@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, StyleSheet, Button, KeyboardAvoidingView, Text, TouchableOpacity } from "react-native";
 import TableCell from "./TableCell";
 import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Table({ headerComponent, rows, columns, data, onUpdate, deleteRow, keyboardType }) {
     const cells = new Array(rows * columns);
@@ -43,7 +44,7 @@ function TableRow({ rowNumber, rowValues, onColumnUpdate, deleteRow, keyboardTyp
             }
 
             <TouchableOpacity style={styles.delete} onPress={() => deleteRow(rowNumber)}>
-                <AntDesign name="delete" size={24} color="black" />
+                    <MaterialIcons name="delete" size={24} color="black" />
             </TouchableOpacity>
         </View>
     );

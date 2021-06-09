@@ -22,6 +22,11 @@ export default function Workout({ navigation, route }) {
         setModalOpen(false);
     }
 
+    const handleEditWorkout = () => {
+        console.log('hello')
+    }
+    // console.log(workouts) 
+
     useEffect(() => {
         return DB.subscribe(userId, setWorkouts);
     }, []);
@@ -49,12 +54,12 @@ export default function Workout({ navigation, route }) {
 
             <FlatList
                 data={workouts ? Object.values(workouts) : null}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
                             return (
                                 <ListItem key={Math.random()}
-                                          containerStyle={{padding: 0, backgroundColor: '#eee'}}
+                                    containerStyle={{ padding: 0, backgroundColor: '#eee' }}
                                 >
                                     <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
                                 </ListItem>
@@ -67,7 +72,21 @@ export default function Workout({ navigation, route }) {
                                 exercises: item.exercises,
                             })}>
                                 <Card>
-                                    <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
+                                    <View style={styles.cardHeader}>
+                                        <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('EditWorkout',
+                                            {
+                                                title: item.workoutTitle, 
+                                                exercises: item.exercises,
+                                            }
+                                        )}>
+                                            <MaterialIcons
+                                                style={styles.cardIcon}
+                                                name='edit'
+                                                size={26}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
                                     {items}
                                 </Card>
                             </TouchableOpacity>
@@ -94,5 +113,10 @@ const styles = StyleSheet.create({
 
     modalToggle: {
         alignSelf: 'center',
+    },
+
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });

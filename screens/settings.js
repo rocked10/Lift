@@ -43,15 +43,15 @@ const styles = StyleSheet.create({
         paddingLeft: 10,  
         paddingRight: 10,  
         paddingBottom: 2,  
-        fontSize: 22,  
+        fontSize: 20,  
         fontWeight: 'bold',  
         color: "#fff",  
         backgroundColor: '#6495ed',  
     },  
     item: {  
         padding: 10,  
-        fontSize: 18,  
-        height: 44,  
+        fontSize: 16,  
+        height: 40,  
     },
     listItemSeparatorStyle: {
         height: 0.5,
