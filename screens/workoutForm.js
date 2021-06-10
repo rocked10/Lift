@@ -14,7 +14,7 @@ export default function WorkoutForm({
                 ]
             },
         ],
-        submissionHandler = () => console.log('lmao'),
+        addWorkout,
         alreadyPreFilled = false,
     }) 
         
@@ -95,9 +95,9 @@ export default function WorkoutForm({
 
     const submitButton = () => {
         if (! alreadyPreFilled) {
-            return <CustomButton title='add workout' onPress={() => submissionHandler({ workoutTitle, exercises })} />
+            return <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
         } else {
-            return <CustomButton title='save workout' onPress={() => console.log('lmao')} />
+            return <CustomButton title='save workout' onPress={() => addWorkout({ workoutTitle, exercises})} />
         }
     }
 

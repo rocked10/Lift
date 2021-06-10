@@ -5,6 +5,7 @@ import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
 import firebaseApp from "./api/firebase";
+import { MenuProvider } from 'react-native-popup-menu';
 // import * as Font from 'expo-font'
 
 export default function App() {
@@ -43,7 +44,9 @@ export default function App() {
 
   if (loggedIn) {
     return (
+      <MenuProvider>
         <TabStack />
+      </MenuProvider>
     );
   } else {
     return (
