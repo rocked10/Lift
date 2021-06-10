@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, SectionList, TextInput} from "react-native";
+import {View, Text, SectionList } from "react-native";
 import { globalStyles } from "../styles/global";
+import { Searchbar } from 'react-native-paper';
 
 export default function Exercises() {
     const DATA = [
@@ -16,9 +17,8 @@ export default function Exercises() {
 
     return (
         <View style={globalStyles.container}>
-            <TextInput
-                placeholder='Search'
-                style={globalStyles.input}
+            <Searchbar
+                placeholder="Type Here..."
             />
 
             <SectionList

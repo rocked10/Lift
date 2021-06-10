@@ -5,6 +5,7 @@ import * as Auth from '../api/auth';
 
 const db = firebase.database();
 
+// Workout
 export const addWorkout = async (userId, workout) => {
     try {
         const ref = db.ref(`workouts/${userId}`).push();
@@ -15,6 +16,7 @@ export const addWorkout = async (userId, workout) => {
         });
         console.log("Data saved");
     } catch (error) {
+        console.log(error);
         console.log("Write failed");
     }
 }
@@ -42,6 +44,16 @@ export const deleteWorkout = async (userId, workoutId) => {
     }
 }
 
+export const setSetCompletion = async (completed, {userId, workoutId}) => {
+    try {
+        const ref = db.ref(`workouts/${userId}/${workoutId}`);
+        await ref.update({ completed });
+        console.log("Set completed");
+    } catch (error) {
+        console.log("Error updating set");
+    }
+}
+
 export const subscribe = (userId, onValueChanged) => {
     const workouts = db.ref(`workouts/${userId}`);
     workouts.on("value", (snapshot) => {
@@ -50,6 +62,7 @@ export const subscribe = (userId, onValueChanged) => {
     return () => workouts.off("value");
 }
 
+// Profile
 export const addUserProfile = (userId, name, email, role) => {
     db.ref(`users/${userId}`).set({
         name: name,

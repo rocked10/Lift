@@ -18,22 +18,27 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import WorkoutFormModal from "../shared/workoutFormModal"
 
 
 export default function Workout({ navigation, route }) {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalOpen2, setModalOpen2] = useState(false);
+    const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
+    const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState([]);
+    const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
 
     const handleAddWorkout = (workout) => {
         DB.addWorkout(userId, workout).then();
-        setModalOpen(false);
+        setAddWorkoutModalOpen(false);
     }
 
     const handleEditWorkout = (workout) => {
-        DB.editWorkout(Auth.getCurrentUserId(), workout.id, workout).then();
-        setModalOpen2(false);
+        // console.log(workout)
+        // console.log(workout.id)
+        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
+        setEditWorkoutModalOpen(false);
+        setIdOfWorkoutBeingEdited(-1)
     }
 
     const handleDeleteWorkout = (workout) => {
@@ -44,50 +49,32 @@ export default function Workout({ navigation, route }) {
         return DB.subscribe(userId, setWorkouts);
     }, []);
 
-    // why does () => handleEditWorkout(workout) work?????
-
-    function EditWorkoutModal({ workout }) {
-        return (
-            <View style={{ padding: 8 }}>
-                <Modal visible={modalOpen2} animationType='slide' >
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <View style={styles.modalContent}>
-                            <MaterialIcons
-                                name='close'
-                                size={26}
-                                style={{ ...styles.modalToggle, ...styles.modalClose }}
-                                onPress={() => setModalOpen2(false)}
-                            />
-                            <WorkoutForm
-                                _workoutTitle={workout.workoutTitle}
-                                _exercises={workout.exercises}
-                                addWorkout={() => handleEditWorkout(workout)}
-                                alreadyPreFilled={true}
-                            />
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
-            </View>
-        )
+    function EditWorkoutModal() {
+        if (workouts != null && idOfWorkoutBeingEdited != -1) {
+            const workout = workouts[idOfWorkoutBeingEdited]
+            console.log(workout)
+            return (
+                <WorkoutFormModal 
+                    modalOpen={editWorkoutModalOpen} 
+                    setModalOpen={setEditWorkoutModalOpen}
+                    workoutTitle={workout.workoutTitle}
+                    exercises={workout.exercises}
+                    addWorkout={handleEditWorkout}
+                    alreadyPreFilled={true} 
+                />
+            )
+        } else {
+            return <View></View>
+        }
     }
 
     function AddWorkoutModal() {
         return (
-            <View style={{ padding: 8 }}>
-                <Modal visible={modalOpen} animationType='slide' >
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <View style={styles.modalContent}>
-                            <MaterialIcons
-                                name='close'
-                                size={26}
-                                style={{ ...styles.modalToggle, ...styles.modalClose }}
-                                onPress={() => setModalOpen(false)}
-                            />
-                            <WorkoutForm addWorkout={handleAddWorkout} />
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
-            </View>
+            <WorkoutFormModal 
+                modalOpen={addWorkoutModalOpen} 
+                setModalOpen={setAddWorkoutModalOpen}
+                addWorkout={handleAddWorkout}
+            />
         )
     }
 
@@ -97,28 +84,31 @@ export default function Workout({ navigation, route }) {
                 <MenuTrigger>
                     <Octicons name="kebab-horizontal" size={24} color="black" />
                 </MenuTrigger>
-                <MenuOptions>
-                    <MenuOption
-                        onSelect={() => setModalOpen2(true)}
+                <MenuOptions customStyles={optionsStyles}>
+                    <MenuOption 
+                        customStyles={optionStyles}
+                        onSelect={() => { console.log(workout.id); setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); }}
                         text='Edit Workout'
                     />
-                    <MenuOption onSelect={() => Alert.alert(
-                        '',
-                        'Delete your workout?',
-                        [
-                            {
-                                text: "Cancel",
-                                // onPress: () => handleDeleteWorkout(workout),
-                                style: "cancel",
-                            },
+                    <MenuOption 
+                        onSelect={() => Alert.alert(
+                            '',
+                            'Delete your workout?',
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel",
+                                },
 
-                            {
-                                text: "Delete",
-                                onPress: () => handleDeleteWorkout(workout),
-                                style: "delete",
-                            }
-                        ]
-                    )}>
+                                {
+                                    text: "Delete",
+                                    onPress: () => handleDeleteWorkout(workout),
+                                    style: "delete",
+                                }
+                            ]
+                        )}
+                        customStyles={optionStyles}
+                    >
                         <Text style={{ color: 'red' }}>Delete</Text>
                     </MenuOption>
                 </MenuOptions>
@@ -129,7 +119,7 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.text}>Start Working Out!</Text>
-            <Button title="Add Workout" onPress={() => setModalOpen(true)} />
+            <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
 
             <AddWorkoutModal />
 
@@ -149,16 +139,13 @@ export default function Workout({ navigation, route }) {
 
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
-                                title: item.workoutTitle,
+                                workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                             })}>
                                 <Card>
                                     <View style={styles.cardHeader}>
                                         <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
-                                        <View>
-                                            <DropDownSelection workout={item} />
-                                            <EditWorkoutModal workout={item} />
-                                        </View>
+                                        <DropDownSelection workout={item} />
                                     </View>
                                     {items}
                                 </Card>
@@ -169,27 +156,32 @@ export default function Workout({ navigation, route }) {
                 keyExtractor={(item, index) => item + index}
             />
 
+            <EditWorkoutModal />
+
             <StatusBar />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    modalContent: {
-        flex: 1,
-    },
-
-    modalClose: {
-        marginTop: 20,
-        marginBottom: 0,
-    },
-
-    modalToggle: {
-        alignSelf: 'center',
-    },
-
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between'
-    }
+    },
 });
+
+const optionsStyles = {
+    optionsContainer: {
+      backgroundColor: '#f5f5f5',
+      width: 160,
+      borderRadius: 4,
+      padding: 4,
+    },
+};
+
+const optionStyles = {
+    optionText: {
+      color: 'black',
+      fontWeight: 'bold'
+    },
+};

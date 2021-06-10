@@ -38,7 +38,7 @@ export default function Profile({ navigation }) {
                             source={{ uri: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg' }}
                         />
                     </View>
-                    <Text style={styles.username}>Jeremy</Text>
+                    <Text style={styles.username}>{ Auth.getCurrentUserEmail() }</Text>
                     <Text style={styles.role}>{ role }</Text>
                     <View style={styles.editProfile}>
                         <Button title='edit profile' onPress={() => navigation.navigate('Settings')} />

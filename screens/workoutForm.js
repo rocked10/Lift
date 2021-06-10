@@ -4,18 +4,10 @@ import ExerciseDetails from "../shared/exerciseDetails"
 import CustomButton from "../shared/customButton"
 
 export default function WorkoutForm({
-        _workoutTitle = '',
-        _exercises = [
-            {
-                exerciseName: '',
-                tableData: [
-                    { row: 0, column: 0, value: 0 },
-                    { row: 0, column: 1, value: 0 },
-                ]
-            },
-        ],
+        _workoutTitle,
+        _exercises,
         addWorkout,
-        alreadyPreFilled = false,
+        alreadyPreFilled,
     }) 
         
     {
@@ -93,7 +85,7 @@ export default function WorkoutForm({
         })
     }
 
-    const submitButton = () => {
+    const SubmitButton = () => {
         if (! alreadyPreFilled) {
             return <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
         } else {
@@ -130,7 +122,7 @@ export default function WorkoutForm({
             />
 
             <CustomButton title='add exercise' onPress={addExercise} />
-            {submitButton()}
+            <SubmitButton />
             
         </View>
 

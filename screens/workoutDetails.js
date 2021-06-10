@@ -1,61 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, Button, StyleSheet } from 'react-native';
+import {
+    FlatList, Text, View, Button, TextInput,
+    TouchableWithoutFeedback, Keyboard, StyleSheet
+} from 'react-native';
 import { globalStyles } from "../styles/global";
+import { Modal, Portal, Provider, Searchbar } from 'react-native-paper';
 import Card from "../shared/card";
+import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
+import { Checkbox } from 'react-native-paper';
+import { MaterialIcons } from "@expo/vector-icons";
+import WorkoutForm from "./workoutForm";
 
 export default function WorkoutDetails({ route, navigation }) {
     const { title, exercises } = route.params;
+    const [modalOpen, setModalOpen] = useState(false);
     const [role, setRole] = useState('');
-    
+
     let initCompletionStatus = []
     for (let i = 0; i < exercises.length; i++) {
         initCompletionStatus[i] = []
-        for (let j = 0; j < (exercises[i].tableData.length) / 2; j++) {
+        for (let j = 0; j < ((exercises[i].tableData.length) / 2); j++) {
             initCompletionStatus[i][j] = false
         }
     }
 
-    console.log(initCompletionStatus)
-
-    const [ completionStatus, setCompletionStatus ] = useState(initCompletionStatus);
+    const [completionStatus, setCompletionStatus] = useState(initCompletionStatus);
 
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
 
-    const handleShare = () => {
-        console.log("Button pressed!");
-    }
-
-    const ShareButton = () => {
+    const ShareButton = ({ onPress }) => {
         if (role === 'Athlete') {
             return (
-                <Button title='Share with' onPress={handleShare} />
+                <Button title='Share with' onPress={onPress} />
             );
         } else {
             return null;
         }
     }
 
-    const WeightAndReps = ({ tableData }) => {
+    const handleShare = (shareId) => {
+        console.log("SHARE");
+        setModalOpen(false);
+        DB.addWorkout(shareId, route.params).then();
+    }
+
+    const WeightAndReps = ({ tableData, exerciseNum }) => {
         return (
             <FlatList
                 data={tableData}
-                renderItem={({ item }) => (
-                    <View>
+                renderItem={({ item, index }) => {
+                    const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
+                    return (
+                        <View>
+                            <Checkbox.Item 
+                                label={label} 
+                                labelStyle={globalStyles.cardText}
+                                status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'} 
+                                onPress={() => {
+                                    setCompletionStatus(prev => {
+                                        const newCompletionStatus = [...prev]
+                                        newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index]
+                                        console.log(newCompletionStatus)
+                                        return newCompletionStatus
+                                    })
+                                }}     
+                            />
+                        </View>
+                    )
 
-                        <Text style={globalStyles.cardText}>
-                            Set {item[0].row + 1}: {item[0].value} kg {item[1].value} reps
-                            {/* <CheckBox
-                                value={isSelected}
-                                onValueChange={setSelection}
-                                style={styles.checkbox}
-                            /> */}
-                        </Text>
-
-                    </View>
-                )}
+                }}
                 keyExtractor={(item, index) => index.toString()}
             />
         );
@@ -80,39 +96,47 @@ export default function WorkoutDetails({ route, navigation }) {
             <Text style={globalStyles.titleText}>{title}</Text>
             <FlatList
                 data={exercises}
-                renderItem={({ item }) => (
+                renderItem={({ item, index }) => (
                     <View>
                         <Card>
                             <Text style={globalStyles.titleText}>
                                 {item.exerciseName}
                             </Text>
-                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} />
+                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} exerciseNum={index} />
                         </Card>
                     </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
             />
 
-            <ShareButton />
+
+
+            <Provider>
+                <Portal>
+                    <Modal
+                        visible={modalOpen}
+                        onDismiss={() => setModalOpen(false)}
+                        contentContainerStyle={styles.modalContainer}
+                    >
+                        <ShareWorkout shareId={handleShare} />
+                    </Modal>
+                </Portal>
+            </Provider>
+
+            <ShareButton onPress={() => setModalOpen(true)} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    // container: {
-    //   flex: 1,
-    //   alignItems: "center",
-    //   justifyContent: "center",
-    // },
-    // checkboxContainer: {
-    //   flexDirection: "row",
-    //   marginBottom: 20,
-    // },
-    checkbox: {
-      alignSelf: "center",
-    },
-    // label: {
-    //   margin: 8,
-    // },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        height: 280,
+        // justifyContent: 'flex-start'
+    }
 });
-  
+
+
+
+
