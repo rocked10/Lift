@@ -1,29 +1,37 @@
 import React, {useEffect, useState} from 'react';
-import { FlatList, Text, View, Button } from 'react-native';
+import { FlatList, Text, View, Button, TextInput,
+    TouchableWithoutFeedback, Keyboard, StyleSheet } from 'react-native';
 import { globalStyles } from "../styles/global";
+import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
 import Card from "../shared/card";
+import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
+import { MaterialIcons } from "@expo/vector-icons";
+import WorkoutForm from "./workoutForm";
 
 export default function WorkoutDetails({ route, navigation }) {
     const { title, exercises } = route.params;
+    const [modalOpen, setModalOpen] = useState(false);
     const [role, setRole] = useState('');
 
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
 
-    const handleShare = () => {
-        console.log("Button pressed!");
-    }
-
-    const ShareButton = () => {
+    const ShareButton = ({onPress}) => {
         if (role === 'Athlete') {
             return (
-                <Button title='Share with' onPress={handleShare}/>
+                <Button title='Share with' onPress={onPress} />
             );
         } else {
             return null;
         }
+    }
+
+    const handleShare = (shareId) => {
+        console.log("SHARE");
+        setModalOpen(false);
+        DB.addWorkout(shareId, route.params).then();
     }
 
     const WeightAndReps = ({tableData}) => {
@@ -76,7 +84,29 @@ export default function WorkoutDetails({ route, navigation }) {
                 keyExtractor={(item, index) => index.toString()}
             />
 
-            <ShareButton />
+            <Provider>
+                <Portal>
+                    <Modal
+                        visible={modalOpen}
+                        onDismiss={() => setModalOpen(false)}
+                        contentContainerStyle={styles.modalContainer}
+                    >
+                        <ShareWorkout shareId={handleShare}/>
+                    </Modal>
+                </Portal>
+            </Provider>
+
+            <ShareButton onPress={() => setModalOpen(true)}/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        height: 280,
+        justifyContent: 'flex-start'
+    }
+});
+

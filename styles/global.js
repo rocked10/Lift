@@ -36,6 +36,19 @@ export const globalStyles = StyleSheet.create({
         fontSize: 17,
         borderRadius: 6,
     },
+
+    modalContent: {
+        flex: 1,
+    },
+
+    modalClose: {
+        marginTop: 20,
+        marginBottom: 0,
+    },
+
+    modalToggle: {
+        alignSelf: 'center',
+    },
 });
 
 export const loginStyles = StyleSheet.create({

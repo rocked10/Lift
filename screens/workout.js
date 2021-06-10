@@ -34,11 +34,11 @@ export default function Workout({ navigation, route }) {
             <View style={{ padding: 8 }}>
                 <Modal visible={modalOpen} animationType='slide' >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <View style={styles.modalContent}>
+                        <View style={globalStyles.modalContent}>
                             <MaterialIcons
                                 name='close'
                                 size={26}
-                                style={{ ...styles.modalToggle, ...styles.modalClose }}
+                                style={{ ...globalStyles.modalToggle, ...globalStyles.modalClose }}
                                 onPress={() => setModalOpen(false)}
                             />
                             <WorkoutForm addWorkout={handleAddWorkout} />
@@ -63,7 +63,7 @@ export default function Workout({ navigation, route }) {
 
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
-                                title: item.workoutTitle,
+                                workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                             })}>
                                 <Card>
@@ -71,7 +71,7 @@ export default function Workout({ navigation, route }) {
                                         <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
                                         <TouchableOpacity onPress={() => navigation.navigate('EditWorkout',
                                             {
-                                                title: item.workoutTitle, 
+                                                title: item.workoutTitle,
                                                 exercises: item.exercises,
                                                 id: item.id,
                                             }
@@ -79,7 +79,7 @@ export default function Workout({ navigation, route }) {
                                             <MaterialIcons
                                                 style={styles.cardIcon}
                                                 name='edit'
-                                                size={26}
+                                                size={23}
                                             />
                                         </TouchableOpacity>
                                     </View>
@@ -98,19 +98,6 @@ export default function Workout({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-    modalContent: {
-        flex: 1,
-    },
-
-    modalClose: {
-        marginTop: 20,
-        marginBottom: 0,
-    },
-
-    modalToggle: {
-        alignSelf: 'center',
-    },
-
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between'

@@ -6,11 +6,13 @@ import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
 import firebaseApp from "./api/firebase";
 // import * as Font from 'expo-font'
+import Loading from "./screens/loading";
+import {Tab} from "react-native-elements";
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(''); // '': loading, 0: logged out, 1: logged in
 
   const userDetails = (details) => {
     setEmail(details.email.toLowerCase());
@@ -35,13 +37,17 @@ export default function App() {
 
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      setLoggedIn(true);
+      setLoggedIn('1');
     } else {
-      setLoggedIn(false);
+      setLoggedIn('0');
     }
   })
 
-  if (loggedIn) {
+  if (! loggedIn) {
+    return (
+        <Loading />
+    );
+  } else if (loggedIn === '1') {
     return (
         <TabStack />
     );
