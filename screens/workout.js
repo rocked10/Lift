@@ -115,6 +115,11 @@ export default function Workout({ navigation, route }) {
                         text='Edit Workout'
                     />
                     <MenuOption 
+                        customStyles={optionStyles}
+                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true);}}
+                        text='Reuse Workout'
+                    />
+                    <MenuOption 
                         onSelect={() => Alert.alert(
                             '',
                             'Delete your workout?',
@@ -135,11 +140,6 @@ export default function Workout({ navigation, route }) {
                     >
                         <Text style={{ color: 'red' }}>Delete</Text>
                     </MenuOption>
-                    <MenuOption 
-                        customStyles={optionStyles}
-                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true);}}
-                        text='Reuse Workout'
-                    />
                 </MenuOptions>
             </Menu>
         )
