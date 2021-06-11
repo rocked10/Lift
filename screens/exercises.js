@@ -24,7 +24,7 @@ export default function Exercises() {
 
             <List.Section title="Exercises">
                 <List.Accordion
-                    title="Olympic Lifts
+                    title="Olympic Lifts"
                     left={props => <List.Icon {...props} icon="folder" />}
                 >
                     <List.Item title="First item" />
