@@ -65,14 +65,6 @@ export default function Profile({ navigation }) {
                     <Text style={{ fontSize: 16, fontWeight: 'bold', marginHorizontal: 12 }}>Personal Records</Text>
                     <FontAwesome name="trophy" size={24} color="gold" />
                 </View>
-
-                {/* <Button title='register' onPress={() => 
-                    DB.addUserProfile(
-                        Auth.getCurrentUserId(),
-                        'ghi',
-                        'ghi@gmail.com',
-                        'Athlete'
-                    )} /> */}
             </ScrollView>
 
             

@@ -8,24 +8,16 @@ import { Modal, Portal, Provider, Searchbar } from 'react-native-paper';
 import Card from "../shared/card";
 import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
+import * as Auth from '../api/auth';
 import { Checkbox } from 'react-native-paper';
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkoutForm from "./workoutForm";
 
 export default function WorkoutDetails({ route, navigation }) {
-    const { title, exercises } = route.params;
+    const { title, exercises, completed, id } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
     const [role, setRole] = useState('');
-
-    let initCompletionStatus = []
-    for (let i = 0; i < exercises.length; i++) {
-        initCompletionStatus[i] = []
-        for (let j = 0; j < ((exercises[i].tableData.length) / 2); j++) {
-            initCompletionStatus[i][j] = false
-        }
-    }
-
-    const [completionStatus, setCompletionStatus] = useState(initCompletionStatus);
+    const [completionStatus, setCompletionStatus] = useState(completed);
 
     useEffect(() => {
         DB.getUserType(setRole);
@@ -61,10 +53,11 @@ export default function WorkoutDetails({ route, navigation }) {
                                 status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'} 
                                 onPress={() => {
                                     setCompletionStatus(prev => {
-                                        const newCompletionStatus = [...prev]
-                                        newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index]
+                                        const newCompletionStatus = [...prev];
+                                        newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
                                         console.log(newCompletionStatus)
-                                        return newCompletionStatus
+                                        DB.updateSetCompletionStatus(Auth.getCurrentUserId(), id, newCompletionStatus).then();
+                                        return newCompletionStatus;
                                     })
                                 }}     
                             />

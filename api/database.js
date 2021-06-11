@@ -12,6 +12,7 @@ export const addWorkout = async (userId, workout) => {
         await ref.set({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
+            completed: workout.completed,
             id: ref.key,
         });
         console.log("Data saved");
@@ -44,10 +45,12 @@ export const deleteWorkout = async (userId, workoutId) => {
     }
 }
 
-export const setSetCompletion = async (completed, {userId, workoutId}) => {
+export const updateSetCompletionStatus = async (userId, workoutId, completed) => {
     try {
         const ref = db.ref(`workouts/${userId}/${workoutId}`);
-        await ref.update({ completed });
+        await ref.update({
+            completed: completed
+        });
         console.log("Set completed");
     } catch (error) {
         console.log("Error updating set");
