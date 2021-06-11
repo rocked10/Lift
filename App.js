@@ -20,7 +20,7 @@ export default function App() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          setLoggedIn(true);
+          setLoggedIn('1');
         })
         .catch((error) => {
           console.log(error.message);
