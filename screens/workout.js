@@ -27,10 +27,17 @@ export default function Workout({ navigation, route }) {
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState([]);
     const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
+    const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
 
     const handleAddWorkout = (workout) => {
         DB.addWorkout(userId, workout).then();
-        setAddWorkoutModalOpen(false);
+        if (workoutBeingReused) {
+            setWorkoutBeingReused(false);
+            setEditWorkoutModalOpen(false);
+            setIdOfWorkoutBeingEdited(-1); 
+        } else {
+            setAddWorkoutModalOpen(false);
+        }
     }
 
     const handleEditWorkout = (workout) => {
@@ -53,14 +60,25 @@ export default function Workout({ navigation, route }) {
         if (workouts != null && idOfWorkoutBeingEdited != -1) {
             const workout = workouts[idOfWorkoutBeingEdited]
             console.log(workout)
+
+            let submissionHandler = ''; 
+            let createsANewWorkout = false; 
+
+            if (workoutBeingReused) {
+                submissionHandler= handleAddWorkout
+                createsANewWorkout= true
+            } else {
+                submissionHandler= handleEditWorkout
+            }
+
             return (
                 <WorkoutFormModal 
                     modalOpen={editWorkoutModalOpen} 
                     setModalOpen={setEditWorkoutModalOpen}
                     workoutTitle={workout.workoutTitle}
                     exercises={workout.exercises}
-                    addWorkout={handleEditWorkout}
-                    alreadyPreFilled={true} 
+                    addWorkout={submissionHandler}
+                    createsANewWorkout={createsANewWorkout} 
                 />
             )
         } else {
@@ -111,6 +129,11 @@ export default function Workout({ navigation, route }) {
                     >
                         <Text style={{ color: 'red' }}>Delete</Text>
                     </MenuOption>
+                    <MenuOption 
+                        customStyles={optionStyles}
+                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true);}}
+                        text='Reuse Workout'
+                    />
                 </MenuOptions>
             </Menu>
         )

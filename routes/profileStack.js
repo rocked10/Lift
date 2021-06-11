@@ -14,7 +14,7 @@ const ProfileStack = () => (
         screenOptions={{
             headerStyle: {
                 backgroundColor: '#eee',
-                height: 80,
+                height: 60,
             },
 
             headerTintColor: '#444',

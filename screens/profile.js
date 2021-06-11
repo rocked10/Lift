@@ -31,7 +31,7 @@ export default function Profile({ navigation }) {
             <Text>{ userEmail }</Text> */}
             {/* <Text>{ username }</Text> */}
             <ScrollView showsVerticalScrollIndicator={true}>
-                <View style={{ alignSelf: "center" }}>
+                <View style={{ alignItems: "center", justifyContent: 'center' }}>
                     <View style={styles.profileImage}>
                         <Image
                             style={styles.image}

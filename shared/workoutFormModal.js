@@ -21,7 +21,7 @@ export default function WorkoutFormModal(
             },
         ],
         addWorkout, 
-        alreadyPreFilled = false }) {
+        createsANewWorkout = true }) {
 
     return (
         <View style={{ padding: 8 }}>
@@ -38,7 +38,7 @@ export default function WorkoutFormModal(
                             _workoutTitle= {workoutTitle}
                             _exercises= {exercises}
                             addWorkout={addWorkout}
-                            alreadyPreFilled={alreadyPreFilled}
+                            createsANewWorkout= {createsANewWorkout}
                         />
                     </View>
                 </TouchableWithoutFeedback>

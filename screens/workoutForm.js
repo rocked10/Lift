@@ -7,7 +7,7 @@ export default function WorkoutForm({
         _workoutTitle,
         _exercises,
         addWorkout,
-        alreadyPreFilled,
+        createsANewWorkout,
     }) 
         
     {
@@ -86,7 +86,7 @@ export default function WorkoutForm({
     }
 
     const SubmitButton = () => {
-        if (! alreadyPreFilled) {
+        if (createsANewWorkout) {
             return <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
         } else {
             return <CustomButton title='save workout' onPress={() => addWorkout({ workoutTitle, exercises})} />
