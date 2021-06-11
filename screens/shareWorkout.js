@@ -25,17 +25,15 @@ export default function ShareWorkout({ shareId = () => {} }) {
 
     const onChangeSearch = (query) => {
         setSearchQuery(query);
+        // const uid = DB.findUserId(searchQuery.toLowerCase());
+        // console.log(searchQuery);
+        // setUserFound(uid);
     }
 
     const handleSearch = () => {
         const uid = DB.findUserId(searchQuery.toLowerCase());
-        if (uid) {
-            console.log(':)');
-            setUserFound(uid);
-        } else {
-            console.log(":(")
-            setUserFound(uid);
-        }
+        console.log(searchQuery);
+        setUserFound(uid);
     }
 
     const handleConfirmation = () => {

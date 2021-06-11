@@ -30,6 +30,14 @@ export default function Workout({ navigation, route }) {
     const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
 
     const handleAddWorkout = (workout) => {
+        // Adding completion status
+        let completed = []
+        workout.exercises.forEach((item) => {
+            completed.push(new Array(item.tableData.length / 2));
+        });
+        completed.map((arr) => arr.fill(false));
+        workout.completed = completed;
+
         DB.addWorkout(userId, workout).then();
         if (workoutBeingReused) {
             setWorkoutBeingReused(false);
@@ -41,8 +49,6 @@ export default function Workout({ navigation, route }) {
     }
 
     const handleEditWorkout = (workout) => {
-        // console.log(workout)
-        // console.log(workout.id)
         DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
         setEditWorkoutModalOpen(false);
         setIdOfWorkoutBeingEdited(-1)
@@ -164,6 +170,8 @@ export default function Workout({ navigation, route }) {
                             <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
+                                completed: item.completed,
+                                id: item.id,
                             })}>
                                 <Card>
                                     <View style={styles.cardHeader}>
