@@ -1,51 +1,127 @@
 import React, { useState, useEffect } from 'react';
 import {
     View, Text, Button, FlatList, TouchableOpacity,
-    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet
+    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert
 } from "react-native";
 import { ListItem } from 'react-native-elements';
 import { globalStyles, loginStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Octicons } from '@expo/vector-icons';
 import Card from "../shared/card";
 import WorkoutForm from "./workoutForm";
 import firebaseApp from "../api/firebase";
 import * as DB from '../api/database';
-import * as Auth from '../api/auth.js'
+import * as Auth from '../api/auth.js';
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
+import WorkoutFormModal from "../shared/workoutFormModal"
+
 
 export default function Workout({ navigation, route }) {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
+    const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState([]);
+    const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
 
     const handleAddWorkout = (workout) => {
         DB.addWorkout(userId, workout).then();
-        setModalOpen(false);
+        setAddWorkoutModalOpen(false);
+    }
+
+    const handleEditWorkout = (workout) => {
+        // console.log(workout)
+        // console.log(workout.id)
+        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
+        setEditWorkoutModalOpen(false);
+        setIdOfWorkoutBeingEdited(-1)
+    }
+
+    const handleDeleteWorkout = (workout) => {
+        DB.deleteWorkout(Auth.getCurrentUserId(), workout.id).then();
     }
 
     useEffect(() => {
         return DB.subscribe(userId, setWorkouts);
     }, []);
 
+    function EditWorkoutModal() {
+        if (workouts != null && idOfWorkoutBeingEdited != -1) {
+            const workout = workouts[idOfWorkoutBeingEdited]
+            console.log(workout)
+            return (
+                <WorkoutFormModal 
+                    modalOpen={editWorkoutModalOpen} 
+                    setModalOpen={setEditWorkoutModalOpen}
+                    workoutTitle={workout.workoutTitle}
+                    exercises={workout.exercises}
+                    addWorkout={handleEditWorkout}
+                    alreadyPreFilled={true} 
+                />
+            )
+        } else {
+            return <View></View>
+        }
+    }
+
+    function AddWorkoutModal() {
+        return (
+            <WorkoutFormModal 
+                modalOpen={addWorkoutModalOpen} 
+                setModalOpen={setAddWorkoutModalOpen}
+                addWorkout={handleAddWorkout}
+            />
+        )
+    }
+
+    function DropDownSelection({ workout }) {
+        return (
+            <Menu>
+                <MenuTrigger>
+                    <Octicons name="kebab-horizontal" size={24} color="black" />
+                </MenuTrigger>
+                <MenuOptions customStyles={optionsStyles}>
+                    <MenuOption 
+                        customStyles={optionStyles}
+                        onSelect={() => { console.log(workout.id); setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); }}
+                        text='Edit Workout'
+                    />
+                    <MenuOption 
+                        onSelect={() => Alert.alert(
+                            '',
+                            'Delete your workout?',
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel",
+                                },
+
+                                {
+                                    text: "Delete",
+                                    onPress: () => handleDeleteWorkout(workout),
+                                    style: "delete",
+                                }
+                            ]
+                        )}
+                        customStyles={optionStyles}
+                    >
+                        <Text style={{ color: 'red' }}>Delete</Text>
+                    </MenuOption>
+                </MenuOptions>
+            </Menu>
+        )
+    }
+
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.text}>Start Working Out!</Text>
-            <Button title="Add Workout" onPress={() => setModalOpen(true)} />
+            <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
 
-            <View style={{ padding: 8 }}>
-                <Modal visible={modalOpen} animationType='slide' >
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <View style={globalStyles.modalContent}>
-                            <MaterialIcons
-                                name='close'
-                                size={26}
-                                style={{ ...globalStyles.modalToggle, ...globalStyles.modalClose }}
-                                onPress={() => setModalOpen(false)}
-                            />
-                            <WorkoutForm addWorkout={handleAddWorkout} />
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
-            </View>
+            <AddWorkoutModal />
 
             <FlatList
                 data={workouts ? Object.values(workouts) : null}
@@ -69,19 +145,7 @@ export default function Workout({ navigation, route }) {
                                 <Card>
                                     <View style={styles.cardHeader}>
                                         <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate('EditWorkout',
-                                            {
-                                                title: item.workoutTitle,
-                                                exercises: item.exercises,
-                                                id: item.id,
-                                            }
-                                        )}>
-                                            <MaterialIcons
-                                                style={styles.cardIcon}
-                                                name='edit'
-                                                size={23}
-                                            />
-                                        </TouchableOpacity>
+                                        <DropDownSelection workout={item} />
                                     </View>
                                     {items}
                                 </Card>
@@ -92,6 +156,8 @@ export default function Workout({ navigation, route }) {
                 keyExtractor={(item, index) => item + index}
             />
 
+            <EditWorkoutModal />
+
             <StatusBar />
         </View>
     );
@@ -101,5 +167,21 @@ const styles = StyleSheet.create({
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between'
-    }
+    },
 });
+
+const optionsStyles = {
+    optionsContainer: {
+      backgroundColor: '#f5f5f5',
+      width: 160,
+      borderRadius: 4,
+      padding: 4,
+    },
+};
+
+const optionStyles = {
+    optionText: {
+      color: 'black',
+      fontWeight: 'bold'
+    },
+};

@@ -4,17 +4,10 @@ import ExerciseDetails from "../shared/exerciseDetails"
 import CustomButton from "../shared/customButton"
 
 export default function WorkoutForm({
-        _workoutTitle = '',
-        _exercises = [
-            {
-                exerciseName: '',
-                tableData: [
-                    { row: 0, column: 0, value: 0 },
-                    { row: 0, column: 1, value: 0 },
-                ]
-            },
-        ],
-        addWorkout = () => console.log('lmao')
+        _workoutTitle,
+        _exercises,
+        addWorkout,
+        alreadyPreFilled,
     }) 
         
     {
@@ -92,6 +85,14 @@ export default function WorkoutForm({
         })
     }
 
+    const SubmitButton = () => {
+        if (! alreadyPreFilled) {
+            return <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
+        } else {
+            return <CustomButton title='save workout' onPress={() => addWorkout({ workoutTitle, exercises})} />
+        }
+    }
+
     return (
         <View style={{ flex: 1, marginVertical: 10, padding: 8 }}>
             <TextInput
@@ -120,9 +121,9 @@ export default function WorkoutForm({
             // stickyHeaderIndices={[0]}
             />
 
-
             <CustomButton title='add exercise' onPress={addExercise} />
-            <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
+            <SubmitButton />
+            
         </View>
 
     );

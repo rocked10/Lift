@@ -8,13 +8,13 @@ export default function editWorkout({ route, navigation }) {
 
     const handleEditWorkout = (workout) => {
         DB.editWorkout(Auth.getCurrentUserId(), id, workout).then();
-        // navigation.navigate('WorkoutDetails', {
-        //     title: workout.title,
-        //     exercises: workout.exercises,
-        // })
+        navigation.navigate('WorkoutDetails', {
+            title: workout.title,
+            exercises: workout.exercises,
+        })
     }
 
     return (
-        <WorkoutForm _workoutTitle={title} _exercises={exercises} addWorkout={handleEditWorkout} />
+        <WorkoutForm _workoutTitle={title} _exercises={exercises} addWorkout={handleEditWorkout} alreadyPreFilled={true}/>
     );
 }
