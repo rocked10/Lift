@@ -26,7 +26,7 @@ export default function WorkoutDetails({ route, navigation }) {
     }, [role]);
 
     const ShareButton = ({ onPress }) => {
-        if (role === 'Athlete') {
+        if (role === 'Coach') {
             return (
                 <Button title='Share with' onPress={onPress} />
             );
