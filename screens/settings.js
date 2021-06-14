@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList } from "react-native";
 import { globalStyles } from "../styles/global";
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
+import * as DB from '../api/database';
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import CustomButton from '../shared/customButton'
 
+
 export default function Settings() {
     // const userInfoFields = []
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        DB.getUserName(setUsername);
+    }, [])
 
     const FlatListItemSeparator = () => {
         return (
@@ -22,11 +29,16 @@ export default function Settings() {
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
-                    { title: 'User Information', data: ['Username', 'Email', 'Name', 'City', 'State', 'Country', 'Bio'] },
+                    { title: 'User Information', data: [`Username: ${username}`, `Email: ${Auth.getCurrentUserEmail()}`, 'City', 'State', 'Country', 'Bio'] },
                     { title: 'Fitness Information', data: ['Gender', 'Height', 'Weight'] },
                     { title: 'Account', data: ['Change password', 'Enable workout notifications', 'Delete account'] },
                 ]}
-                renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+                renderItem={
+                    ({ item }) => (
+                        <TouchableOpacity>
+                            <Text style={styles.item}>{item}</Text>
+                        </TouchableOpacity>
+                    )}
                 renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
@@ -49,7 +61,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#6495ed',  
     },  
     item: {  
-        padding: 10,  
+        padding: 10,
         fontSize: 16,  
         height: 40,  
     },

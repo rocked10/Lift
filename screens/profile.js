@@ -27,9 +27,6 @@ export default function Profile({ navigation }) {
     
     return (
         <View style={globalStyles.container}>
-            {/* <Text>Profile</Text>
-            <Text>{ userEmail }</Text> */}
-            {/* <Text>{ username }</Text> */}
             <ScrollView showsVerticalScrollIndicator={true}>
                 <View style={{ alignItems: "center", justifyContent: 'center' }}>
                     <View style={styles.profileImage}>
@@ -69,11 +66,11 @@ export default function Profile({ navigation }) {
 
             
 
-            {/* <TouchableOpacity
+            <TouchableOpacity
                 onPress={signOut}
             >
                 <Text>Sign out</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     );
 }

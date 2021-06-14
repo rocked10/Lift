@@ -5,9 +5,14 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import WorkoutStack from "./workoutStack";
 import ProfileStack from './profileStack';
 import ExercisesStack from "./exercisesStack";
-
 import HistoryStack from "./historyStack";
+import { createStackNavigator } from "@react-navigation/stack";
+import Settings from "../screens/settings";
+
+
 const { Navigator, Screen } = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
 
 export const TabStack = () => (
     <NavigationContainer>
@@ -71,5 +76,6 @@ export const TabStack = () => (
             />
 
         </Navigator>
+
     </NavigationContainer>
 )

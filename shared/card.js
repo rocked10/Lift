@@ -5,13 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 const Card = (props) => {
     return (
         <View style={styles.card}>
-            {/* <TouchableOpacity>
-                <MaterialIcons
-                    style={styles.cardIcon}
-                    name='edit'
-                    size={26}
-                />
-            </TouchableOpacity> */}
             <View style={styles.cardContent}>
                 {props.children}
             </View>

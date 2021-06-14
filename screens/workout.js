@@ -171,6 +171,7 @@ export default function Workout({ navigation, route }) {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                                 completed: item.completed,
+                                sharedBy: item.sharedBy,
                                 id: item.id,
                             })}>
                                 <Card>

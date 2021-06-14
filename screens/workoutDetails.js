@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, Text, View, Button, TextInput,
-    TouchableWithoutFeedback, Keyboard, StyleSheet
+    TouchableWithoutFeedback, Keyboard, StyleSheet, TouchableOpacity
 } from 'react-native';
 import { globalStyles } from "../styles/global";
 import { Modal, Portal, Provider, Searchbar } from 'react-native-paper';
@@ -13,22 +13,29 @@ import { Checkbox } from 'react-native-paper';
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkoutForm from "./workoutForm";
 
+
 export default function WorkoutDetails({ route, navigation }) {
-    const { title, exercises, completed, id } = route.params;
+    const { workoutTitle, exercises, completed, sharedBy, id } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
+    const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
     const [completionStatus, setCompletionStatus] = useState(completed);
-
-    console.log(completed)
 
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
 
     const ShareButton = ({ onPress }) => {
-        if (role === 'Athlete') {
+        if (role === 'Athlete') { // Remember to change to 'Coach'
             return (
-                <Button title='Share with' onPress={onPress} />
+                <TouchableOpacity>
+                    <MaterialIcons
+                        name='share'
+                        size={26}
+                        color='black'
+                        onPress={onPress}
+                    />
+                </TouchableOpacity>
             );
         } else {
             return null;
@@ -38,7 +45,7 @@ export default function WorkoutDetails({ route, navigation }) {
     const handleShare = (shareId) => {
         console.log("SHARE");
         setModalOpen(false);
-        DB.addWorkout(shareId, route.params).then();
+        DB.addSharedWorkout(userId, shareId, id, route.params).then();
     }
 
     const WeightAndReps = ({ tableData, exerciseNum }) => {
@@ -49,19 +56,21 @@ export default function WorkoutDetails({ route, navigation }) {
                     const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
                     return (
                         <View>
-                            <Checkbox.Item 
-                                label={label} 
+                            <Checkbox.Item
+                                label={label}
                                 labelStyle={globalStyles.cardText}
-                                status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'} 
+                                status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setCompletionStatus(prev => {
                                         const newCompletionStatus = [...prev];
                                         newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
-                                        console.log(newCompletionStatus)
-                                        DB.updateSetCompletionStatus(Auth.getCurrentUserId(), id, newCompletionStatus).then();
+                                        DB.updateSetCompletionStatus(userId, id, newCompletionStatus).then();
+                                        if (sharedBy) {
+                                            DB.updateSetCompletionStatus(sharedBy, id, newCompletionStatus).then();
+                                        }
                                         return newCompletionStatus;
                                     })
-                                }}     
+                                }}
                             />
                         </View>
                     )
@@ -88,7 +97,11 @@ export default function WorkoutDetails({ route, navigation }) {
 
     return (
         <View style={globalStyles.container}>
-            <Text style={globalStyles.titleText}>{title}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={globalStyles.titleText}>{ workoutTitle }</Text>
+
+                <ShareButton onPress={() => setModalOpen(true)} />
+            </View>
             <FlatList
                 data={exercises}
                 renderItem={({ item, index }) => (
@@ -104,8 +117,6 @@ export default function WorkoutDetails({ route, navigation }) {
                 keyExtractor={(item, index) => index.toString()}
             />
 
-
-
             <Provider>
                 <Portal>
                     <Modal
@@ -117,8 +128,6 @@ export default function WorkoutDetails({ route, navigation }) {
                     </Modal>
                 </Portal>
             </Provider>
-
-            <ShareButton onPress={() => setModalOpen(true)} />
         </View>
     )
 }
