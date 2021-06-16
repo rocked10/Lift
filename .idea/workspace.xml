@@ -3,10 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js.orig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/exercisesStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/exercisesStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/historyStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/historyStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/shareWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shareWorkout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workoutDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/workoutFormModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/workoutFormModal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +89,9 @@
       <workItem from="1623235001636" duration="16252000" />
       <workItem from="1623298310261" duration="17548000" />
       <workItem from="1623391890183" duration="3037000" />
-      <workItem from="1623415805168" duration="2371000" />
+      <workItem from="1623415805168" duration="2769000" />
+      <workItem from="1623490944167" duration="7932000" />
+      <workItem from="1623575426303" duration="8380000" />
     </task>
     <servers />
   </component>

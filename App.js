@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, LogBox } from 'react-native';
 import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
@@ -8,6 +8,8 @@ import firebaseApp from "./api/firebase";
 import { MenuProvider } from 'react-native-popup-menu';
 // import * as Font from 'expo-font'
 import Loading from "./screens/loading";
+
+LogBox.ignoreLogs(["Setting a timer for a long period of"]);
 
 export default function App() {
   const [email, setEmail] = useState('');

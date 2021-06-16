@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button } from "react-native";
 import { globalStyles } from "../styles/global";
 import firebase from 'firebase';
@@ -24,12 +24,21 @@ export default function Profile({ navigation }) {
                 console.log(error);
             });
     }
-    
+
+    const AthleteList = ({ role }) => {
+        if (role === 'Coach') {
+            return (
+                <View style={{ alignItems: "center", justifyContent: 'center' }}>
+                    <Button title='athletes' onPress={() => navigation.navigate('Athlete List')} />
+                </View>
+            )
+        } else {
+            return null;
+        }
+    }
+
     return (
         <View style={globalStyles.container}>
-            {/* <Text>Profile</Text>
-            <Text>{ userEmail }</Text> */}
-            {/* <Text>{ username }</Text> */}
             <ScrollView showsVerticalScrollIndicator={true}>
                 <View style={{ alignItems: "center", justifyContent: 'center' }}>
                     <View style={styles.profileImage}>
@@ -38,15 +47,16 @@ export default function Profile({ navigation }) {
                             source={{ uri: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg' }}
                         />
                     </View>
-                    <Text style={styles.username}>{ Auth.getCurrentUserEmail() }</Text>
-                    <Text style={styles.role}>{ role }</Text>
+                    <Text style={styles.username}>{Auth.getCurrentUserEmail()}</Text>
+                    <Text style={styles.role}>{role}</Text>
                     <View style={styles.editProfile}>
                         <Button title='edit profile' onPress={() => navigation.navigate('Settings')} />
                     </View>
-                    
+
                 </View>
 
-                <View style={styles.statsBar}>
+                <AthleteList role={role} />
+                {/* <View style={styles.statsBar}>
                     <View style={styles.statsBarItem}>
                         <Text style={{ alignSelf: 'center' }}>30000</Text>
                         <Text>Followers</Text>
@@ -64,16 +74,16 @@ export default function Profile({ navigation }) {
                     <FontAwesome name="trophy" size={24} color="gold" />
                     <Text style={{ fontSize: 16, fontWeight: 'bold', marginHorizontal: 12 }}>Personal Records</Text>
                     <FontAwesome name="trophy" size={24} color="gold" />
-                </View>
+                </View> */}
             </ScrollView>
 
-            
 
-            {/* <TouchableOpacity
+
+            <TouchableOpacity
                 onPress={signOut}
             >
                 <Text>Sign out</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     );
 }
@@ -118,7 +128,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 18,
         flexDirection: 'row'
-    }, 
+    },
     editProfile: {
         paddingBottom: 16
     }

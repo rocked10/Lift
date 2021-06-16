@@ -1,15 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
-import History from "../screens/history";
-
+import AthletesWorkouts from "../screens/athletesWorkouts";
+import WorkoutDetails from "../screens/workoutDetails";
 
 const { Navigator, Screen } = createStackNavigator();
 
-const HistoryStack = () => (
+const AthleteWorkoutStack = ({ navigation }) => (
     <Navigator
-        initialRouteName={"History"}
         screenOptions={{
             headerStyle: {
                 backgroundColor: '#eee',
@@ -19,8 +16,10 @@ const HistoryStack = () => (
             headerTintColor: '#444',
         }}
     >
-        <Screen name='History' component={History} />
+
+        <Screen name="Athletes' Workouts" component={AthletesWorkouts} />
+        <Screen name="Workout Details" component={WorkoutDetails} /> 
     </Navigator>
 );
 
-export default HistoryStack;
+export default AthleteWorkoutStack;

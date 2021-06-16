@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
 
+
 export default function ShareWorkout({ shareId = () => {} }) {
     const [searchQuery, setSearchQuery] = useState('')
     const [userFound, setUserFound] = useState('');
@@ -31,7 +32,7 @@ export default function ShareWorkout({ shareId = () => {} }) {
     }
 
     const handleSearch = () => {
-        const uid = DB.findUserId(searchQuery.toLowerCase());
+        const uid = DB.findUserId(searchQuery.toLowerCase().trim());
         console.log(searchQuery);
         setUserFound(uid);
     }

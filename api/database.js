@@ -22,6 +22,23 @@ export const addWorkout = async (userId, workout) => {
     }
 }
 
+export const addSharedWorkout = async (ownUserId, sharedUserId, workoutId, workout) => {
+    try {
+        const ref = db.ref(`workouts/${sharedUserId}/${workoutId}`);
+        await ref.set({
+            exercises: workout.exercises,
+            workoutTitle: workout.workoutTitle,
+            completed: workout.completed,
+            sharedBy: ownUserId,
+            id: workoutId,
+        });
+        console.log("Data saved");
+    } catch (error) {
+        console.log(error);
+        console.log("Write failed");
+    }
+}
+
 export const editWorkout = async (userId, workoutId, workout) => {
     try {
         const ref = db.ref(`workouts/${userId}/${workoutId}`);
@@ -106,4 +123,16 @@ export const getUserName = (onValueChanged) => {
     ref.once('value', (snapshot) => {
         onValueChanged(snapshot.val().name);
     });
+}
+
+export const addAthlete = async (userId, athleteId) => {
+    try {
+        const ref = db.ref(`users/${userId}/athletes/${athleteId}`)
+        await ref.set({
+            id: athleteId
+        });
+        console.log("Athlete added");
+    } catch (error) {
+        console.log("Error adding athlete");
+    }
 }

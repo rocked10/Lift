@@ -19,19 +19,6 @@ import {
     MenuTrigger,
 } from 'react-native-popup-menu';
 import WorkoutFormModal from "../shared/workoutFormModal"
-import {
-    Button as PaperButton,
-    Title,
-    Paragraph,
-} from 'react-native-paper';
-import {
-    Tabs,
-    TabScreen,
-    useTabIndex,
-    useTabNavigation,
-} from 'react-native-paper-tabs';
-import { List } from 'react-native-paper';
-
 
 export default function Workout({ navigation, route }) {
     const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
@@ -45,96 +32,6 @@ export default function Workout({ navigation, route }) {
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
-
-    const MyWorkoutsTab = () => {
-        return (
-            <View style={globalStyles.container}>
-                <Text style={globalStyles.text}>Start Working Out!</Text>
-
-                <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
-
-                <AddWorkoutModal />
-
-                <FlatList
-                    data={workouts ? Object.values(workouts) : null}
-                    renderItem={({ item, index }) => {
-                        if (item.exercises !== undefined) {
-                            let items = item.exercises.map(item2 => {
-                                return (
-                                    <ListItem key={Math.random()}
-                                        containerStyle={{ padding: 0, backgroundColor: '#eee' }}
-                                    >
-                                        <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
-                                    </ListItem>
-                                );
-                            });
-
-                            return (
-                                <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
-                                    workoutTitle: item.workoutTitle,
-                                    exercises: item.exercises,
-                                    completed: item.completed,
-                                    id: item.id,
-                                })}>
-                                    <Card>
-                                        <View style={styles.cardHeader}>
-                                            <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
-                                            <DropDownSelection workout={item} />
-                                        </View>
-                                        {items}
-                                    </Card>
-                                </TouchableOpacity>
-                            );
-                        }
-                    }}
-                    keyExtractor={(item, index) => item + index}
-                />
-
-                <EditWorkoutModal />
-
-                <StatusBar />
-
-
-            </View>
-
-        );
-    }
-
-    const AthletesWorkoutsTab = () => {
-        return (
-            <List.Section title="Athletes">
-                <List.Accordion
-                    title="Olympic Lifts"
-                    left={props => <List.Icon {...props} icon="folder" />}
-                >
-                    <List.Item title="First item" />
-                    <List.Item title="Second item" />
-                </List.Accordion>
-            </List.Section>
-        )
-    }
-
-    // swap code later
-    const WorkoutPageDisplay = () => {
-        if (role === 'Coach') {
-            return (
-                <Tabs>
-                    <TabScreen label="My Workouts">
-                        {/* <View style={{ backgroundColor: 'red', flex: 1 }} /> */}
-                        <MyWorkoutsTab />
-                    </TabScreen>
-                    <TabScreen label="Athletes' Workouts">
-                        {/* <View style={{ backgroundColor: 'black', flex: 1 }} /> */}
-                        <AthletesWorkoutsTab />
-                    </TabScreen>
-                </Tabs>
-            )
-        } else {
-            return (
-                <Text>yo</Text>
-            )
-        }
-    }
 
     const handleAddWorkout = (workout) => {
         // Adding completion status
@@ -253,8 +150,54 @@ export default function Workout({ navigation, route }) {
     }
 
     return (
+        <View style={globalStyles.container}>
+            <Text style={globalStyles.text}>Start Working Out!</Text>
 
-        <WorkoutPageDisplay />
+            <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
+
+            <AddWorkoutModal />
+
+            <FlatList
+                data={workouts ? Object.values(workouts) : null}
+                renderItem={({ item, index }) => {
+                    if (item.exercises !== undefined) {
+                        let items = item.exercises.map(item2 => {
+                            return (
+                                <ListItem key={Math.random()}
+                                    containerStyle={{ padding: 0, backgroundColor: '#eee' }}
+                                >
+                                    <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
+                                </ListItem>
+                            );
+                        });
+
+                        return (
+                            <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
+                                workoutTitle: item.workoutTitle,
+                                exercises: item.exercises,
+                                completed: item.completed,
+                                id: item.id,
+                            })}>
+                                <Card>
+                                    <View style={styles.cardHeader}>
+                                        <Text style={globalStyles.titleText}>{item.workoutTitle}</Text>
+                                        <DropDownSelection workout={item} />
+                                    </View>
+                                    {items}
+                                </Card>
+                            </TouchableOpacity>
+                        );
+                    }
+                }}
+                keyExtractor={(item, index) => item + index}
+            />
+
+            <EditWorkoutModal />
+
+            <StatusBar />
+
+
+        </View>
 
     );
 }

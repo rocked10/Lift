@@ -3,12 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Workout from '../screens/workout';
 import WorkoutDetails from "../screens/workoutDetails";
 import EditWorkout from "../screens/editWorkout";
+import Header from "../shared/header";
+import Settings from "../screens/settings";
+
 
 const { Navigator, Screen } = createStackNavigator();
 
-const WorkoutStack = () => (
+const WorkoutStack = ({ navigation }) => (
     <Navigator
-        initialRouteName={"Workout"}
         screenOptions={{
             headerStyle: {
                 backgroundColor: '#eee',
@@ -18,9 +20,10 @@ const WorkoutStack = () => (
             headerTintColor: '#444',
         }}
     >
-        <Screen name='Workout' component={Workout} />
-        <Screen name='WorkoutDetails' component={WorkoutDetails} options={{title: "Workout Details"}} />
-        <Screen name='EditWorkout' component={EditWorkout} options={{title: "Edit Workout"}} />
+        <Screen name='Workout' component={Workout}
+            options={{ headerTitle: () => <Header navigation={navigation} title='Workout' /> }}/>
+        <Screen name='WorkoutDetails' component={WorkoutDetails} />
+        <Screen name='EditWorkout' component={EditWorkout} />
     </Navigator>
 );
 

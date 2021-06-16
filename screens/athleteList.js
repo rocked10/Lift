@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList } from "react-native";
-import { globalStyles } from "../styles/global";
-import firebase from 'firebase';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, FlatList } from "react-native";
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
-import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import CustomButton from '../shared/customButton'
 
-
-export default function Settings() {
+export default function AthleteList() {
     // const userInfoFields = []
-    const [username, setUsername] = useState('');
+    // const [username, setUsername] = useState('');
 
-    useEffect(() => {
-        DB.getUserName(setUsername);
-    }, [])
+    // useEffect(() => {
+    //     DB.getUserName(setUsername);
+    // }, [])
 
     const FlatListItemSeparator = () => {
         return (
@@ -26,20 +20,15 @@ export default function Settings() {
 
     return (
         <View style={styles.container}>
-            <SectionList
+            <FlatList
                 ItemSeparatorComponent={FlatListItemSeparator}
-                sections={[
-                    { title: 'User Information', data: [`Username: ${username}`, `Email: ${Auth.getCurrentUserEmail()}`, 'City', 'State', 'Country', 'Bio'] },
-                    { title: 'Fitness Information', data: ['Gender', 'Height', 'Weight'] },
-                    { title: 'Account', data: ['Change password', 'Enable workout notifications', 'Delete account'] },
-                ]}
+                data={['fakeAthlete 1', 'fakeAthlete 2']}
                 renderItem={
                     ({ item }) => (
                         <TouchableOpacity>
                             <Text style={styles.item}>{item}</Text>
                         </TouchableOpacity>
                     )}
-                renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
         </View>
