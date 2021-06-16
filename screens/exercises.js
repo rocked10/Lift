@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, SectionList } from "react-native";
+import {View, Text, SectionList, TouchableOpacity} from "react-native";
 import { List } from 'react-native-paper';
 import { globalStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
 
 export default function Exercises() {
-    const DATA = [
-        {
-            title: "Olympic Lifts",
-            data: ["Clean and Jerk", "Snatch", "Power Snatch"]
-        },
-        {
-            title: "Barbell",
-            data: ["Back Squat", "Front Squat", "Bench Press"]
-        }
-    ];
+    const barbell = ["Back Squat", "Front Squat", "Bench Press"]
+    const olympic = ["Snatch", "Clean and Jerk",]
+
+    const handlePress = () => {
+        console.log("hi");
+    }
+
+    const Render = ({ data }) => {
+        const listItems = data.map((item) =>
+            <TouchableOpacity onPress={handlePress}>
+                <List.Item title={item}/>
+            </TouchableOpacity>
+            )
+        return (
+            <View>
+                { listItems }
+            </View>
+        );
+    }
 
     return (
         <View style={globalStyles.container}>
@@ -24,22 +33,20 @@ export default function Exercises() {
 
             <List.Section title="Exercises">
                 <List.Accordion
-                    title="Olympic Lifts"
-                    left={props => <List.Icon {...props} icon="folder" />}
+                    title="Barbell"
+                    left={props => <List.Icon {...props} icon="equal" />}
                 >
-                    <List.Item title="First item" />
-                    <List.Item title="Second item" />
+                    <Render data={barbell}/>
+                </List.Accordion>
+
+                <List.Accordion
+                    title="Olympic"
+                    left={props => <List.Icon {...props} icon="equal" />}
+                >
+                    <Render data={olympic} />
                 </List.Accordion>
             </List.Section>
 
-            <SectionList
-                sections={DATA}
-                keyExtractor={(item, index) => item + index}
-                renderItem={({ item }) => <Text>{item}</Text>}
-                renderSectionHeader={({ section: { title } }) => (
-                    <Text>{title}</Text>
-                )}
-            />
         </View>
     );
 }

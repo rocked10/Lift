@@ -97,6 +97,18 @@ export const addUserProfile = (userId, name, email, role) => {
     });
 }
 
+export const addAthlete = async (userId, athleteId) => {
+    try {
+        const ref = db.ref(`users/${userId}/athletes/${athleteId}`)
+        await ref.set({
+            id: athleteId
+        });
+        console.log("Athlete added");
+    } catch (error) {
+        console.log("Error adding athlete");
+    }
+}
+
 export const findUserId = (email) => {
     const ref = db.ref('users');
     let uid = '';

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
+import { TextInput } from 'react-native-paper';
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
@@ -24,6 +25,32 @@ export default function Settings() {
         );
     };
 
+    const handlePress = (item, section) => {
+        let sectionTitle = section.title;
+        if (sectionTitle === 'User Information') {
+            handleUser(item);
+        } else if (sectionTitle === 'Fitness') {
+            handleFitness(item);
+        } else {
+            handleAccount(item);
+        }
+    }
+
+    const handleUser = (item) => {
+        console.log(item);
+    }
+
+    const handleFitness = (item) => {
+        console.log(item);
+    }
+
+    const handleAccount = (item) => {
+        console.log(item);
+        if (item === 'Change password') {
+            // Auth.changePassword();
+        }
+    }
+
     return (
         <View style={styles.container}>
             <SectionList
@@ -34,8 +61,10 @@ export default function Settings() {
                     { title: 'Account', data: ['Change password', 'Enable workout notifications', 'Delete account'] },
                 ]}
                 renderItem={
-                    ({ item }) => (
-                        <TouchableOpacity>
+                    ({ item, section }) => (
+                        <TouchableOpacity onPress={() => handlePress(item, section)}>
+                            {/*<Text style={styles.itemLabel}>{item.key}</Text>*/}
+                            {/*<TextInput style={styles.item}>{item.value}</TextInput>*/}
                             <Text style={styles.item}>{item}</Text>
                         </TouchableOpacity>
                     )}
@@ -49,7 +78,8 @@ export default function Settings() {
 const styles = StyleSheet.create({ 
     container: {  
         flex: 1,   
-    },   
+    },
+
     sectionHeader: {  
         paddingTop: 2,  
         paddingLeft: 10,  
@@ -59,12 +89,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',  
         color: "#fff",  
         backgroundColor: '#6495ed',  
-    },  
+    },
+
+    itemLabel: {
+        padding: 10,
+        fontSize: 14,
+    },
+
     item: {  
         padding: 10,
         fontSize: 16,  
         height: 40,  
     },
+
     listItemSeparatorStyle: {
         height: 0.5,
         width: '100%',

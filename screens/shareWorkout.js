@@ -26,9 +26,6 @@ export default function ShareWorkout({ shareId = () => {} }) {
 
     const onChangeSearch = (query) => {
         setSearchQuery(query);
-        // const uid = DB.findUserId(searchQuery.toLowerCase());
-        // console.log(searchQuery);
-        // setUserFound(uid);
     }
 
     const handleSearch = () => {

@@ -10,6 +10,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import Loading from "./screens/loading";
 
 LogBox.ignoreLogs(["Setting a timer for a long period of"]);
+LogBox.ignoreLogs(["Each child in a list should have"]);
 
 export default function App() {
   const [email, setEmail] = useState('');
