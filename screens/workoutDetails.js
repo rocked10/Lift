@@ -15,7 +15,7 @@ import WorkoutForm from "./workoutForm";
 
 
 export default function WorkoutDetails({ route, navigation }) {
-    const { workoutTitle, exercises, completed, sharedBy, id } = route.params;
+    const { workoutTitle, exercises, completed, sharedBy, id, forViewingOnly } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
@@ -25,8 +25,8 @@ export default function WorkoutDetails({ route, navigation }) {
         DB.getUserType(setRole);
     }, [role]);
 
-    const ShareButton = ({ onPress }) => {
-        if (role === 'Athlete') { // Remember to change to 'Coach'
+    const ShareButton = ({ onPress, visible }) => {
+        if (role === 'Coach' && visible) {
             return (
                 <TouchableOpacity>
                     <MaterialIcons
@@ -49,36 +49,61 @@ export default function WorkoutDetails({ route, navigation }) {
     }
 
     const WeightAndReps = ({ tableData, exerciseNum }) => {
-        return (
-            <FlatList
-                data={tableData}
-                renderItem={({ item, index }) => {
-                    const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
-                    return (
-                        <View>
-                            <Checkbox.Item
-                                label={label}
-                                labelStyle={globalStyles.cardText}
-                                status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setCompletionStatus(prev => {
-                                        const newCompletionStatus = [...prev];
-                                        newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
-                                        DB.updateSetCompletionStatus(userId, id, newCompletionStatus).then();
-                                        if (sharedBy) {
-                                            DB.updateSetCompletionStatus(sharedBy, id, newCompletionStatus).then();
-                                        }
-                                        return newCompletionStatus;
-                                    })
-                                }}
-                            />
-                        </View>
-                    )
-
-                }}
-                keyExtractor={(item, index) => index.toString()}
-            />
-        );
+        if (forViewingOnly) {
+            return (
+                <FlatList
+                    data={tableData}
+                    renderItem={({ item, index }) => {
+                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
+                        return (
+                            <View>
+                                <Checkbox.Item
+                                    label={label}
+                                    labelStyle={globalStyles.cardText}
+                                    status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
+                                    disabled={forViewingOnly}
+                                />
+                            </View>
+                        )
+    
+                    }}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+            );
+        } else {
+            return (
+                <FlatList
+                    data={tableData}
+                    renderItem={({ item, index }) => {
+                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
+                        return (
+                            <View>
+                                <Checkbox.Item
+                                    label={label}
+                                    labelStyle={globalStyles.cardText}
+                                    status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
+                                    onPress={() => {
+                                        setCompletionStatus(prev => {
+                                            const newCompletionStatus = [...prev];
+                                            newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
+                                            DB.updateSetCompletionStatus(userId, id, newCompletionStatus).then();
+                                            if (sharedBy) {
+                                                DB.updateSetCompletionStatus(sharedBy, id, newCompletionStatus).then();
+                                            }
+                                            return newCompletionStatus;
+                                        })
+                                    }
+                                    }
+                                    disabled={forViewingOnly}
+                                />
+                            </View>
+                        )
+    
+                    }}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+            );
+        }
     }
 
     function chunkArray(arr, n) {
@@ -100,7 +125,7 @@ export default function WorkoutDetails({ route, navigation }) {
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={globalStyles.titleText}>{ workoutTitle }</Text>
 
-                <ShareButton onPress={() => setModalOpen(true)} />
+                <ShareButton onPress={() => setModalOpen(true)} visible={! forViewingOnly} />
             </View>
             <FlatList
                 data={exercises}

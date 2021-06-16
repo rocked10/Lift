@@ -20,7 +20,6 @@ import {
 } from 'react-native-popup-menu';
 import WorkoutFormModal from "../shared/workoutFormModal"
 
-
 export default function Workout({ navigation, route }) {
     const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
     const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
@@ -28,6 +27,11 @@ export default function Workout({ navigation, route }) {
     const [workouts, setWorkouts] = useState([]);
     const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
     const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
+    const [role, setRole] = useState('');
+
+    useEffect(() => {
+        DB.getUserType(setRole);
+    }, [role]);
 
     const handleAddWorkout = (workout) => {
         // Adding completion status
@@ -42,7 +46,7 @@ export default function Workout({ navigation, route }) {
         if (workoutBeingReused) {
             setWorkoutBeingReused(false);
             setEditWorkoutModalOpen(false);
-            setIdOfWorkoutBeingEdited(-1); 
+            setIdOfWorkoutBeingEdited(-1);
         } else {
             setAddWorkoutModalOpen(false);
         }
@@ -67,35 +71,35 @@ export default function Workout({ navigation, route }) {
             const workout = workouts[idOfWorkoutBeingEdited]
             console.log(workout)
 
-            let submissionHandler = ''; 
-            let createsANewWorkout = false; 
+            let submissionHandler = '';
+            let createsANewWorkout = false;
 
             if (workoutBeingReused) {
-                submissionHandler= handleAddWorkout
-                createsANewWorkout= true
+                submissionHandler = handleAddWorkout
+                createsANewWorkout = true
             } else {
-                submissionHandler= handleEditWorkout
+                submissionHandler = handleEditWorkout
             }
 
             return (
-                <WorkoutFormModal 
-                    modalOpen={editWorkoutModalOpen} 
+                <WorkoutFormModal
+                    modalOpen={editWorkoutModalOpen}
                     setModalOpen={setEditWorkoutModalOpen}
                     workoutTitle={workout.workoutTitle}
                     exercises={workout.exercises}
                     addWorkout={submissionHandler}
-                    createsANewWorkout={createsANewWorkout} 
+                    createsANewWorkout={createsANewWorkout}
                 />
             )
         } else {
-            return <View></View>
+            return null;
         }
     }
 
     function AddWorkoutModal() {
         return (
-            <WorkoutFormModal 
-                modalOpen={addWorkoutModalOpen} 
+            <WorkoutFormModal
+                modalOpen={addWorkoutModalOpen}
                 setModalOpen={setAddWorkoutModalOpen}
                 addWorkout={handleAddWorkout}
             />
@@ -109,17 +113,17 @@ export default function Workout({ navigation, route }) {
                     <Octicons name="kebab-horizontal" size={24} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
-                    <MenuOption 
+                    <MenuOption
                         customStyles={optionStyles}
                         onSelect={() => { console.log(workout.id); setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); }}
                         text='Edit Workout'
                     />
-                    <MenuOption 
+                    <MenuOption
                         customStyles={optionStyles}
-                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true);}}
+                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true); }}
                         text='Reuse Workout'
                     />
-                    <MenuOption 
+                    <MenuOption
                         onSelect={() => Alert.alert(
                             '',
                             'Delete your workout?',
@@ -148,6 +152,7 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.text}>Start Working Out!</Text>
+
             <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
 
             <AddWorkoutModal />
@@ -171,7 +176,6 @@ export default function Workout({ navigation, route }) {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                                 completed: item.completed,
-                                sharedBy: item.sharedBy,
                                 id: item.id,
                             })}>
                                 <Card>
@@ -191,7 +195,10 @@ export default function Workout({ navigation, route }) {
             <EditWorkoutModal />
 
             <StatusBar />
+
+
         </View>
+
     );
 }
 
@@ -204,16 +211,16 @@ const styles = StyleSheet.create({
 
 const optionsStyles = {
     optionsContainer: {
-      backgroundColor: '#f5f5f5',
-      width: 160,
-      borderRadius: 4,
-      padding: 4,
+        backgroundColor: '#f5f5f5',
+        width: 160,
+        borderRadius: 4,
+        padding: 4,
     },
 };
 
 const optionStyles = {
     optionText: {
-      color: 'black',
-      fontWeight: 'bold'
+        color: 'black',
+        fontWeight: 'bold'
     },
 };

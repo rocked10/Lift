@@ -136,3 +136,15 @@ export const getUserName = (onValueChanged) => {
         onValueChanged(snapshot.val().name);
     });
 }
+
+export const addAthlete = async (userId, athleteId) => {
+    try {
+        const ref = db.ref(`users/${userId}/athletes/${athleteId}`)
+        await ref.set({
+            id: athleteId
+        });
+        console.log("Athlete added");
+    } catch (error) {
+        console.log("Error adding athlete");
+    }
+}

@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Profile from "../screens/profile";
 import Settings from "../screens/settings";
 import Header from "../shared/header";
+import AthleteList from "../screens/athleteList"
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -23,6 +24,7 @@ const ProfileStack = ({ navigation }) => (
         <Screen name='Profile' component={Profile}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Profile' /> }}/>
         <Screen name='Settings' component={Settings} />
+        <Screen name='Athlete List' component={AthleteList} />
     </Navigator>
 );
 
