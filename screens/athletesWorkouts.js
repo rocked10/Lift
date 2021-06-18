@@ -23,12 +23,12 @@ export default function AthletesWorkouts({ navigation }) {
         } 
         setSearchQuery(query);  
     }
-    const onSubmitSearch = () => {
-        const uid = DB.findUserId(searchQuery.toLowerCase().trim());
+    const onSubmitSearch = async () => {
+        const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
         console.log(searchQuery);
+        console.log(uid);
         setUserFound(uid);
         setAthleteId(uid);
-        console.log(uid);
     }
 
     const handleConfirmation = () => {

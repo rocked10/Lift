@@ -28,8 +28,8 @@ export default function ShareWorkout({ shareId = () => {} }) {
         setSearchQuery(query);
     }
 
-    const handleSearch = () => {
-        const uid = DB.findUserId(searchQuery.toLowerCase().trim());
+    const handleSearch = async () => {
+        const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
         console.log(searchQuery);
         setUserFound(uid);
     }

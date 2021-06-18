@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text } from "react-native";
 import { globalStyles } from "../styles/global";
 
-export default function History() {
+export default function Community() {
     return (
         <View style={globalStyles.container}>
-            <Text>History</Text>
+            <Text>Community Feed</Text>
         </View>
     );
 }

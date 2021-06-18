@@ -6,22 +6,31 @@ import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
 import firebaseApp from "./api/firebase";
 import { MenuProvider } from 'react-native-popup-menu';
-// import * as Font from 'expo-font'
+import * as Font from 'expo-font'
 import Loading from "./screens/loading";
+import AppLoading from "expo-app-loading";
 
-LogBox.ignoreLogs(["Setting a timer for a long period of"]);
-LogBox.ignoreLogs(["Each child in a list should have"]);
+
+LogBox.ignoreLogs(["Setting a timer for a long period of", "Failed child context type", "Failed context type"]);
+
+const getFonts = () => {
+  return Font.loadAsync({
+    'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
+    'lato-bold': require('./assets/fonts/Lato-Bold.ttf')
+  });
+}
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(''); // '': loading, 0: logged out, 1: logged in
 
-  const userDetails = (details) => {
+  const userDetails = async (details) => {
     setEmail(details.email.toLowerCase());
     setPassword(details.password);
 
-    firebase.auth().signInWithEmailAndPassword(email.trim(), password)
+    await firebase.auth().signInWithEmailAndPassword(email.trim(), password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
@@ -46,19 +55,29 @@ export default function App() {
     }
   })
 
-  if (! loggedIn) {
-    return (
-        <Loading />
-    );
-  } else if (loggedIn === '1') {
-    return (
-      <MenuProvider>
-        <TabStack />
-      </MenuProvider>
-    );
+  if (fontsLoaded) {
+    if (!loggedIn) {
+      return (
+          <Loading/>
+      );
+    } else if (loggedIn === '1') {
+      return (
+          <MenuProvider>
+            <TabStack/>
+          </MenuProvider>
+      );
+    } else {
+      return (
+          <Login userDetails={userDetails}/>
+      );
+    }
   } else {
     return (
-        <Login userDetails={userDetails}/>
+        <AppLoading
+            startAsync={getFonts}
+            onFinish={() => setFontsLoaded(true)}
+            onError={console.warn}
+        />
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 
-export default function Header({ navigation, title }) {
+export default function Header({ navigation, title, displaySettings }) {
     const openSettings = () => {
         navigation.navigate('Profile', {
             screen: 'Settings',
@@ -10,10 +10,20 @@ export default function Header({ navigation, title }) {
         });
     }
 
+    const SettingsIcon = () => {
+        if (displaySettings) {
+            return (
+                <MaterialIcons name='settings' size={28} onPress={openSettings} style={styles.icon}/>
+            );
+        } else {
+            return null;
+        }
+    }
+
     return (
         <View style={styles.header}>
             <Text style={styles.headerText}>{ title }</Text>
-            <MaterialIcons name='settings' size={28} onPress={openSettings} style={styles.icon} />
+            <SettingsIcon />
         </View>
     );
 }
@@ -25,14 +35,15 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#383838',
+        fontSize: 26,
+        fontFamily: 'lato-bold',
+        // color: '#383838',
+        color: 'white',
     },
 
     icon: {
         position: 'absolute',
         right: 1,
-        color: '#383838',
+        color: 'white',
     }
 })

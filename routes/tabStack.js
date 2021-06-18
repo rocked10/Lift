@@ -5,9 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WorkoutStack from "./workoutStack";
 import ProfileStack from './profileStack';
 import ExercisesStack from "./exercisesStack";
-import HistoryStack from "./historyStack";
+import CommunityStack from "./communityStack";
 import { createStackNavigator } from "@react-navigation/stack";
-import Settings from "../screens/settings";
 import WorkoutTabs from "./workoutTabs";
 import * as DB from '../api/database';
 
@@ -56,7 +55,7 @@ export const TabStack = () => {
                     options={{
                         tabBarLabel: 'Workout',
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='plus-thick' color='black' size={26} />
+                            <MaterialCommunityIcons name='weight-lifter' color='black' size={26} />
                         )
                     }}
                 />
@@ -73,12 +72,12 @@ export const TabStack = () => {
                 />
 
                 <Screen
-                    name='History'
-                    component={HistoryStack}
+                    name='Community'
+                    component={CommunityStack}
                     options={{
-                        tabBarLabel: 'History',
+                        tabBarLabel: 'Community',
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='clock' color='black' size={26} />
+                            <MaterialCommunityIcons name='account-multiple' color='black' size={26} />
                         )
                     }}
                 />

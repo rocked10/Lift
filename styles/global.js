@@ -1,28 +1,28 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 30,
+        padding: 16,
     },
 
     titleText: {
-        fontFamily: 'sans-serif-medium',
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontFamily: 'lato-bold',
+        fontSize: 22,
         marginBottom: 16
     },
 
     text: {
-        fontFamily: 'sans-serif-medium',
+        fontFamily: 'lato-regular',
         fontSize: 18,
         marginBottom: 16
     },
 
     cardText: {
-        fontFamily: 'sans-serif-medium',
-        fontSize: 15,
+        fontFamily: 'lato-regular',
+        fontSize: 14,
     },
 
     inputView: {
@@ -83,3 +83,12 @@ export const loginStyles = StyleSheet.create({
         borderRadius: 6,
     },
 })
+
+export const navigationStyles = {
+    headerStyle: {
+        backgroundColor: '#0080ff',
+        height: 60,
+    },
+    headerTintColor: '#444',
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+}

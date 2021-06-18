@@ -2,13 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Black.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-BlackItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-BoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-LightItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-Thin.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Lato-ThinItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/exerciseDescription.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/exercisesStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/exercisesStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/historyStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/communityStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/history.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/shareWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shareWorkout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/styles/global.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +109,11 @@
       <workItem from="1623652277282" duration="118000" />
       <workItem from="1623668935868" duration="1958000" />
       <workItem from="1623734953216" duration="13094000" />
-      <workItem from="1623824067981" duration="1806000" />
+      <workItem from="1623824067981" duration="2436000" />
+      <workItem from="1623841900015" duration="3648000" />
+      <workItem from="1623869734038" duration="3875000" />
+      <workItem from="1623913553919" duration="185000" />
+      <workItem from="1623914010235" duration="20605000" />
     </task>
     <servers />
   </component>

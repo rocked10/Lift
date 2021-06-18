@@ -109,18 +109,29 @@ export const addAthlete = async (userId, athleteId) => {
     }
 }
 
-export const findUserId = (email) => {
-    const ref = db.ref('users');
-    let uid = '';
-    ref.orderByChild('email').equalTo(email)
-        .on('value', (snapshot) => {
-            if (snapshot.val()) {
-                uid = Object.keys(snapshot.val())[0]
-            } else {
-                console.log('User not found');
-            }
-        })
-    return uid;
+export const findUserId = async (email) => {
+    // const ref = db.ref('users');
+    // // let uid = '';
+    // await ref.orderByChild('email').equalTo(email)
+    //     .once('value', (snapshot) => {
+    //         if (snapshot.val()) {
+    //             console.log(snapshot.val());
+    //             return Object.keys(snapshot.val())[0]
+    //         } else {
+    //             console.log('User not found');
+    //         }
+    //     });
+    // // return uid;
+    let ref = ''
+
+        await db.ref('users').orderByChild('email').equalTo(email)
+        .once('value', snapshot => {
+        ref = snapshot.val();
+    })
+    const uidObject = ref;
+    const uid = Object.keys(uidObject)
+    console.log(ref)
+    return uid[0]
 }
 
 export const getUserType = (onValueChanged) => {
@@ -135,16 +146,4 @@ export const getUserName = (onValueChanged) => {
     ref.once('value', (snapshot) => {
         onValueChanged(snapshot.val().name);
     });
-}
-
-export const addAthlete = async (userId, athleteId) => {
-    try {
-        const ref = db.ref(`users/${userId}/athletes/${athleteId}`)
-        await ref.set({
-            id: athleteId
-        });
-        console.log("Athlete added");
-    } catch (error) {
-        console.log("Error adding athlete");
-    }
 }

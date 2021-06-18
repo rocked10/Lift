@@ -110,7 +110,7 @@ export default function Workout({ navigation, route }) {
         return (
             <Menu>
                 <MenuTrigger>
-                    <Octicons name="kebab-horizontal" size={24} color="black" />
+                    <Octicons name="kebab-horizontal" size={26} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
                     <MenuOption
@@ -151,9 +151,11 @@ export default function Workout({ navigation, route }) {
 
     return (
         <View style={globalStyles.container}>
-            <Text style={globalStyles.text}>Start Working Out!</Text>
-
-            <Button title="Add Workout" onPress={() => setAddWorkoutModalOpen(true)} />
+            <TouchableOpacity
+                onPress={() => setAddWorkoutModalOpen(true)}
+            >
+                <MaterialIcons name='add' size={28}/>
+            </TouchableOpacity>
 
             <AddWorkoutModal />
 
@@ -195,7 +197,6 @@ export default function Workout({ navigation, route }) {
             <EditWorkoutModal />
 
             <StatusBar />
-
 
         </View>
 

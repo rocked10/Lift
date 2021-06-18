@@ -16,7 +16,7 @@ export default Card;
 
 const styles = StyleSheet.create({
     card: {
-        borderRadius: 6,
+        borderRadius: 16,
         elevation: 3,
         backgroundColor: '#eee',
         shadowOffset: { width: 1, height: 1},

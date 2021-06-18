@@ -1,27 +1,19 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
 import Exercises from '../screens/exercises';
-import Settings from "../screens/settings";
+import ExerciseDescription from "../screens/exerciseDescription";
 import Header from "../shared/header";
+import { navigationStyles } from '../styles/global';
 
 
 const { Navigator, Screen } = createStackNavigator();
 
 const ExercisesStack = ({ navigation }) => (
-    <Navigator
-        screenOptions={{
-            headerStyle: {
-                backgroundColor: '#eee',
-                height: 60,
-            },
-
-            headerTintColor: '#444',
-        }}
-    >
+    <Navigator screenOptions={navigationStyles} >
         <Screen name='Exercises' component={Exercises}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Exercises' /> }}/>
+        <Screen name='ExerciseDescription' component={ExerciseDescription}
+                options={{ headerTitle: () => <Header navigation={navigation} title='Video Demonstration' /> }}/>
     </Navigator>
 );
 

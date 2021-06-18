@@ -51,23 +51,40 @@ export default function Settings() {
         }
     }
 
+    const [fitnessInfo, setFitnessInfo] = useState([{ key: 'Gender', value: 'LMAO'}, { key: 'Height', value: '10'},
+        {key: 'Weight', value: '100'}]);
+
     return (
         <View style={styles.container}>
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
                     { title: 'User Information', data: [`Username: ${username}`, `Email: ${Auth.getCurrentUserEmail()}`, 'City', 'State', 'Country', 'Bio'] },
-                    { title: 'Fitness Information', data: ['Gender', 'Height', 'Weight'] },
+                    { title: 'Fitness Information', data: fitnessInfo },
                     { title: 'Account', data: ['Change password', 'Enable workout notifications', 'Delete account'] },
                 ]}
-                renderItem={
-                    ({ item, section }) => (
-                        <TouchableOpacity onPress={() => handlePress(item, section)}>
-                            {/*<Text style={styles.itemLabel}>{item.key}</Text>*/}
-                            {/*<TextInput style={styles.item}>{item.value}</TextInput>*/}
-                            <Text style={styles.item}>{item}</Text>
-                        </TouchableOpacity>
-                    )}
+
+                renderItem = {({item, index, section}) => {
+                    if (section.title === 'Account') {
+                        return (
+                            <TouchableOpacity onPress={() => handlePress(item, section)}>
+                                <Text style={styles.item}>{item}</Text>
+                            </TouchableOpacity>
+                        );
+                    } else {
+                        return (
+                            <TextInput
+                                label={item.key}
+                                onChangeText={(text) => {
+                                    let temp = fitnessInfo;
+                                    temp[index].value = text;
+                                    setFitnessInfo(temp);
+                                }}
+                            />
+                        );
+                    }
+                }}
+
                 renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
