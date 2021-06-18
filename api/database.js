@@ -110,28 +110,13 @@ export const addAthlete = async (userId, athleteId) => {
 }
 
 export const findUserId = async (email) => {
-    // const ref = db.ref('users');
-    // // let uid = '';
-    // await ref.orderByChild('email').equalTo(email)
-    //     .once('value', (snapshot) => {
-    //         if (snapshot.val()) {
-    //             console.log(snapshot.val());
-    //             return Object.keys(snapshot.val())[0]
-    //         } else {
-    //             console.log('User not found');
-    //         }
-    //     });
-    // // return uid;
-    let ref = ''
-
-        await db.ref('users').orderByChild('email').equalTo(email)
+    let ref = '';
+    await db.ref('users').orderByChild('email').equalTo(email)
         .once('value', snapshot => {
         ref = snapshot.val();
     })
     const uidObject = ref;
-    const uid = Object.keys(uidObject)
-    console.log(ref)
-    return uid[0]
+    return Object.keys(uidObject)[0];
 }
 
 export const getUserType = (onValueChanged) => {

@@ -1,17 +1,19 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, LogBox } from 'react-native';
+import { StyleSheet, Alert, LogBox, Keyboard } from 'react-native';
 import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
 import firebaseApp from "./api/firebase";
 import { MenuProvider } from 'react-native-popup-menu';
 import * as Font from 'expo-font'
+import * as Auth from './api/auth';
 import Loading from "./screens/loading";
 import AppLoading from "expo-app-loading";
 
 
-LogBox.ignoreLogs(["Setting a timer for a long period of", "Failed child context type", "Failed context type"]);
+LogBox.ignoreLogs(["Setting a timer for a long period of", "Can't perform a React state update",
+  "Failed child context type", "Failed context type"]);
 
 const getFonts = () => {
   return Font.loadAsync({
@@ -22,29 +24,22 @@ const getFonts = () => {
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(''); // '': loading, 0: logged out, 1: logged in
 
-  const userDetails = async (details) => {
-    setEmail(details.email.toLowerCase());
-    setPassword(details.password);
+  const handleLogin = async (details) => {
+    Keyboard.dismiss();
+    const email = details.email.toLowerCase().trim();
+    const password = details.password;
 
-    await firebase.auth().signInWithEmailAndPassword(email.trim(), password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          setLoggedIn('1');
-        })
-        .catch((error) => {
-          console.log(error.message);
-          Alert.alert(
-              "Error",
-              error.message,
-              [{ text: "OK",
-                onPress: () => console.log("OK Pressed") }]
-          )
-        });
+    await Auth.signIn(
+        { email, password },
+        (user) => setLoggedIn('1'),
+        (error) => Alert.alert(
+            "Error",
+            error.message,
+            [{ text: "OK", onPress: () => console.log("OK Pressed")}]
+        )
+    );
   }
 
   firebase.auth().onAuthStateChanged(user => {
@@ -68,7 +63,7 @@ export default function App() {
       );
     } else {
       return (
-          <Login userDetails={userDetails}/>
+          <Login userDetails={handleLogin}/>
       );
     }
   } else {

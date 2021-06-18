@@ -1,7 +1,18 @@
 import firebase from 'firebase';
-import {Alert} from "react-native";
+import { Alert } from "react-native";
 
 const auth = firebase.auth();
+
+export const signIn = async({ email, password }, onSuccess, onError ) => {
+    try {
+        const { user } = await auth.signInWithEmailAndPassword(email, password);
+        console.log(email);
+        console.log(password);
+        return onSuccess(user);
+    } catch (error) {
+        return onError(error);
+    }
+}
 
 export const getCurrentUserId = () => auth.currentUser ? auth.currentUser.uid : null;
 
@@ -21,4 +32,4 @@ export const changePassword = (newPassword) => auth.currentUser.updatePassword('
     );
 });
 
-// export const getCurrentUsername = () => auth.currentUser ? auth.currentUser.username : null; 
+// export const getCurrentUsername = () => auth.currentUser ? auth.currentUser.username : null;
