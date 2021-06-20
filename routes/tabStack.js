@@ -17,6 +17,7 @@ const Stack = createStackNavigator();
 
 export const TabStack = () => {
     const [role, setRole] = useState('');
+
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);

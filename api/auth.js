@@ -32,4 +32,18 @@ export const changePassword = (newPassword) => auth.currentUser.updatePassword('
     );
 });
 
+export const changeEmail = (newEmail) => auth.currentUser.updateEmail(newEmail).then(() => {
+    Alert.alert(
+        "Email successfully changed!",
+        "Press OK to go back",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+    );
+}).catch((error) => {
+    Alert.alert(
+        "Error",
+        error.message,
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+    );
+})
+
 // export const getCurrentUsername = () => auth.currentUser ? auth.currentUser.username : null;

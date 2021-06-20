@@ -25,8 +25,6 @@ export default function AthletesWorkouts({ navigation }) {
     }
     const onSubmitSearch = async () => {
         const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
-        console.log(searchQuery);
-        console.log(uid);
         setUserFound(uid);
         setAthleteId(uid);
     }
@@ -92,9 +90,10 @@ export default function AthletesWorkouts({ navigation }) {
         <View>
             <Searchbar
                 placeholder="Search for an athlete..."
+                value={searchQuery}
                 onChangeText={onChangeSearch}
                 onIconPress={onSubmitSearch}
-                value={searchQuery}
+                onSubmitEditing={onSubmitSearch}
             />
 
             <ProfileCard item={userFound} />

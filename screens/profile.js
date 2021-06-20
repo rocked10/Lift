@@ -9,12 +9,16 @@ import CustomButton from '../shared/customButton'
 import * as DB from '../api/database'
 
 
-export default function Profile({ navigation }) {
-    const [role, setRole] = useState('');
+export default function Profile({ navigation, route }) {
+    const [userProfile, setUserProfile] = useState({});
 
-    useEffect(() => {
-        DB.getUserType(setRole);
-    }, [role]);
+    useEffect( () => {
+        const handle = async () => {
+            const userProf = await DB.getUserProfile(Auth.getCurrentUserId());
+            setUserProfile(userProf);
+        }
+        handle();
+    }, []);
 
     const signOut = () => {
         firebase.auth().signOut()
@@ -48,14 +52,16 @@ export default function Profile({ navigation }) {
                         />
                     </View>
                     <Text style={styles.username}>{Auth.getCurrentUserEmail()}</Text>
-                    <Text style={styles.role}>{role}</Text>
+                    <Text style={styles.role}>{userProfile.role}</Text>
                     <View style={styles.editProfile}>
-                        <Button title='edit profile' onPress={() => navigation.navigate('Settings')} />
+                        <Button title='edit profile' onPress={() => navigation.navigate('Edit Profile', {
+                            userProfile: userProfile
+                        })} />
                     </View>
 
                 </View>
 
-                <AthleteList role={role} />
+                <AthleteList role={userProfile.role} />
                 {/* <View style={styles.statsBar}>
                     <View style={styles.statsBarItem}>
                         <Text style={{ alignSelf: 'center' }}>30000</Text>

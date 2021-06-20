@@ -6,7 +6,6 @@ export default function Header({ navigation, title, displaySettings }) {
     const openSettings = () => {
         navigation.navigate('Profile', {
             screen: 'Settings',
-            initial: false,
         });
     }
 

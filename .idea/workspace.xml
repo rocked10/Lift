@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/screens/editProfile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/exerciseDescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exerciseDescription.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/workoutFormModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/workoutFormModal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +42,6 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../App Tutorial/reviews_app" />
@@ -37,7 +49,20 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="discord-project" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -87,7 +112,11 @@
       <workItem from="1623869734038" duration="3875000" />
       <workItem from="1623913553919" duration="185000" />
       <workItem from="1623914010235" duration="20605000" />
-      <workItem from="1623994393383" duration="2606000" />
+      <workItem from="1623994393383" duration="5202000" />
+      <workItem from="1624019901324" duration="5287000" />
+      <workItem from="1624029863402" duration="7543000" />
+      <workItem from="1624080401046" duration="390000" />
+      <workItem from="1624080810637" duration="17983000" />
     </task>
     <servers />
   </component>

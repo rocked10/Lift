@@ -109,7 +109,7 @@ export default function Workout({ navigation, route }) {
     function DropDownSelection({ workout }) {
         return (
             <Menu>
-                <MenuTrigger>
+                <MenuTrigger hitSlop={{top: 20, bottom: 20, left: 60, right: 50}} >
                     <Octicons name="kebab-horizontal" size={26} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
@@ -206,7 +206,7 @@ export default function Workout({ navigation, route }) {
 const styles = StyleSheet.create({
     cardHeader: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
 });
 

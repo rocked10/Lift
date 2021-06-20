@@ -35,10 +35,10 @@ export default function WorkoutFormModal(
                             onPress={() => setModalOpen(false)}
                         />
                         <WorkoutForm
-                            _workoutTitle= {workoutTitle}
-                            _exercises= {exercises}
+                            _workoutTitle={workoutTitle}
+                            _exercises={exercises}
                             addWorkout={addWorkout}
-                            createsANewWorkout= {createsANewWorkout}
+                            createsANewWorkout={createsANewWorkout}
                         />
                     </View>
                 </TouchableWithoutFeedback>

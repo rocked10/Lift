@@ -10,13 +10,7 @@ import { Feather } from '@expo/vector-icons';
 import CustomButton from '../shared/customButton'
 
 
-export default function Settings() {
-    // const userInfoFields = []
-    const [username, setUsername] = useState('');
-
-    useEffect(() => {
-        DB.getUserName(setUsername);
-    }, [])
+export default function Settings({ navigation }) {
 
     const FlatListItemSeparator = () => {
         return (
@@ -25,71 +19,37 @@ export default function Settings() {
         );
     };
 
-    const handlePress = (item, section) => {
-        let sectionTitle = section.title;
-        if (sectionTitle === 'User Information') {
-            handleUser(item);
-        } else if (sectionTitle === 'Fitness') {
-            handleFitness(item);
-        } else {
-            handleAccount(item);
-        }
-    }
-
-    const handleUser = (item) => {
-        console.log(item);
-    }
-
-    const handleFitness = (item) => {
-        console.log(item);
-    }
-
     const handleAccount = (item) => {
-        console.log(item);
         if (item === 'Change password') {
             // Auth.changePassword();
+        } else if (item === 'Change email') {
+            // Auth.changeEmail();
+        } else if (item === 'Delete account') {
+            
         }
     }
-
-    const [fitnessInfo, setFitnessInfo] = useState([{ key: 'Gender', value: 'LMAO'}, { key: 'Height', value: '10'},
-        {key: 'Weight', value: '100'}]);
 
     return (
         <View style={styles.container}>
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
-                    { title: 'User Information', data: [`Username: ${username}`, `Email: ${Auth.getCurrentUserEmail()}`, 'City', 'State', 'Country', 'Bio'] },
-                    { title: 'Fitness Information', data: fitnessInfo },
-                    { title: 'Account', data: ['Change password', 'Enable workout notifications', 'Delete account'] },
+                    { title: 'Account', data: ['Change email', 'Change password', 'Enable workout notifications', 'Delete account'] },
                 ]}
 
                 renderItem = {({item, index, section}) => {
-                    if (section.title === 'Account') {
-                        return (
-                            <TouchableOpacity onPress={() => handlePress(item, section)}>
-                                <Text style={styles.item}>{item}</Text>
-                            </TouchableOpacity>
-                        );
-                    } else {
-                        return (
-                            <TextInput
-                                label={item.key}
-                                onChangeText={(text) => {
-                                    let temp = fitnessInfo;
-                                    temp[index].value = text;
-                                    setFitnessInfo(temp);
-                                }}
-                            />
-                        );
-                    }
+                    return (
+                        <TouchableOpacity onPress={() => handleAccount(item)}>
+                            <Text style={styles.item}>{item}</Text>
+                        </TouchableOpacity>
+                    );
                 }}
 
                 renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({ 
