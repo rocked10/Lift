@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Button } from "react-native";
+import { View, TouchableOpacity, Button, ScrollView, Keyboard } from "react-native";
 import { List } from 'react-native-paper';
 import { globalStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
@@ -13,6 +13,7 @@ export default function Exercises({ navigation, route }) {
     const [legs, setLegs] = useState([]);
     const [chest, setChest] = useState([]);
     const [back, setBack] = useState([]);
+    const [cardio, setCardio] = useState([]);
 
     const [expanded, setExpanded] = useState({
         Olympic: false,
@@ -26,10 +27,11 @@ export default function Exercises({ navigation, route }) {
         DB.getExercisesByCategory("Legs", setLegs);
         DB.getExercisesByCategory("Chest", setChest);
         DB.getExercisesByCategory("Back", setBack);
+        DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
     const exercises = [{title: 'Olympic', data: olympic}, {title: 'Legs', data: legs},
-        {title: 'Chest', data: chest}, {title: 'Back', data: back}];
+        {title: 'Chest', data: chest}, {title: 'Back', data: back}, {title: 'Cardio', data: cardio}];
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -71,6 +73,7 @@ export default function Exercises({ navigation, route }) {
     }
 
     const handleSearch = async () => {
+        Keyboard.dismiss();
         const exercise = await DB.getExerciseByName(searchQuery.trim());
         if (exercise) {
             setExpanded({...expanded, [exercise.category]: true});
@@ -98,22 +101,24 @@ export default function Exercises({ navigation, route }) {
                 onSubmitEditing={handleSearch}
             />
 
-            <List.Section title="Exercises" titleStyle={{fontFamily: 'lato-bold'}}>
-                {
-                    exercises.map((exercise, index) => (
-                        <List.Accordion
-                            key={`${exercise.title}-${index}`}
-                            title={exercise.title}
-                            expanded={expanded[exercise.title]}
-                            onPress={() => handleExpansion(exercise.title)}
-                            left={props => <List.Icon {...props} icon="equal" />}
-                            titleStyle={{fontFamily: 'lato-bold'}}
-                        >
-                            <Render data={exercise.data}/>
-                        </List.Accordion>
-                    ))
-                }
-            </List.Section>
+            <ScrollView showsVerticalScrollIndicator={false} >
+                <List.Section title="Exercises" titleStyle={{fontFamily: 'lato-bold'}}>
+                    {
+                        exercises.map((exercise, index) => (
+                            <List.Accordion
+                                key={`${exercise.title}-${index}`}
+                                title={exercise.title}
+                                expanded={expanded[exercise.title]}
+                                onPress={() => handleExpansion(exercise.title)}
+                                left={props => <List.Icon {...props} icon="equal" />}
+                                titleStyle={{fontFamily: 'lato-bold'}}
+                            >
+                                <Render data={exercise.data}/>
+                            </List.Accordion>
+                        ))
+                    }
+                </List.Section>
+            </ScrollView>
 
             {/*<Button onPress={handlePress} title="Add" />*/}
 

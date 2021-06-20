@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Keyboard } from "react-native";
 import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
 
@@ -29,6 +29,7 @@ export default function ShareWorkout({ shareId = () => {} }) {
     }
 
     const handleSearch = async () => {
+        Keyboard.dismiss();
         const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
         console.log(searchQuery);
         setUserFound(uid);

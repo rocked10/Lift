@@ -24,6 +24,7 @@ export default function AthletesWorkouts({ navigation }) {
         setSearchQuery(query);  
     }
     const onSubmitSearch = async () => {
+        Keyboard.dismiss();
         const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
         setUserFound(uid);
         setAthleteId(uid);
@@ -87,7 +88,7 @@ export default function AthletesWorkouts({ navigation }) {
     }
 
     return (
-        <View>
+        <View style={globalStyles.container}>
             <Searchbar
                 placeholder="Search for an athlete..."
                 value={searchQuery}

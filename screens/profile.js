@@ -12,12 +12,8 @@ import * as DB from '../api/database'
 export default function Profile({ navigation, route }) {
     const [userProfile, setUserProfile] = useState({});
 
-    useEffect( () => {
-        const handle = async () => {
-            const userProf = await DB.getUserProfile(Auth.getCurrentUserId());
-            setUserProfile(userProf);
-        }
-        handle();
+    useEffect(() => {
+        return DB.getUserProfile(Auth.getCurrentUserId(), setUserProfile);
     }, []);
 
     const signOut = () => {
@@ -53,6 +49,7 @@ export default function Profile({ navigation, route }) {
                     </View>
                     <Text style={styles.username}>{Auth.getCurrentUserEmail()}</Text>
                     <Text style={styles.role}>{userProfile.role}</Text>
+                    <Text style={styles.role}>{userProfile.bio}</Text>
                     <View style={styles.editProfile}>
                         <Button title='edit profile' onPress={() => navigation.navigate('Edit Profile', {
                             userProfile: userProfile

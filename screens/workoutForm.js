@@ -103,6 +103,7 @@ export default function WorkoutForm({
             />
 
             <FlatList
+                showsVerticalScrollIndicator={false}
                 data={exercises}
                 keyExtractor={(item, index) => index}
                 // showsVerticalScrollIndicator={false}

@@ -57,9 +57,9 @@ export default function App() {
       );
     } else if (loggedIn === '1') {
       return (
-          <MenuProvider>
-            <TabStack/>
-          </MenuProvider>
+            <MenuProvider>
+              <TabStack/>
+            </MenuProvider>
       );
     } else {
       return (

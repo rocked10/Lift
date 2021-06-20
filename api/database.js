@@ -45,6 +45,7 @@ export const editWorkout = async (userId, workoutId, workout) => {
         await ref.update({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
+            completed: workout.completed,
         });
         console.log("Data updated");
     } catch (error) {
@@ -88,12 +89,19 @@ export const addUserProfile = (userId, name, email, role) => {
         name: name,
         email: email,
         role: role,
+        bio: '',
     }, (error) => {
         if (error) {
             console.log("User not saved");
         } else {
             console.log("User saved");
         }
+    });
+
+    db.ref(`users/${userId}/fitnessInfo`).set({
+        gender: '',
+        height: '',
+        weight: '',
     });
 }
 
@@ -123,26 +131,35 @@ export const findUserId = async (email) => {
     }
 }
 
-export const getUserProfile = async (userId) => {
+export const getUserProfile = (userId, onValueChanged) => {
     let ref = db.ref(`users/${userId}`);
-    await ref.once('value', snapshot => {
-        ref = snapshot.val();
+    ref.on('value', snapshot => {
+        onValueChanged(snapshot.val());
     });
-    return ref;
+    return () => ref.off("value");
 }
-
-// export const updateUserInfo = async (userId, detail, value) => {
-//     try {
-//         const ref = db.ref(`users/${userId}`);
-//
-//     }
-// }
 
 export const updateFitnessInfo = async (userId, detail, value) => {
     try {
         const ref = db.ref(`users/${userId}/fitnessInfo`);
         await ref.update({
             [detail]: value,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateInfo = async (userId, reference, key, value) => {
+    let ref = '';
+    if (reference === 'userInfo') {
+        ref = db.ref(`users/${userId}`);
+    } else {
+        ref = db.ref(`users/${userId}/${reference}`);
+    }
+    try {
+        await ref.update({
+            [key]: value,
         });
     } catch (error) {
         console.log(error);
@@ -156,12 +173,12 @@ export const getUserType = (onValueChanged) => {
     });
 }
 
-// export const getUserName = (onValueChanged) => {
-//     const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
-//     ref.once('value', (snapshot) => {
-//         onValueChanged(snapshot.val().name);
-//     });
-// }
+export const getUserName = (onValueChanged) => {
+    const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
+    ref.once('value', (snapshot) => {
+        onValueChanged(snapshot.val().name);
+    });
+}
 
 // Exercises
 export const addExercise = async (exerciseCategory, exerciseName, videoId) => {

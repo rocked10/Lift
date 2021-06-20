@@ -74,6 +74,7 @@ export default function Signup() {
                         </View>
 
                         <Text style={{marginLeft: 20}}>I am a...</Text>
+
                         <SelectPicker
                             selectedValue={props.values.role}
                             onValueChange={(itemValue, itemIndex) =>

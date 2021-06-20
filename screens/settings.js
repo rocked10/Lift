@@ -35,6 +35,7 @@ export default function Settings({ navigation }) {
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
                     { title: 'Account', data: ['Change email', 'Change password', 'Enable workout notifications', 'Delete account'] },
+                    { title: 'General', data: [] }
                 ]}
 
                 renderItem = {({item, index, section}) => {

@@ -5,20 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/screens/editProfile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/workoutTabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutTabs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/editProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/editProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/editWorkout.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exerciseDescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exerciseDescription.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/loading.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/shareWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shareWorkout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/signup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/workoutFormModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/workoutFormModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workoutForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/card.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +123,8 @@
       <workItem from="1624029863402" duration="7543000" />
       <workItem from="1624080401046" duration="390000" />
       <workItem from="1624080810637" duration="17983000" />
+      <workItem from="1624157119816" duration="122000" />
+      <workItem from="1624161582307" duration="22113000" />
     </task>
     <servers />
   </component>

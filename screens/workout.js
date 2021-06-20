@@ -33,16 +33,25 @@ export default function Workout({ navigation, route }) {
         DB.getUserType(setRole);
     }, [role]);
 
-    const handleAddWorkout = (workout) => {
-        // Adding completion status
-        let completed = []
+    useEffect(() => {
+        return DB.subscribe(userId, setWorkouts);
+    }, []);
+
+    const addCompletionStatus = (workout) => {
+        let completed = [];
         workout.exercises.forEach((item) => {
             completed.push(new Array(item.tableData.length / 2));
         });
         completed.map((arr) => arr.fill(false));
         workout.completed = completed;
+        return workout;
+    }
 
-        DB.addWorkout(userId, workout).then();
+    const handleAddWorkout = (workout) => {
+        // Adding completion status
+        const newWorkout = addCompletionStatus(workout);
+
+        DB.addWorkout(userId, newWorkout).then();
         if (workoutBeingReused) {
             setWorkoutBeingReused(false);
             setEditWorkoutModalOpen(false);
@@ -53,7 +62,9 @@ export default function Workout({ navigation, route }) {
     }
 
     const handleEditWorkout = (workout) => {
-        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
+        const newWorkout = addCompletionStatus(workout);
+
+        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, newWorkout).then();
         setEditWorkoutModalOpen(false);
         setIdOfWorkoutBeingEdited(-1)
     }
@@ -61,10 +72,6 @@ export default function Workout({ navigation, route }) {
     const handleDeleteWorkout = (workout) => {
         DB.deleteWorkout(Auth.getCurrentUserId(), workout.id).then();
     }
-
-    useEffect(() => {
-        return DB.subscribe(userId, setWorkouts);
-    }, []);
 
     function EditWorkoutModal() {
         if (workouts != null && idOfWorkoutBeingEdited != -1) {
@@ -109,7 +116,7 @@ export default function Workout({ navigation, route }) {
     function DropDownSelection({ workout }) {
         return (
             <Menu>
-                <MenuTrigger hitSlop={{top: 20, bottom: 20, left: 60, right: 50}} >
+                <MenuTrigger hitSlop={{top: 20, bottom: 50, left: 60, right: 50}} >
                     <Octicons name="kebab-horizontal" size={26} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
@@ -152,21 +159,23 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <TouchableOpacity
+                style={{alignItems: 'flex-end'}}
                 onPress={() => setAddWorkoutModalOpen(true)}
             >
-                <MaterialIcons name='add' size={28}/>
+                <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
             <AddWorkoutModal />
 
             <FlatList
+                showsVerticalScrollIndicator={false}
                 data={workouts ? Object.values(workouts) : null}
                 renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
                             return (
                                 <ListItem key={Math.random()}
-                                    containerStyle={{ padding: 0, backgroundColor: '#eee' }}
+                                    containerStyle={{ padding: 0, backgroundColor: '#F5F5F5' }}
                                 >
                                     <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
                                 </ListItem>
