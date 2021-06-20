@@ -6,7 +6,7 @@ import { Searchbar } from 'react-native-paper';
 import * as DB from '../api/database';
 
 
-export default function Exercises({ navigation, route }) {
+export default function Exercises({ navigation, route, cameFromWorkoutForm, onSelectExercise, setModalOpen, setFormVisible }) {
     const [searchQuery, setSearchQuery] = useState('');
 
     const [olympic, setOlympic] = useState([]);
@@ -28,8 +28,8 @@ export default function Exercises({ navigation, route }) {
         DB.getExercisesByCategory("Back", setBack);
     }, []);
 
-    const exercises = [{title: 'Olympic', data: olympic}, {title: 'Legs', data: legs},
-        {title: 'Chest', data: chest}, {title: 'Back', data: back}];
+    const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
+    { title: 'Chest', data: chest }, { title: 'Back', data: back }];
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -45,13 +45,19 @@ export default function Exercises({ navigation, route }) {
                 <TouchableOpacity
                     key={`${item.exerciseName}-${index}`}
                     onPress={() => {
-                        navigation.navigate('ExerciseDescription', {
-                            exercise: item,
-                        })
+                        if (! cameFromWorkoutForm) {
+                            navigation.navigate('ExerciseDescription', {
+                                exercise: item,
+                            })
+                        } else { 
+                            onSelectExercise(item.exerciseName)
+                            setModalOpen(false)
+                            setFormVisible(true)
+                        }
                     }}
                 >
                     <List.Item
-                        titleStyle={{fontFamily: 'lato-regular', color: highlight}}
+                        titleStyle={{ fontFamily: 'lato-regular', color: highlight }}
                         title={item.exerciseName}
                     />
                 </TouchableOpacity>
@@ -61,7 +67,7 @@ export default function Exercises({ navigation, route }) {
 
         return (
             <View>
-                { listItems }
+                {listItems}
             </View>
         );
     }
@@ -73,13 +79,13 @@ export default function Exercises({ navigation, route }) {
     const handleSearch = async () => {
         const exercise = await DB.getExerciseByName(searchQuery.trim());
         if (exercise) {
-            setExpanded({...expanded, [exercise.category]: true});
+            setExpanded({ ...expanded, [exercise.category]: true });
         }
     }
 
     const handleExpansion = (title) => {
         const initialState = expanded[title]
-        setExpanded({...expanded, [title]: ! initialState});
+        setExpanded({ ...expanded, [title]: !initialState });
     }
 
     // Exercise adder
@@ -98,7 +104,7 @@ export default function Exercises({ navigation, route }) {
                 onSubmitEditing={handleSearch}
             />
 
-            <List.Section title="Exercises" titleStyle={{fontFamily: 'lato-bold'}}>
+            <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold' }}>
                 {
                     exercises.map((exercise, index) => (
                         <List.Accordion
@@ -107,9 +113,9 @@ export default function Exercises({ navigation, route }) {
                             expanded={expanded[exercise.title]}
                             onPress={() => handleExpansion(exercise.title)}
                             left={props => <List.Icon {...props} icon="equal" />}
-                            titleStyle={{fontFamily: 'lato-bold'}}
+                            titleStyle={{ fontFamily: 'lato-bold' }}
                         >
-                            <Render data={exercise.data}/>
+                            <Render data={exercise.data} />
                         </List.Accordion>
                     ))
                 }

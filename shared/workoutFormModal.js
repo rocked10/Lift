@@ -12,13 +12,13 @@ export default function WorkoutFormModal(
         setModalOpen, 
         workoutTitle='', 
         exercises = [
-            {
-                exerciseName: '',
-                tableData: [
-                    { row: 0, column: 0, value: 0 },
-                    { row: 0, column: 1, value: 0 },
-                ]
-            },
+            // {
+            //     exerciseName: '',
+            //     tableData: [
+            //         { row: 0, column: 0, value: 0 },
+            //         { row: 0, column: 1, value: 0 },
+            //     ]
+            // },
         ],
         addWorkout, 
         createsANewWorkout = true }) {

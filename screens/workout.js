@@ -53,6 +53,16 @@ export default function Workout({ navigation, route }) {
     }
 
     const handleEditWorkout = (workout) => {
+        // Completed array needs to be recreated 
+        console.log(workout)
+        let completed = []
+        workout.exercises.forEach((item) => {
+            completed.push(new Array(item.tableData.length / 2));
+        });
+        completed.map((arr) => arr.fill(false));
+        workout.completed = completed;
+        console.log(workout.completed)
+
         DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
         setEditWorkoutModalOpen(false);
         setIdOfWorkoutBeingEdited(-1)

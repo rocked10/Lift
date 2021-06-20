@@ -16,6 +16,9 @@ function ExerciseName({ value, onChangeText }) {
             placeholder='Enter exercise'
             defaultValue={value}
         />
+        // <TouchableOpacity onPress={onChangeText}>
+        //     <MaterialIcons name="delete" size={24} color="black" />
+        // </TouchableOpacity>
     )
 }
 
@@ -38,28 +41,33 @@ function TopRow() {
     )
 }
 
-export default function ExerciseDetails({ exerciseName, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName }) {
-    return (
-        <Card>
-            <View style={styles.cardHeader}>
-                <ExerciseName value={exerciseName} onChangeText={(text) => updateExerciseName(text)} />
-                <TouchableOpacity style={styles.deleteExercise} onPress={() => deleteExercise()}>
-                    <MaterialIcons name="delete" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
-            <Table
-                headerComponent={TopRow}
-                rows={tableData.length / 2}
-                columns={2}
-                data={tableData}
-                onUpdate={onUpdate}
-                deleteRow={deleteSet}
-                keyboardType='phone-pad'
-            />
-
-            <CustomButton title='add set' onPress={() => addSet()} />
-        </Card>
-    )
+export default function ExerciseDetails({ exerciseName, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName, visible }) {
+    if (visible) {
+        return (
+            <Card>
+                <View style={styles.cardHeader}>
+                    <ExerciseName value={exerciseName} onChangeText={(text) => updateExerciseName(text)} />
+                    <TouchableOpacity style={styles.deleteExercise} onPress={() => deleteExercise()}>
+                        <MaterialIcons name="delete" size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
+                <Table
+                    headerComponent={TopRow}
+                    rows={tableData.length / 2}
+                    columns={2}
+                    data={tableData}
+                    onUpdate={onUpdate}
+                    deleteRow={deleteSet}
+                    keyboardType='phone-pad'
+                />
+    
+                <CustomButton title='add set' onPress={() => addSet()} />
+            </Card>
+        )
+    } else { 
+        return null; 
+    }
+    
 }
 
 const styles = StyleSheet.create({

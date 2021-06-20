@@ -1,18 +1,46 @@
 import React, { useState } from 'react';
-import { TextInput, View, Button, StatusBar, Text, FlatList, StyleSheet } from "react-native";
+import { TextInput, View, Button, StatusBar, Text, FlatList, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ExerciseDetails from "../shared/exerciseDetails"
 import CustomButton from "../shared/customButton"
+import Exercises from "./exercises"
+import { globalStyles } from "../styles/global";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function WorkoutForm({
-        _workoutTitle,
-        _exercises,
-        addWorkout,
-        createsANewWorkout,
-    }) 
-        
-    {
+    _workoutTitle,
+    _exercises,
+    addWorkout,
+    createsANewWorkout,
+}) {
     const [workoutTitle, setWorkoutTitle] = useState(_workoutTitle)
     const [exercises, setExercises] = useState(_exercises)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [formVisible, setFormVisible] = useState(true)
+
+    const ExerciseLibraryModal = () => {
+        return (
+            <View style={{ padding: 8 }}>
+                <Modal visible={modalOpen} animationType='slide' >
+                    <MaterialIcons
+                        name='close'
+                        size={26}
+                        style={{ ...globalStyles.modalToggle, ...globalStyles.modalClose }}
+                        onPress={() => setModalOpen(false)}
+                    />
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <View style={globalStyles.modalContent}>
+                            <Exercises 
+                                cameFromWorkoutForm={true} 
+                                onSelectExercise={name => updateExerciseName(exercises.length - 1)(name)} 
+                                setModalOpen={setModalOpen}
+                                setFormVisible = {setFormVisible}
+                            />    
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
+            </View>
+        )
+    }
 
     // exerciseNum is zero indexed starting from top of exercises list 
 
@@ -26,6 +54,10 @@ export default function WorkoutForm({
     }
 
     const addExercise = () => {
+        // sets visibility of exercise library modal to be true and opens it up
+        setModalOpen(true);
+        setFormVisible(false);
+
         setExercises(prev => {
             const newExercises = [...prev]
             newExercises.push({
@@ -89,7 +121,7 @@ export default function WorkoutForm({
         if (createsANewWorkout) {
             return <CustomButton title='add workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
         } else {
-            return <CustomButton title='save workout' onPress={() => addWorkout({ workoutTitle, exercises})} />
+            return <CustomButton title='save workout' onPress={() => addWorkout({ workoutTitle, exercises })} />
         }
     }
 
@@ -101,6 +133,8 @@ export default function WorkoutForm({
                 placeholder='Workout Title'
                 defaultValue={workoutTitle}
             />
+
+            <ExerciseLibraryModal />
 
             <FlatList
                 data={exercises}
@@ -116,6 +150,7 @@ export default function WorkoutForm({
                         deleteSet={deleteSet(index)}
                         addSet={() => addSet(index)}
                         updateExerciseName={updateExerciseName(index)}
+                        visible={formVisible}
                     />
                 }
             // stickyHeaderIndices={[0]}
@@ -123,7 +158,7 @@ export default function WorkoutForm({
 
             <CustomButton title='add exercise' onPress={addExercise} />
             <SubmitButton />
-            
+
         </View>
 
     );

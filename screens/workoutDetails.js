@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, Text, View, Button, TextInput,
-    TouchableWithoutFeedback, Keyboard, StyleSheet, TouchableOpacity
+    FlatList, Text, View, Button,
+    TouchableWithoutFeedback, Keyboard, StyleSheet, TouchableOpacity, ScrollView
 } from 'react-native';
 import { globalStyles } from "../styles/global";
-import { Modal, Portal, Provider, Searchbar } from 'react-native-paper';
+import { Modal, Portal, Provider, Searchbar, TextInput } from 'react-native-paper';
 import Card from "../shared/card";
 import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
@@ -20,6 +20,7 @@ export default function WorkoutDetails({ route, navigation }) {
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
     const [completionStatus, setCompletionStatus] = useState(completed);
+    const [remarks, setRemarks] = useState('');
 
     useEffect(() => {
         DB.getUserType(setRole);
@@ -54,7 +55,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
+                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
                         return (
                             <View>
                                 <Checkbox.Item
@@ -65,7 +66,7 @@ export default function WorkoutDetails({ route, navigation }) {
                                 />
                             </View>
                         )
-    
+
                     }}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -75,7 +76,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " +  (item[1].value) + " reps"
+                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
                         return (
                             <View>
                                 <Checkbox.Item
@@ -98,7 +99,7 @@ export default function WorkoutDetails({ route, navigation }) {
                                 />
                             </View>
                         )
-    
+
                     }}
                     keyExtractor={(item, index) => index.toString()}
                 />
@@ -122,11 +123,13 @@ export default function WorkoutDetails({ route, navigation }) {
 
     return (
         <View style={globalStyles.container}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={globalStyles.titleText}>{ workoutTitle }</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={globalStyles.titleText}>{workoutTitle}</Text>
 
-                <ShareButton onPress={() => setModalOpen(true)} visible={! forViewingOnly} />
+                <ShareButton onPress={() => setModalOpen(true)} visible={!forViewingOnly} />
             </View>
+
+
             <FlatList
                 data={exercises}
                 renderItem={({ item, index }) => (
@@ -140,6 +143,12 @@ export default function WorkoutDetails({ route, navigation }) {
                     </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
+                ListFooterComponent={<TextInput
+                    multiline={true}
+                    label="Remarks"
+                    numberOfLines={4}
+                    onChangeText={setRemarks}
+                    value={remarks} />}
             />
 
             <Provider>
