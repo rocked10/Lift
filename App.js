@@ -18,7 +18,8 @@ LogBox.ignoreLogs(["Setting a timer for a long period of", "Can't perform a Reac
 const getFonts = () => {
   return Font.loadAsync({
     'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
-    'lato-bold': require('./assets/fonts/Lato-Bold.ttf')
+    'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+    'karla-bold': require('./assets/fonts/Karla-Bold.ttf')
   });
 }
 
@@ -57,9 +58,9 @@ export default function App() {
       );
     } else if (loggedIn === '1') {
       return (
-          <MenuProvider>
-            <TabStack/>
-          </MenuProvider>
+            <MenuProvider>
+              <TabStack/>
+            </MenuProvider>
       );
     } else {
       return (

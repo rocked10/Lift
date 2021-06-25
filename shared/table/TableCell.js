@@ -1,15 +1,16 @@
 import React from 'react';
-import { TextInput, View, StyleSheet } from "react-native";
-
-// using value as prop in TextInput led to text flickering issue. changing to defaultValue fixed it.
+import { View, StyleSheet } from "react-native";
+import { TextInput } from "react-native-paper";
+import { globalStyles } from "../../styles/global";
 
 export default function TableCell ({ value, onUpdate, editable=true, additionalStyles, keyboardType }) {
     return (
         // <View style={[styles.cell, { backgroundColor }]}>
         <TextInput
-            style={{...styles.userInput, ...additionalStyles}}
+            style={{...styles.userInput, ...additionalStyles,}}
             editable={editable}
-            defaultValue={value.toString()}
+            value={value.toString()}
+            placeholder={'0'}
             onChangeText={onUpdate}
             keyboardType={keyboardType}
         />
@@ -19,10 +20,11 @@ export default function TableCell ({ value, onUpdate, editable=true, additionalS
 
 const styles = StyleSheet.create({
     userInput: {
-        color: '#000000',
+        // color: '#000000',
         flex: 1,
         backgroundColor: '#ffffff',
-        height: 51,
+        height: 48,
         textAlign: 'center',
+        borderRadius: 0
     }
 });

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Button } from "react-native";
-import { List } from 'react-native-paper';
+import { View, TouchableOpacity, ScrollView, Keyboard, Text } from "react-native";
 import { globalStyles } from "../styles/global";
-import { Searchbar } from 'react-native-paper';
 import * as DB from '../api/database';
+import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
 
 
 export default function Exercises({ navigation, route, cameFromWorkoutForm, onSelectExercise, setModalOpen, setFormVisible }) {
@@ -13,6 +12,11 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     const [legs, setLegs] = useState([]);
     const [chest, setChest] = useState([]);
     const [back, setBack] = useState([]);
+    const [cardio, setCardio] = useState([]);
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const showAlert = () => setAlertVisible(true);
+    const hideAlert = () => setAlertVisible(false);
 
     const [expanded, setExpanded] = useState({
         Olympic: false,
@@ -21,15 +25,60 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
         Back: false
     });
 
+    const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
+    { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Cardio', data: cardio }];
+
     useEffect(() => {
         DB.getExercisesByCategory("Olympic", setOlympic);
         DB.getExercisesByCategory("Legs", setLegs);
         DB.getExercisesByCategory("Chest", setChest);
         DB.getExercisesByCategory("Back", setBack);
+        DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
-    const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
-    { title: 'Chest', data: chest }, { title: 'Back', data: back }];
+
+    // const f = () => {
+    //     let initialSelectedState = {}
+    //     exercises.map((category) => {
+    //         const temp = new Array(category.data.length).fill(false);
+    //         initialSelectedState[category.title] = temp;
+    //     });
+    //     return initialSelectedState
+    // }
+
+    // const [selected, setSelected] = useState(f());
+
+    // console.log(selected)
+
+    // const getExerciseBgColor = (item, index) => {
+    //     selected[item.category][index] ? 'blue' : 'white'
+    // }
+
+
+
+    // can be abstracted. will be abstracted. 
+
+    const AlertMessage = () => {
+        let customExerciseObject = {
+            category: "userDefined",
+            exerciseName: searchQuery,
+        };
+
+        return (
+            <Dialog visible={alertVisible} dismissable={false}>
+                <Dialog.Title>Hmm... we don't know what that exercise is</Dialog.Title>
+                <Dialog.Content>
+                    <Paragraph>Add it anyway?</Paragraph>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Button onPress={() => { hideAlert(); setModalOpen(false); setFormVisible(true); onSelectExercise(customExerciseObject) }}>Yes</Button>
+                    <Button onPress={hideAlert}>Nah</Button>
+                </Dialog.Actions>
+            </Dialog>
+        )
+    }
+
+
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -45,12 +94,21 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                 <TouchableOpacity
                     key={`${item.exerciseName}-${index}`}
                     onPress={() => {
-                        if (! cameFromWorkoutForm) {
+                        if (!cameFromWorkoutForm) {
+                            console.log(item)
                             navigation.navigate('ExerciseDescription', {
                                 exercise: item,
                             })
-                        } else { 
-                            onSelectExercise(item.exerciseName)
+                        } else {
+                            // setSelected(prev => {
+                            //     console.log("****8")
+                            //     console.log(prev)
+                            //     const newSelected = { ...prev }
+                            //     // console.log(item.category)
+                            //     newSelected[item.category][index] = true
+                            //     return newSelected
+                            // })
+                            onSelectExercise(item)
                             setModalOpen(false)
                             setFormVisible(true)
                         }
@@ -59,6 +117,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                     <List.Item
                         titleStyle={{ fontFamily: 'lato-regular', color: highlight }}
                         title={item.exerciseName}
+                        // style={{ backgroundColor: getExerciseBgColor(item, index) }}
                     />
                 </TouchableOpacity>
             );
@@ -77,9 +136,14 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     }
 
     const handleSearch = async () => {
+        Keyboard.dismiss();
         const exercise = await DB.getExerciseByName(searchQuery.trim());
         if (exercise) {
             setExpanded({ ...expanded, [exercise.category]: true });
+        } else {
+            if (cameFromWorkoutForm) {
+                showAlert();
+            }
         }
     }
 
@@ -92,7 +156,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     // const handlePress = async () => {
     //     DB.addExercise('Back', 'Barbell Row','9efgcAjQe7E').then();
     //     DB.getExerciseByName('Clean and Jerk').then();
-    // }
+    // }  
 
     return (
         <View style={globalStyles.container}>
@@ -104,25 +168,30 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                 onSubmitEditing={handleSearch}
             />
 
-            <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold' }}>
-                {
-                    exercises.map((exercise, index) => (
-                        <List.Accordion
-                            key={`${exercise.title}-${index}`}
-                            title={exercise.title}
-                            expanded={expanded[exercise.title]}
-                            onPress={() => handleExpansion(exercise.title)}
-                            left={props => <List.Icon {...props} icon="equal" />}
-                            titleStyle={{ fontFamily: 'lato-bold' }}
-                        >
-                            <Render data={exercise.data} />
-                        </List.Accordion>
-                    ))
-                }
-            </List.Section>
+            <ScrollView showsVerticalScrollIndicator={false} >
+                <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold' }}>
+                    {
+                        exercises.map((exercise, index) => (
+                            <List.Accordion
+                                key={`${exercise.title}-${index}`}
+                                title={exercise.title}
+                                expanded={expanded[exercise.title]}
+                                onPress={() => handleExpansion(exercise.title)}
+                                left={props => <List.Icon {...props} icon="equal" />}
+                                titleStyle={{ fontFamily: 'lato-bold' }}
+                            >
+                                <Render data={exercise.data} />
+                            </List.Accordion>
+                        ))
+                    }
+                </List.Section>
+            </ScrollView>
+
+            <AlertMessage />
 
             {/*<Button onPress={handlePress} title="Add" />*/}
 
         </View>
     );
+
 }

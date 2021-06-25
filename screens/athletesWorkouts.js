@@ -13,6 +13,7 @@ export default function AthletesWorkouts({ navigation }) {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [userFound, setUserFound] = useState('');
     const [athleteId, setAthleteId] = useState('');
+    // const [userProfile, setUserProfile] = useState('');
     const [workouts, setWorkouts] = useState([]);
     const [displayWorkouts, setDisplayWorkouts] = useState(false);
 
@@ -23,7 +24,13 @@ export default function AthletesWorkouts({ navigation }) {
         } 
         setSearchQuery(query);  
     }
+
+    // useEffect(() => {
+    //     DB.getUserProfile(athleteId, setUserProfile);
+    // }, []);
+
     const onSubmitSearch = async () => {
+        Keyboard.dismiss();
         const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
         setUserFound(uid);
         setAthleteId(uid);
@@ -87,7 +94,7 @@ export default function AthletesWorkouts({ navigation }) {
     }
 
     return (
-        <View>
+        <View style={globalStyles.container}>
             <Searchbar
                 placeholder="Search for an athlete..."
                 value={searchQuery}

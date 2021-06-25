@@ -7,13 +7,17 @@ export default function ExerciseDescription({ navigation, route}) {
     const { exercise } = route.params;
    
     const YouTubePlayer = ({ videoId }) => {
-        return (
-            <YoutubePlayer
-                videoId={videoId}
-                height={250}
-                play={true}
-            />
-        );
+        if (videoId) {
+            return (
+                <YoutubePlayer
+                    videoId={videoId}
+                    height={250}
+                    play={true}
+                />
+            );
+        } else {
+            return null;
+        }
     }
 
     return (

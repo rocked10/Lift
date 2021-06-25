@@ -7,7 +7,6 @@ import ProfileStack from './profileStack';
 import ExercisesStack from "./exercisesStack";
 import CommunityStack from "./communityStack";
 import { createStackNavigator } from "@react-navigation/stack";
-import WorkoutTabs from "./workoutTabs";
 import * as DB from '../api/database';
 
 
@@ -52,7 +51,7 @@ export const TabStack = () => {
 
                 <Screen
                     name='Workout'
-                    component={role === 'Coach' ? WorkoutTabs : WorkoutStack}
+                    component={WorkoutStack} // role === 'Coach' ? WorkoutTabs : WorkoutStack}
                     options={{
                         tabBarLabel: 'Workout',
                         tabBarIcon: ({ color, size }) => (

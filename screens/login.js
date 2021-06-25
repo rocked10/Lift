@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Button, Text, TouchableOpacity,
-    StatusBar, Modal, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+    StyleSheet, View, Text, TextInput, TouchableOpacity,
+    StatusBar, Modal, TouchableWithoutFeedback, Keyboard, Image
+} from "react-native";
 import { Formik } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import Signup from '../screens/signup';
-import { loginStyles } from '../styles/global'
+import { loginStyles, pictures } from '../styles/global'
+import { Button } from 'react-native-paper'
+// import { app } from 'firebase-admin';
 
 export default function Login({ userDetails }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -12,8 +17,15 @@ export default function Login({ userDetails }) {
     return (
 
         <View style={loginStyles.container}>
+            <Image
+                style={styles.tinyLogo}
+                source={pictures.logo}
+            />
+
+            {/* <Text style={loginStyles.appTitle}>LIFT</Text> */}
+
             <Formik
-                initialValues = {{email: '', password: '' }}
+                initialValues={{ email: '', password: '' }}
                 onSubmit={(values, actions) => {
                     console.log(values);
                     userDetails(values);
@@ -23,6 +35,7 @@ export default function Login({ userDetails }) {
                 {(props) => (
                     <View>
                         <View style={loginStyles.inputView} >
+                            <MaterialIcons name="email" size={24} color="black" />
                             <TextInput
                                 style={loginStyles.inputText}
                                 placeholder='Email...'
@@ -32,6 +45,7 @@ export default function Login({ userDetails }) {
                         </View>
 
                         <View style={loginStyles.inputView} >
+                            <AntDesign name="lock" size={24} color="black" />
                             <TextInput
                                 style={loginStyles.inputText}
                                 placeholder='Password...'
@@ -41,7 +55,9 @@ export default function Login({ userDetails }) {
                             />
                         </View>
 
-                        <Button title='LOGIN' onPress={props.handleSubmit} />
+                        <Button mode="contained" onPress={props.handleSubmit} style={{borderRadius: 10}}>
+                            <Text style={{fontFamily: 'karla-bold'}}>LOGIN</Text>
+                        </Button>
                     </View>
                 )}
 
@@ -62,12 +78,9 @@ export default function Login({ userDetails }) {
                         </View>
                     </TouchableWithoutFeedback>
                 </Modal>
-
-                <TouchableOpacity
-                    style={styles.modalToggle}
-                    onPress={() => setModalOpen(true)}
-                >
-                    <Text style={loginStyles.loginText}>Signup</Text>
+                
+                <TouchableOpacity onPress={() => setModalOpen(true)} style={{marginTop: 14}}>
+                    <Text style={{fontFamily: 'karla-bold'}}>SIGNUP</Text>
                 </TouchableOpacity>
             </View>
 
@@ -88,5 +101,13 @@ const styles = StyleSheet.create({
 
     modalToggle: {
         alignSelf: 'center',
-    }
+    },
+
+    tinyLogo: {
+        borderRadius: 30,
+        // overflow: "hidden",
+        width: 150,
+        height: 150,
+        marginVertical: 24
+    },
 });

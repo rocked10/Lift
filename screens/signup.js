@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Button, Alert, StatusBar, Text } from "react-native";
+import { StyleSheet, TextInput, View, Alert, StatusBar, Text } from "react-native";
 import { Formik } from 'formik';
 import firebase from 'firebase';
 import { loginStyles } from "../styles/global";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Picker as SelectPicker } from "@react-native-picker/picker";
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Button } from 'react-native-paper'
+
 
 export default function Signup() {
     return (
@@ -46,6 +51,7 @@ export default function Signup() {
                 {(props) => (
                     <View>
                         <View style={loginStyles.inputView} >
+                            <MaterialIcons name="email" size={24} color="black" />
                             <TextInput
                                 style={loginStyles.inputText}
                                 placeholder='Enter your email...'
@@ -55,6 +61,7 @@ export default function Signup() {
                         </View>
 
                         <View style={loginStyles.inputView} >
+                            <Ionicons name="person" size={24} color="black" />
                             <TextInput
                                 style={loginStyles.inputText}
                                 placeholder='Enter a username...'
@@ -64,6 +71,7 @@ export default function Signup() {
                         </View>
 
                         <View style={loginStyles.inputView} >
+                            <AntDesign name="lock" size={24} color="black" />
                             <TextInput
                                 style={loginStyles.inputText}
                                 placeholder='Enter a password...'
@@ -73,7 +81,8 @@ export default function Signup() {
                             />
                         </View>
 
-                        <Text style={{marginLeft: 20}}>I am a...</Text>
+                        <Text style={{marginLeft: 8}}>I am a...</Text>
+
                         <SelectPicker
                             selectedValue={props.values.role}
                             onValueChange={(itemValue, itemIndex) =>
@@ -85,7 +94,9 @@ export default function Signup() {
                             <SelectPicker.Item label="Athlete" value="Athlete" />
                         </SelectPicker>
 
-                        <Button title='SIGNUP' onPress={props.handleSubmit} />
+                        <Button onPress={props.handleSubmit} mode="contained" style={{marginVertical: 10}}>
+                            <Text style={{fontFamily: 'karla-bold'}}>SIGNUP</Text>
+                        </Button>
                     </View>
                 )}
 

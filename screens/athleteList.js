@@ -1,15 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Keyboard, Alert, } from "react-native";
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
+import { Button, TextInput } from "react-native-paper"
+import { set } from 'react-native-reanimated';
 
 export default function AthleteList() {
     // const userInfoFields = []
     // const [username, setUsername] = useState('');
 
-    // useEffect(() => {
-    //     DB.getUserName(setUsername);
-    // }, [])
+    const coachId = Auth.getCurrentUserId();
+
+    const [coachProfile, setCoachProfile] = useState({});
+
+    console.log(coachProfile.athletes)
+
+    // the fuck is going on here?????
+    useEffect(() => {
+        DB.getUserProfile(Auth.getCurrentUserId(), setCoachProfile);
+    }, []);
+
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const handleAddAthlete = async () => {
+        // Keyboard.dismiss()
+        const athleteId = await DB.findUserId(searchQuery.toLowerCase().trim());
+        if (athleteId) {
+            DB.addAthlete(coachId, athleteId)
+            console.log("added athlete")
+        } else {
+            Alert.alert(
+                '',
+                'No such athlete exists',
+                [
+                    {
+                        text: "Ok",
+                    }
+                ]
+            )
+        }
+    }
 
     const FlatListItemSeparator = () => {
         return (
@@ -18,15 +48,19 @@ export default function AthleteList() {
         );
     };
 
+    // why didn't it work when i placed the textinput and button outside??
+
     return (
         <View style={styles.container}>
+            <TextInput placeholder="enter athlete's email" onChangeText={query => setSearchQuery(query)} />
+            <Button onPress={handleAddAthlete}>add</Button>
             <FlatList
                 ItemSeparatorComponent={FlatListItemSeparator}
-                data={['fakeAthlete 1', 'fakeAthlete 2']}
+                data={coachProfile.athletes ? Object.values(coachProfile.athletes) : null}
                 renderItem={
                     ({ item }) => (
                         <TouchableOpacity>
-                            <Text style={styles.item}>{item}</Text>
+                            <Text style={styles.item}>{item.id}</Text>
                         </TouchableOpacity>
                     )}
                 keyExtractor={(item, index) => index}
@@ -39,16 +73,6 @@ const styles = StyleSheet.create({
     container: {  
         flex: 1,   
     },   
-    sectionHeader: {  
-        paddingTop: 2,  
-        paddingLeft: 10,  
-        paddingRight: 10,  
-        paddingBottom: 2,  
-        fontSize: 20,  
-        fontWeight: 'bold',  
-        color: "#fff",  
-        backgroundColor: '#6495ed',  
-    },  
     item: {  
         padding: 10,
         fontSize: 16,  

@@ -12,8 +12,9 @@ import * as Auth from '../api/auth';
 import { Checkbox } from 'react-native-paper';
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkoutForm from "./workoutForm";
+import ExerciseDescription from "./exerciseDescription";
 
-
+// remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
     const { workoutTitle, exercises, completed, sharedBy, id, forViewingOnly } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
@@ -76,14 +77,14 @@ export default function WorkoutDetails({ route, navigation }) {
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                        const label = "Set " + (item[0].row + 1) + ": " + (item[0].value) + " kg " + (item[1].value) + " reps"
                         return (
                             <View>
                                 <Checkbox.Item
                                     label={label}
                                     labelStyle={globalStyles.cardText}
                                     status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
-                                    onPress={() => {
+                                    onPress={async () => {
                                         setCompletionStatus(prev => {
                                             const newCompletionStatus = [...prev];
                                             newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
@@ -92,9 +93,20 @@ export default function WorkoutDetails({ route, navigation }) {
                                                 DB.updateSetCompletionStatus(sharedBy, id, newCompletionStatus).then();
                                             }
                                             return newCompletionStatus;
-                                        })
-                                    }
-                                    }
+                                        });
+
+                                        if (completionStatus[exerciseNum][index]) {
+                                            const prevPR = await DB.getPR(userId, exercises[exerciseNum].exerciseName)
+                                            console.log('hello')
+                                            console.log(prevPR)
+                                            const currWeight = item[0].value;
+                                            const currReps = item[1].value;
+
+                                            if (! prevPR || currWeight > prevPR[0]) {
+                                                DB.addPR(userId, exercises[exerciseNum].exerciseName, [currWeight, currReps]);
+                                            }
+                                        }
+                                    }}
                                     disabled={forViewingOnly}
                                 />
                             </View>
@@ -125,7 +137,6 @@ export default function WorkoutDetails({ route, navigation }) {
         <View style={globalStyles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={globalStyles.titleText}>{workoutTitle}</Text>
-
                 <ShareButton onPress={() => setModalOpen(true)} visible={!forViewingOnly} />
             </View>
 
@@ -135,9 +146,18 @@ export default function WorkoutDetails({ route, navigation }) {
                 renderItem={({ item, index }) => (
                     <View>
                         <Card>
-                            <Text style={globalStyles.titleText}>
-                                {item.exerciseName}
-                            </Text>
+                            <TouchableOpacity onPress={async () => {
+                                console.log(item.exerciseName)
+                                const exerciseObj = await DB.getExerciseByName(item.exerciseName)
+                                if (exerciseObj) {
+                                    console.log(exerciseObj)
+                                    navigation.navigate("ExerciseDescription", { exercise: exerciseObj })
+                                }
+                            }}>
+                                <Text style={globalStyles.titleText}>
+                                    {item.exerciseName}
+                                </Text>
+                            </TouchableOpacity>
                             <WeightAndReps tableData={chunkArray(item.tableData, 2)} exerciseNum={index} />
                         </Card>
                     </View>

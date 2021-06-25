@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
 import { TextInput } from 'react-native-paper';
@@ -13,8 +13,9 @@ import CustomButton from '../shared/customButton'
 export default function EditProfile({ navigation, route }) {
     const { userProfile } = route.params;
     const [uid, setUid] = useState(Auth.getCurrentUserId());
-    const [userInfo, setUserInfo] = useState(Object.entries({ email: userProfile.email, name: userProfile.name, role: userProfile.role }));
-    const [fitnessInfo, setFitnessInfo] = useState(Object.entries(userProfile.fitnessInfo));
+    const [accountInfo, setAccountInfo] = useState(Object.entries({ email: userProfile.email, role: userProfile.role, }));
+    const [userInfo, setUserInfo] = useState(Object.entries({ name: userProfile.name, bio: userProfile.bio }));// editable Info
+    const [fitnessInfo, setFitnessInfo] = useState(userProfile.fitnessInfo ? Object.entries(userProfile.fitnessInfo) : []);
 
     const FlatListItemSeparator = () => {
         return (
@@ -23,27 +24,37 @@ export default function EditProfile({ navigation, route }) {
         );
     };
 
+    const handleEditInfo = (title, index, item, text) => {
+        if (title === 'Fitness Information') {
+            let temp = [...fitnessInfo];
+            temp[index][1] = text;
+            setFitnessInfo(temp);
+            DB.updateInfo(uid, 'fitnessInfo', item, text).then();
+        } else if (title === 'User Information') {
+            let temp = [...userInfo];
+            temp[index][1] = text;
+            setUserInfo(temp);
+            DB.updateInfo(uid, 'userInfo', item, text).then();
+        }
+    }
+
     return (
         <View style={styles.container}>
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
+                    { title: 'Account Information', data: accountInfo },
                     { title: 'User Information', data: userInfo },
                     { title: 'Fitness Information', data: fitnessInfo},
                 ]}
 
                 renderItem = {({item, index, section}) => {
-                    if (section.title === 'Fitness Information') {
+                    if (section.title === 'Account Information') {
                         return (
                             <TextInput
                                 label={item[0]}
                                 value={item[1]}
-                                onChangeText={(text) => {
-                                    let temp = [...fitnessInfo];
-                                    temp[index][1] = text;
-                                    setFitnessInfo(temp);
-                                    DB.updateFitnessInfo(uid, item[0], text).then();
-                                }}
+                                editable={false}
                             />
                         );
                     } else {
@@ -51,7 +62,7 @@ export default function EditProfile({ navigation, route }) {
                             <TextInput
                                 label={item[0]}
                                 value={item[1]}
-                                editable={false}
+                                onChangeText={(text) => { handleEditInfo(section.title, index, item[0], text) }}
                             />
                         );
                     }

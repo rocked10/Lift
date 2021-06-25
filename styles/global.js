@@ -39,6 +39,8 @@ export const globalStyles = StyleSheet.create({
 
     modalContent: {
         flex: 1,
+        marginVertical: 2,
+        padding: 8
     },
 
     modalClose: {
@@ -55,19 +57,25 @@ export const loginStyles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
     },
 
     inputView: {
+        flexDirection: 'row',
         backgroundColor: "#D3D3D3",
         borderRadius: 25,
         height: 50,
+        width: '90%',
         marginBottom: 20,
         justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
     },
 
     inputText: {
+        flex: 1,
         height: 50,
+        marginLeft: 10
     },
 
     loginText: {
@@ -82,6 +90,12 @@ export const loginStyles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 6,
     },
+
+    appTitle: {
+        fontFamily: 'karla-bold',
+        fontSize: 28,
+        marginVertical: 16
+    }
 })
 
 export const navigationStyles = {
@@ -91,4 +105,8 @@ export const navigationStyles = {
     },
     headerTintColor: '#444',
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+}
+
+export const pictures = {
+    'logo': require('../assets/LiftLogo-trimmy-trimmy.png'),
 }

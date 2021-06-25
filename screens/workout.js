@@ -27,43 +27,46 @@ export default function Workout({ navigation, route }) {
     const [workouts, setWorkouts] = useState([]);
     const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
     const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
+    const [templateBeingReused, setTemplateBeingReused] = useState(false)
     const [role, setRole] = useState('');
 
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
 
-    const handleAddWorkout = (workout) => {
-        // Adding completion status
-        let completed = []
+    useEffect(() => {
+        return DB.subscribe(userId, setWorkouts);
+    }, []);
+
+    const addCompletionStatus = (workout) => {
+        let completed = [];
         workout.exercises.forEach((item) => {
             completed.push(new Array(item.tableData.length / 2));
         });
         completed.map((arr) => arr.fill(false));
         workout.completed = completed;
+        return workout;
+    }
 
-        DB.addWorkout(userId, workout).then();
-        if (workoutBeingReused) {
-            setWorkoutBeingReused(false);
+    const handleAddWorkout = (workout) => {
+        // Adding completion status
+        const newWorkout = addCompletionStatus(workout);
+
+        DB.addWorkout(userId, newWorkout).then();
+        if (workoutBeingReused || templateBeingReused) {
             setEditWorkoutModalOpen(false);
             setIdOfWorkoutBeingEdited(-1);
+            if (workoutBeingReused) setWorkoutBeingReused(false);
+            else setTemplateBeingReused(false);
         } else {
             setAddWorkoutModalOpen(false);
         }
     }
 
     const handleEditWorkout = (workout) => {
-        // Completed array needs to be recreated 
-        console.log(workout)
-        let completed = []
-        workout.exercises.forEach((item) => {
-            completed.push(new Array(item.tableData.length / 2));
-        });
-        completed.map((arr) => arr.fill(false));
-        workout.completed = completed;
-        console.log(workout.completed)
+        const newWorkout = addCompletionStatus(workout);
 
-        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, workout).then();
+        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, newWorkout).then();
         setEditWorkoutModalOpen(false);
         setIdOfWorkoutBeingEdited(-1)
     }
@@ -72,23 +75,35 @@ export default function Workout({ navigation, route }) {
         DB.deleteWorkout(Auth.getCurrentUserId(), workout.id).then();
     }
 
-    useEffect(() => {
-        return DB.subscribe(userId, setWorkouts);
-    }, []);
-
     function EditWorkoutModal() {
         if (workouts != null && idOfWorkoutBeingEdited != -1) {
             const workout = workouts[idOfWorkoutBeingEdited]
-            console.log(workout)
 
             let submissionHandler = '';
             let createsANewWorkout = false;
+            let exercises = '';
 
-            if (workoutBeingReused) {
+            if (workoutBeingReused || templateBeingReused) {
                 submissionHandler = handleAddWorkout
                 createsANewWorkout = true
+
+                if (workoutBeingReused) {
+                    exercises = workout.exercises.map(exercise => {
+                        exercise.tableData = exercise.tableData.map(elem => {return { row: elem.row, column : elem.column, value: 0}})
+                        return exercise;  
+                    })
+                } else {
+                    exercises = workout.exercises.map(exercise => {
+                        exercise.tableData = [
+                            { row: 0, column: 0, value: 0 },
+                            { row: 0, column: 1, value: 0 },
+                        ]
+                        return exercise;  
+                    })
+                }
             } else {
                 submissionHandler = handleEditWorkout
+                exercises = workout.exercises;
             }
 
             return (
@@ -96,9 +111,10 @@ export default function Workout({ navigation, route }) {
                     modalOpen={editWorkoutModalOpen}
                     setModalOpen={setEditWorkoutModalOpen}
                     workoutTitle={workout.workoutTitle}
-                    exercises={workout.exercises}
+                    exercises={exercises}
                     addWorkout={submissionHandler}
                     createsANewWorkout={createsANewWorkout}
+                    usesExistingWorkout={true}
                 />
             )
         } else {
@@ -119,7 +135,7 @@ export default function Workout({ navigation, route }) {
     function DropDownSelection({ workout }) {
         return (
             <Menu>
-                <MenuTrigger hitSlop={{top: 20, bottom: 20, left: 60, right: 50}} >
+                <MenuTrigger hitSlop={{top: 20, bottom: 50, left: 60, right: 50}} >
                     <Octicons name="kebab-horizontal" size={26} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
@@ -132,6 +148,11 @@ export default function Workout({ navigation, route }) {
                         customStyles={optionStyles}
                         onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true); }}
                         text='Reuse Workout'
+                    />
+                    <MenuOption
+                        customStyles={optionStyles}
+                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setTemplateBeingReused(true); }}
+                        text='Reuse Template'
                     />
                     <MenuOption
                         onSelect={() => Alert.alert(
@@ -162,33 +183,40 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <TouchableOpacity
+                style={{alignItems: 'flex-end'}}
                 onPress={() => setAddWorkoutModalOpen(true)}
             >
-                <MaterialIcons name='add' size={28}/>
+                <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
             <AddWorkoutModal />
 
             <FlatList
+                showsVerticalScrollIndicator={false}
                 data={workouts ? Object.values(workouts) : null}
                 renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
                             return (
                                 <ListItem key={Math.random()}
-                                    containerStyle={{ padding: 0, backgroundColor: '#eee' }}
+                                    containerStyle={{ padding: 0, backgroundColor: '#F5F5F5' }}
                                 >
                                     <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
                                 </ListItem>
                             );
                         });
+                        
+                        // console.log("--------------------------------------------")
+                        // console.log(workouts)
+                        // console.log(item.exercises)
 
                         return (
-                            <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
+                            <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', { 
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                                 completed: item.completed,
                                 id: item.id,
+                                forViewingOnly: false, 
                             })}>
                                 <Card>
                                     <View style={styles.cardHeader}>

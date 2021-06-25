@@ -12,14 +12,14 @@ export default function customButton({ onPress, title }) {
 const styles = StyleSheet.create({
     ButtonContainer: {
     //   elevation: 8,
-      backgroundColor: "#fff",
+      backgroundColor: "#6200ee",
     //   borderRadius: 10,
       paddingVertical: 10,
       paddingHorizontal: 12
     },
     ButtonText: {
       fontSize: 16,
-      color: "#6495ed",
+      color: "#fff",
       fontWeight: "bold",
       alignSelf: "center",
       textTransform: "uppercase"
