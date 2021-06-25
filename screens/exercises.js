@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Keyboard, Text } from "react-native";
+import {View, TouchableOpacity, ScrollView, Keyboard, } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
 import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
@@ -138,6 +138,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     const handleSearch = async () => {
         Keyboard.dismiss();
         const exercise = await DB.getExerciseByName(searchQuery.trim());
+        console.log(exercise);
         if (exercise) {
             setExpanded({ ...expanded, [exercise.category]: true });
         } else {
@@ -166,6 +167,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                 value={searchQuery}
                 onIconPress={handleSearch}
                 onSubmitEditing={handleSearch}
+                inputStyle={{ fontFamily: 'lato-regular' }}
             />
 
             <ScrollView showsVerticalScrollIndicator={false} >

@@ -30,14 +30,12 @@ export default function WorkoutDetails({ route, navigation }) {
     const ShareButton = ({ onPress, visible }) => {
         if (role === 'Coach' && visible) {
             return (
-                <TouchableOpacity>
-                    <MaterialIcons
-                        name='share'
-                        size={26}
-                        color='black'
-                        onPress={onPress}
-                    />
-                </TouchableOpacity>
+                <MaterialIcons
+                    name='share'
+                    size={26}
+                    color='black'
+                    onPress={onPress}
+                />
             );
         } else {
             return null;
@@ -48,6 +46,31 @@ export default function WorkoutDetails({ route, navigation }) {
         console.log("SHARE");
         setModalOpen(false);
         DB.addSharedWorkout(userId, shareId, id, route.params).then();
+    }
+
+    const DownloadButton = ({ onPress, visible }) => {
+        if (visible) {
+            return (
+                <MaterialCommunityIcons
+                    name='download'
+                    size={26}
+                    color='black'
+                    onPress={onPress}
+                />
+            );
+        } else {
+            return null;
+        }
+    }
+
+    const handleDownload = () => {
+        Alert.alert(
+            "Download Workout",
+            "Add this workout to your workout list?",
+            [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+                { text: "OK", onPress: () => DB.addWorkout(userId, route.params).then() }
+            ]
+        )
     }
 
     const WeightAndReps = ({ tableData, exerciseNum }) => {

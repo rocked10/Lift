@@ -50,19 +50,18 @@ export default function Profile({ navigation, route }) {
 
     const PersonalRecords = () => {
         if (userProfile.personalRecords) {
-            const entries = Object.entries(userProfile.personalRecords).map(item => {
-                const [name, pr] = item
-                const label = name + ": " + pr[0] + "kg" + " x " + pr[1]
+            const entries = Object.values(userProfile.personalRecords).map(item => {
+                const label = item.exerciseName + ": " + item.weight + "kg" + " x " + item.reps;
                 return (
                     <Text style={globalStyles.text}>{label}</Text>
-                )
-            })
+                );
+            });
 
             return (
                 <View style={styles.container}>
                     {entries}
                 </View>
-            )
+            );
         } else {
             return null;
         }

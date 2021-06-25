@@ -53,7 +53,7 @@ export default function WorkoutForm({
             newExercises[exerciseNum].exerciseName = exerciseObj.exerciseName
             newExercises[exerciseNum].exerciseCategory = exerciseObj.category
 
-            return newExercises
+            return newExercises;
         })
     }
 

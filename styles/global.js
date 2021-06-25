@@ -32,6 +32,7 @@ export const globalStyles = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: '#ddd',
+        fontFamily: 'lato-regular',
         padding: 10,
         fontSize: 17,
         borderRadius: 6,

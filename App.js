@@ -13,7 +13,7 @@ import AppLoading from "expo-app-loading";
 
 
 LogBox.ignoreLogs(["Setting a timer for a long period of", "Can't perform a React state update",
-  "Failed child context type", "Failed context type"]);
+  "Failed child context type", "Failed context type", "Non-serializable values were found"]);
 
 const getFonts = () => {
   return Font.loadAsync({

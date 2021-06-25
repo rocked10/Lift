@@ -46,4 +46,12 @@ export const changeEmail = (newEmail) => auth.currentUser.updateEmail(newEmail).
     );
 })
 
+export const deleteUser = () => {
+    auth.currentUser.delete().then(() => {
+        console.log('User Deleted');
+    }).catch((error) => {
+        console.log("Error deleting user");
+    });
+}
+
 // export const getCurrentUsername = () => auth.currentUser ? auth.currentUser.username : null;
