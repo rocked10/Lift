@@ -18,7 +18,8 @@ const ProfileStack = ({ navigation }) => (
                 options={{ headerTitle: () => <Header navigation={navigation} title='Settings' /> }}/>
         <Screen name='Edit Profile' component={EditProfile}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Edit Profile' />}} />
-        <Screen name='Athlete List' component={AthleteList} />
+        <Screen name='Athlete List' component={AthleteList}
+                options={{ headerTitle: () => <Header navigation={navigation} title='Athlete List' />}} />
     </Navigator>
 );
 

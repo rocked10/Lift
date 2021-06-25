@@ -11,6 +11,7 @@
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/athleteList.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athleteList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
@@ -139,7 +140,7 @@
       <workItem from="1624417849139" duration="15679000" />
       <workItem from="1624511233441" duration="4248000" />
       <workItem from="1624598665351" duration="3024000" />
-      <workItem from="1624621110925" duration="15511000" />
+      <workItem from="1624621110925" duration="18127000" />
     </task>
     <servers />
   </component>
