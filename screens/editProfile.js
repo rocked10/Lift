@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, SectionList } from "react-native";
 import { globalStyles } from "../styles/global";
 import { TextInput } from 'react-native-paper';
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
-import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import CustomButton from '../shared/customButton'
 
 
 export default function EditProfile({ navigation, route }) {
@@ -48,7 +45,7 @@ export default function EditProfile({ navigation, route }) {
                     { title: 'Fitness Information', data: fitnessInfo},
                 ]}
 
-                renderItem = {({item, index, section}) => {
+                renderItem={({item, index, section}) => {
                     if (section.title === 'Account Information') {
                         return (
                             <TextInput
@@ -107,4 +104,4 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#C8C8C8',
     },
-})
+});

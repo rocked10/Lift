@@ -83,6 +83,14 @@ export const subscribe = (userId, onValueChanged) => {
     return () => workouts.off("value");
 }
 
+export const subscribeOnce = (userId) => {
+    let ref = db.ref(`workouts/${userId}`);
+    ref.once('value', (snapshot) => {
+        ref = snapshot.val();
+    });
+    return ref;
+}
+
 // Profile
 export const addUserProfile = (userId, name, email, role) => {
     db.ref(`users/${userId}`).set({
@@ -214,4 +222,31 @@ export const getExerciseByName = async (name) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+// Community
+export const addCommunityPost = async (userId, name, role, postTitle, body, date, workouts) => {
+    try {
+        const ref = db.ref(`community`).push();
+        await ref.set({
+            postTitle: postTitle,
+            body: body,
+            date: date,
+            workouts: workouts,
+            userId: userId,
+            name: name,
+            role: role,
+        });
+        console.log('Post added');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getCommunityPosts = (onValueChanged) => {
+    const posts = db.ref(`community`);
+    posts.on("value", (snapshot) => {
+        onValueChanged(snapshot.val())
+    });
+    return () => posts.off("value");
 }

@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, SectionList, Alert } from "react-native";
-import { globalStyles } from "../styles/global";
-import { TextInput } from 'react-native-paper';
-import firebase from 'firebase';
-import * as Auth from '../api/auth';
-import * as DB from '../api/database';
-import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import CustomButton from '../shared/customButton'
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SectionList, Alert } from "react-native";
+import * as Auth from "../api/auth";
 
 
 export default function Settings({ navigation }) {
@@ -25,7 +18,13 @@ export default function Settings({ navigation }) {
         } else if (item === 'Change email') {
             // Auth.changeEmail();
         } else if (item === 'Delete account') {
-            
+            Alert.alert(
+                "",
+                "Are you sure you want to delete your account? This action cannot be undone.",
+                [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+                    { text: "OK", onPress: () => { Auth.deleteUser(); } }
+                ]
+            );
         }
     }
 
@@ -59,14 +58,14 @@ const styles = StyleSheet.create({
     },
 
     sectionHeader: {  
-        paddingTop: 2,  
+        paddingTop: 6,
         paddingLeft: 10,  
         paddingRight: 10,  
-        paddingBottom: 2,  
+        paddingBottom: 6,
         fontSize: 20,  
-        fontWeight: 'bold',  
-        color: "#fff",  
-        backgroundColor: '#6495ed',  
+        fontFamily: 'lato-bold',
+        color: "#fff",
+        backgroundColor: '#6200ee',
     },
 
     itemLabel: {
@@ -76,7 +75,8 @@ const styles = StyleSheet.create({
 
     item: {  
         padding: 10,
-        fontSize: 16,  
+        fontSize: 16,
+        fontFamily: 'lato-regular',
         height: 40,  
     },
 

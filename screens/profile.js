@@ -106,14 +106,15 @@ const styles = StyleSheet.create({
     username: {
         alignSelf: 'center',
         marginTop: 8,
-        fontWeight: 'bold',
-        fontSize: 24
+        fontSize: 24,
+        fontFamily: 'lato-bold',
         // fontFamily: 'RobotoSlab-Black'
     },
     role: {
         alignSelf: 'center',
         marginBottom: 16,
-        fontWeight: "600"
+        fontFamily: 'lato-regular',
+        // fontWeight: "600",
     },
     statsBar: {
         flexDirection: 'row',

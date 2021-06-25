@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    FlatList, Text, View, Button, TextInput,
-    TouchableWithoutFeedback, Keyboard, StyleSheet, TouchableOpacity
-} from 'react-native';
+import {FlatList, Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { globalStyles } from "../styles/global";
 import { Modal, Portal, Provider, Searchbar } from 'react-native-paper';
 import Card from "../shared/card";
@@ -10,8 +7,7 @@ import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Checkbox } from 'react-native-paper';
-import { MaterialIcons } from "@expo/vector-icons";
-import WorkoutForm from "./workoutForm";
+import {MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 
 
 export default function WorkoutDetails({ route, navigation }) {
@@ -28,14 +24,12 @@ export default function WorkoutDetails({ route, navigation }) {
     const ShareButton = ({ onPress, visible }) => {
         if (role === 'Coach' && visible) {
             return (
-                <TouchableOpacity>
-                    <MaterialIcons
-                        name='share'
-                        size={26}
-                        color='black'
-                        onPress={onPress}
-                    />
-                </TouchableOpacity>
+                <MaterialIcons
+                    name='share'
+                    size={26}
+                    color='black'
+                    onPress={onPress}
+                />
             );
         } else {
             return null;
@@ -46,6 +40,31 @@ export default function WorkoutDetails({ route, navigation }) {
         console.log("SHARE");
         setModalOpen(false);
         DB.addSharedWorkout(userId, shareId, id, route.params).then();
+    }
+
+    const DownloadButton = ({ onPress, visible }) => {
+        if (visible) {
+            return (
+                <MaterialCommunityIcons
+                    name='download'
+                    size={26}
+                    color='black'
+                    onPress={onPress}
+                />
+            );
+        } else {
+            return null;
+        }
+    }
+
+    const handleDownload = () => {
+        Alert.alert(
+            "Download Workout",
+            "Add this workout to your workout list?",
+            [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+                { text: "OK", onPress: () => DB.addWorkout(userId, route.params).then() }
+            ]
+        )
     }
 
     const WeightAndReps = ({ tableData, exerciseNum }) => {
@@ -126,6 +145,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 <Text style={globalStyles.titleText}>{ workoutTitle }</Text>
 
                 <ShareButton onPress={() => setModalOpen(true)} visible={! forViewingOnly} />
+                <DownloadButton onPress={handleDownload} visible={forViewingOnly} />
             </View>
             <FlatList
                 data={exercises}

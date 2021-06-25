@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Button, ScrollView, Keyboard } from "react-native";
+import {View, TouchableOpacity, Button, ScrollView, Keyboard, } from "react-native";
 import { List } from 'react-native-paper';
 import { globalStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
@@ -15,12 +15,7 @@ export default function Exercises({ navigation, route }) {
     const [back, setBack] = useState([]);
     const [cardio, setCardio] = useState([]);
 
-    const [expanded, setExpanded] = useState({
-        Olympic: false,
-        Legs: false,
-        Chest: false,
-        Back: false
-    });
+    const [expanded, setExpanded] = useState({});
 
     useEffect(() => {
         DB.getExercisesByCategory("Olympic", setOlympic);
@@ -75,6 +70,7 @@ export default function Exercises({ navigation, route }) {
     const handleSearch = async () => {
         Keyboard.dismiss();
         const exercise = await DB.getExerciseByName(searchQuery.trim());
+        console.log(exercise);
         if (exercise) {
             setExpanded({...expanded, [exercise.category]: true});
         }
@@ -99,9 +95,10 @@ export default function Exercises({ navigation, route }) {
                 value={searchQuery}
                 onIconPress={handleSearch}
                 onSubmitEditing={handleSearch}
+                inputStyle={{ fontFamily: 'lato-regular' }}
             />
 
-            <ScrollView showsVerticalScrollIndicator={false} >
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <List.Section title="Exercises" titleStyle={{fontFamily: 'lato-bold'}}>
                     {
                         exercises.map((exercise, index) => (

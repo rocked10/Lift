@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {
-    View, Text, Button, FlatList, TouchableOpacity,
-    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert
-} from "react-native";
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Keyboard, StyleSheet } from "react-native";
 import { globalStyles, loginStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
-import * as Auth from '../api/auth.js';
 import Card from "../shared/card";
+
 
 export default function AthletesWorkouts({ navigation }) {
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -32,7 +29,7 @@ export default function AthletesWorkouts({ navigation }) {
 
     const handleConfirmation = () => {
         setDisplayWorkouts(true);
-        DB.subscribe(athleteId, setWorkouts);
+        return DB.subscribe(athleteId, setWorkouts);
     }
 
     const ListOfAthleteWorkouts = ({ displayWorkouts, workouts }) => {

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
     View, Text, Button, FlatList, TouchableOpacity,
-    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert
+    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert, SectionList
 } from "react-native";
+import { List } from "react-native-paper";
 import { ListItem } from 'react-native-elements';
 import { globalStyles, loginStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -24,7 +25,8 @@ export default function Workout({ navigation, route }) {
     const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
     const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
-    const [workouts, setWorkouts] = useState([]);
+    const [workouts, setWorkouts] = useState({});
+    const [sectionedWorkouts, setSectionedWorkouts] = useState([]);
     const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
     const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
     const [role, setRole] = useState('');
@@ -36,6 +38,24 @@ export default function Workout({ navigation, route }) {
     useEffect(() => {
         return DB.subscribe(userId, setWorkouts);
     }, []);
+
+    useEffect(() => {
+         if (workouts) {
+             const sortedWorkouts = [];
+             const workoutArray = Object.values(workouts).reverse();
+             const completedWorkouts = workoutArray.filter((workout) => workout.completed.every(i => i.every(j => j === true) === true));
+             const pendingWorkouts = workoutArray.filter((workout) => ! workout.completed.every(i => i.every(j => j === true) === true));
+
+             if (completedWorkouts.length > 0) {
+                 sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
+             }
+             if (pendingWorkouts.length > 0) {
+                 sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
+             }
+
+             setSectionedWorkouts(sortedWorkouts);
+         }
+    }, [workouts]);
 
     const addCompletionStatus = (workout) => {
         let completed = [];
@@ -66,7 +86,7 @@ export default function Workout({ navigation, route }) {
 
         DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, newWorkout).then();
         setEditWorkoutModalOpen(false);
-        setIdOfWorkoutBeingEdited(-1)
+        setIdOfWorkoutBeingEdited(-1);
     }
 
     const handleDeleteWorkout = (workout) => {
@@ -75,8 +95,9 @@ export default function Workout({ navigation, route }) {
 
     function EditWorkoutModal() {
         if (workouts != null && idOfWorkoutBeingEdited != -1) {
-            const workout = workouts[idOfWorkoutBeingEdited]
-            console.log(workout)
+            // const workout = workouts[idOfWorkoutBeingEdited]
+            const tempMyObj = workouts[idOfWorkoutBeingEdited]
+            const workout = Object.assign({}, tempMyObj);
 
             let submissionHandler = '';
             let createsANewWorkout = false;
@@ -97,7 +118,7 @@ export default function Workout({ navigation, route }) {
                     addWorkout={submissionHandler}
                     createsANewWorkout={createsANewWorkout}
                 />
-            )
+            );
         } else {
             return null;
         }
@@ -110,7 +131,7 @@ export default function Workout({ navigation, route }) {
                 setModalOpen={setAddWorkoutModalOpen}
                 addWorkout={handleAddWorkout}
             />
-        )
+        );
     }
 
     function DropDownSelection({ workout }) {
@@ -167,9 +188,10 @@ export default function Workout({ navigation, route }) {
 
             <AddWorkoutModal />
 
-            <FlatList
+            <SectionList
                 showsVerticalScrollIndicator={false}
-                data={workouts ? Object.values(workouts) : null}
+                renderSectionHeader={({section: {title}}) => <List.Subheader style={{fontFamily: 'lato-bold'}}>{title} workouts</List.Subheader>}
+                sections={sectionedWorkouts}
                 renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
@@ -183,7 +205,7 @@ export default function Workout({ navigation, route }) {
                         });
 
                         return (
-                            <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetails', {
+                            <TouchableOpacity onPress={() => navigation.navigate('Workout Details', {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                                 completed: item.completed,

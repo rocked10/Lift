@@ -11,17 +11,17 @@ export default function WorkoutForm({
     }) 
         
     {
-    const [workoutTitle, setWorkoutTitle] = useState(_workoutTitle)
-    const [exercises, setExercises] = useState(_exercises)
+    const [workoutTitle, setWorkoutTitle] = useState(_workoutTitle);
+    const [exercises, setExercises] = useState(_exercises);
 
     // exerciseNum is zero indexed starting from top of exercises list 
 
     const updateExerciseName = exerciseNum => name => {
         setExercises(prev => {
-            const newExercises = [...prev]
-            newExercises[exerciseNum].exerciseName = name
+            const newExercises = [...prev];
+            newExercises[exerciseNum].exerciseName = name;
 
-            return newExercises
+            return newExercises;
         })
     }
 

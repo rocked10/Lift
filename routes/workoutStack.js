@@ -22,7 +22,7 @@ const WorkoutStack = ({ navigation }) => {
         <Navigator screenOptions={navigationStyles} >
             <Screen name='Workout' component={role === 'Coach' ? WorkoutTabs : Workout}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Workout' /> }}/>
-            <Screen name='WorkoutDetails' component={WorkoutDetails}
+            <Screen name="Workout Details" component={WorkoutDetails}
                     options={{ headerTitle: () => <Header navigation={navigation} title='Workout Details' /> }}/>
         </Navigator>
     )

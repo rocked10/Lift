@@ -1,45 +1,102 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from "react-native";
+import {FlatList, StyleSheet, TouchableOpacity, View} from "react-native";
 import { globalStyles } from "../styles/global";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Button, Card, FAB, Title, Paragraph } from 'react-native-paper';
 import MyCard from '../shared/card';
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 
 
-export default function Community() {
+export default function Community({ navigation, route }) {
+    const [posts, setPosts] = useState({});
     const [userProfile, setUserProfile] = useState({});
+    const [userId, setUserId] = useState(Auth.getCurrentUserId());
 
     useEffect(() => {
-        return DB.getUserProfile(Auth.getCurrentUserId(), setUserProfile);
+        return DB.getUserProfile(userId, setUserProfile);
+    }, []);
+
+    useEffect(() => {
+        return DB.getCommunityPosts(setPosts);
     }, []);
 
     const LeftContent = props => <Avatar.Icon {...props} icon="account" />
 
-    const CommunityCard = () => (
-        <Card style={{backgroundColor: '#F5F5F5'}} onPress={() => {}}>
-            <Card.Title title={userProfile.name} subtitle={userProfile.role} left={LeftContent} />
-            <Card.Content>
-                <Title>Sick workout</Title>
-                <MyCard>
-                    <View style={styles.cardHeader}>
-                        <Title>Fucking sick workout</Title>
-                    </View>
-                </MyCard>
-                <Paragraph>Goodness GRACIOUS me, get shredded with this 1 secret tip!</Paragraph>
-            </Card.Content>
+    const CommunityCard = ({ name, role, title, body, workouts }) => {
 
-            <Card.Actions>
-                <Button onPress={() => {}}>Like</Button>
-                <Button onPress={() => {}}>Comment</Button>
-                <Button onPress={() => {}}>Share</Button>
-            </Card.Actions>
-        </Card>
-    );
+        return (
+            <Card style={{backgroundColor: '#F5F5F5', margin: 10}} onPress={() => {}}>
+                <Card.Title titleStyle={{fontFamily: 'lato-bold'}} title={name} subtitle={role} left={LeftContent} />
+                <Card.Content>
+                    <Title style={{fontFamily: 'lato-bold'}} >{ title }</Title>
+
+                        { workouts &&
+                            workouts.map((item) => (
+                                <TouchableOpacity
+                                    key={Math.random()}
+                                    onPress={() => {
+                                        navigation.navigate('Workout Details', {
+                                            workoutTitle: item.workout.workoutTitle,
+                                            exercises: item.workout.exercises,
+                                            completed: item.workout.completed,
+                                            id: item.id,
+                                            forViewingOnly: true,
+                                        });
+                                    }}
+                                >
+                                    <MyCard>
+                                        <View style={styles.cardHeader}>
+                                            <Title style={{fontFamily: 'lato-bold'}} >{item.workout.workoutTitle}</Title>
+                                        </View>
+                                    </MyCard>
+                                </TouchableOpacity>
+                            ))
+                        }
+
+                    <Paragraph style={{fontFamily: 'lato-regular'}} >{ body }</Paragraph>
+                </Card.Content>
+
+                <Card.Actions>
+                    <Button onPress={() => {}}>Like</Button>
+                    <Button onPress={() => {}}>Comment</Button>
+                </Card.Actions>
+            </Card>
+        );
+    };
+
+    const CommunityPosts = ({ data }) => {
+        return (
+            <View>
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={data}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <CommunityCard name={item.name} role={item.role} title={item.postTitle} body={item.body} workouts={item.workouts}/>
+                        );
+                    }}
+                    keyExtractor={(item, index) => item + index}
+                />
+            </View>
+        );
+    }
 
     return (
         <View style={globalStyles.container}>
-            <CommunityCard />
+            <Button style={{marginBottom: 20}} mode='contained' compact={true}
+                    onPress={() => {
+                        navigation.navigate('Create Post', {
+                            name: userProfile.name,
+                            role: userProfile.role,
+                            userId: userId,
+                        });
+                    }}
+            >
+                Add Post
+            </Button>
+
+            <CommunityPosts data={Object.values(posts).reverse()} />
+
         </View>
     );
 }
