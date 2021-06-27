@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Alert, StatusBar, Text } from "react-native";
+import React from 'react';
+import { TextInput, View, Alert, StatusBar, Text } from "react-native";
 import { Formik } from 'formik';
-import firebase from 'firebase';
 import { loginStyles } from "../styles/global";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Picker as SelectPicker } from "@react-native-picker/picker";
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { Button } from 'react-native-paper'
 
 
@@ -16,36 +13,34 @@ export default function Signup() {
     return (
         <View style={loginStyles.container}>
             <Formik
-                initialValues = {{email: '', username: '', password: '', role: '' }}
+                initialValues = {{email: '', username: '', password: '', password2: '', role: 'Coach' }}
                 onSubmit={(values, actions) => {
-                    console.log(values);
-                    actions.resetForm();
-
-                    // Sign up user
-                    firebase.auth().createUserWithEmailAndPassword(values.email.trim().toLowerCase(), values.password)
-                        .then((userCredential) => {
-                            // Signed in
-                            Alert.alert(
-                                "Successfully signed up!",
-                                "Press OK to go back",
-                                [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-                            );
-
-                            // Add User Profile
-                            DB.addUserProfile(Auth.getCurrentUserId(), values.username, values.email, values.role);
-                        })
-                        .catch((error) => {
-                            console.log(error.message);
-                            Alert.alert(
-                                "Error",
-                                error.message,
-                                [
-                                    { text: "OK",
-                                        onPress: () => console.log("OK Pressed") }
-                                ]
-                            )
-                        });
-
+                    if (values.password !== values.password2) {
+                        Alert.alert(
+                            "Error",
+                            "The passwords do not match!",
+                            [{ text: "OK", onPress: () => console.log("Ok pressed") }]
+                        );
+                    } else if (values.password.length < 8) {
+                        Alert.alert(
+                            "Error",
+                            "Please enter a password that is longer than 8 characters!",
+                            [{ text: "OK", onPress: () => console.log("Ok pressed") }]
+                        );
+                    } else if (values.password === values.password2) {
+                        Auth.signUp(values.username, values.email.toLowerCase().trim(), values.password, values.role,
+                            (user) => {
+                                Alert.alert(
+                                    "Successfully signed up!",
+                                    "Press OK to go back",
+                                    [{text: "OK", onPress: () => console.log("OK Pressed")}]
+                                );
+                                DB.addUserProfile(user.uid, values.username, values.email.toLowerCase().trim(), values.role);
+                            },
+                            () => {
+                            },
+                        ).then();
+                    }
                 }}
             >
                 {(props) => (
@@ -78,6 +73,17 @@ export default function Signup() {
                                 secureTextEntry={true}
                                 onChangeText={props.handleChange('password')}
                                 value={props.values.password}
+                            />
+                        </View>
+
+                        <View style={loginStyles.inputView} >
+                            <AntDesign name="lock" size={24} color="black" />
+                            <TextInput
+                                style={loginStyles.inputText}
+                                placeholder='Confirm your password...'
+                                secureTextEntry={true}
+                                onChangeText={props.handleChange('password2')}
+                                value={props.values.password2}
                             />
                         </View>
 

@@ -14,7 +14,7 @@ export default function AthletesWorkouts({ navigation }) {
     const [workouts, setWorkouts] = useState([]);
     const [displayWorkouts, setDisplayWorkouts] = useState(false);
 
-    const onChangeSearch = query => {
+    const onChangeSearch = (query) => {
         if (query === "") {
             setUserFound('');
             setDisplayWorkouts(false);

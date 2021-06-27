@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    FlatList, Text, View, Button,
-    TouchableWithoutFeedback, Keyboard, StyleSheet, TouchableOpacity, ScrollView
-} from 'react-native';
+import { FlatList, Text, View, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { globalStyles } from "../styles/global";
 import { Modal, Portal, Provider, Searchbar, TextInput } from 'react-native-paper';
 import Card from "../shared/card";
@@ -10,13 +7,13 @@ import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Checkbox } from 'react-native-paper';
-import { MaterialIcons } from "@expo/vector-icons";
-import WorkoutForm from "./workoutForm";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import ExerciseDescription from "./exerciseDescription";
+
 
 // remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
-    const { workoutTitle, exercises, completed, sharedBy, id, forViewingOnly } = route.params;
+    const { workoutTitle, exercises, completed, sharedBy, id, forViewingOnly, forDownload } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
@@ -161,6 +158,7 @@ export default function WorkoutDetails({ route, navigation }) {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={globalStyles.titleText}>{workoutTitle}</Text>
                 <ShareButton onPress={() => setModalOpen(true)} visible={!forViewingOnly} />
+                <DownloadButton onPress={handleDownload} visible={forViewingOnly && forDownload} />
             </View>
 
 

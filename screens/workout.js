@@ -21,6 +21,7 @@ import {
 } from 'react-native-popup-menu';
 import WorkoutFormModal from "../shared/workoutFormModal"
 
+
 export default function Workout({ navigation, route }) {
     const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
     const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
@@ -47,14 +48,16 @@ export default function Workout({ navigation, route }) {
              const completedWorkouts = workoutArray.filter((workout) => workout.completed.every(i => i.every(j => j === true) === true));
              const pendingWorkouts = workoutArray.filter((workout) => ! workout.completed.every(i => i.every(j => j === true) === true));
 
-             if (completedWorkouts.length > 0) {
-                 sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
-             }
              if (pendingWorkouts.length > 0) {
                  sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
              }
+             if (completedWorkouts.length > 0) {
+                 sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
+             }
 
              setSectionedWorkouts(sortedWorkouts);
+         } else {
+             setSectionedWorkouts([]); // Ensures that if last workout is deleted sectioned Workouts will refresh
          }
     }, [workouts]);
 
@@ -111,7 +114,7 @@ export default function Workout({ navigation, route }) {
                     exercises = workout.exercises.map(exercise => {
                         exercise.tableData = exercise.tableData.map(elem => {return { row: elem.row, column : elem.column, value: 0}})
                         return exercise;  
-                    })
+                    });
                 } else {
                     exercises = workout.exercises.map(exercise => {
                         exercise.tableData = [
@@ -119,10 +122,10 @@ export default function Workout({ navigation, route }) {
                             { row: 0, column: 1, value: 0 },
                         ]
                         return exercise;  
-                    })
+                    });
                 }
             } else {
-                submissionHandler = handleEditWorkout
+                submissionHandler = handleEditWorkout;
                 exercises = workout.exercises;
             }
 
@@ -203,7 +206,7 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <TouchableOpacity
-                style={{alignItems: 'flex-end'}}
+                style={{alignItems: 'flex-end', marginBottom: -18}}
                 onPress={() => setAddWorkoutModalOpen(true)}
             >
                 <MaterialIcons name='add' size={28} />
@@ -219,17 +222,14 @@ export default function Workout({ navigation, route }) {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
                             return (
-                                <ListItem key={Math.random()}
-                                    containerStyle={{ padding: 0, backgroundColor: '#F5F5F5' }}
+                                <Text
+                                    style={globalStyles.cardText}
+                                    key={Math.random()}
                                 >
-                                    <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
-                                </ListItem>
+                                    {item2.exerciseName}
+                                </Text>
                             );
                         });
-                        
-                        // console.log("--------------------------------------------")
-                        // console.log(workouts)
-                        // console.log(item.exercises)
 
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('Workout Details', { 

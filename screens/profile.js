@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, FlatList } from "react-native";
 import { globalStyles } from "../styles/global";
-import firebase from 'firebase';
 import * as Auth from '../api/auth';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Card from '../shared/card'
-import CustomButton from '../shared/customButton'
 import * as DB from '../api/database'
 import { Button } from 'react-native-paper'
-import { Entypo } from '@expo/vector-icons';
 
 
 export default function Profile({ navigation, route }) {
@@ -22,16 +19,7 @@ export default function Profile({ navigation, route }) {
         DB.subscribe(userId, setWorkouts);
     }, []);
 
-    const signOut = () => {
-        firebase.auth().signOut()
-            .then(() => {
-                console.log("Successfully signed out");
-            }).catch((error) => {
-                console.log(error);
-            });
-    }
-
-    const AthleteList = ({ role }) => {
+    const AthleteListButton = ({ role }) => {
         if (role === 'Coach') {
             return (
                 <Button
@@ -53,7 +41,7 @@ export default function Profile({ navigation, route }) {
             const entries = Object.values(userProfile.personalRecords).map(item => {
                 const label = item.exerciseName + ": " + item.weight + "kg" + " x " + item.reps;
                 return (
-                    <Text style={globalStyles.text}>{label}</Text>
+                    <Text key={Math.random()} style={globalStyles.text}>{label}</Text>
                 );
             });
 
@@ -72,7 +60,7 @@ export default function Profile({ navigation, route }) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <TouchableOpacity
-                        onPress={signOut}
+                        onPress={Auth.signOut}
                         style={{ alignSelf: 'flex-end' }}
                     >
                         <Entypo name="log-out" size={28} color="black"  />
@@ -85,7 +73,7 @@ export default function Profile({ navigation, route }) {
                         />
                     </View>
 
-                    <Text style={styles.email}>{Auth.getCurrentUserEmail()}</Text>
+                    <Text style={styles.email}>{userProfile.name}</Text>
                     <Text style={styles.role}>{userProfile.role}</Text>
                     <Text style={styles.bio}>{userProfile.bio}</Text>
                     <View style={styles.personalRecordsTitle}>
@@ -98,7 +86,7 @@ export default function Profile({ navigation, route }) {
                         >
                             <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
                         </Button>
-                        <AthleteList role={userProfile.role} />
+                        <AthleteListButton role={userProfile.role} />
                     </View>
 
                 </View>
@@ -129,9 +117,6 @@ export default function Profile({ navigation, route }) {
                 </Card>
 
             </ScrollView>
-
-
-
 
         </View>
     );

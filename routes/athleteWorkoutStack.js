@@ -8,12 +8,7 @@ const { Navigator, Screen } = createStackNavigator();
 const AthleteWorkoutStack = ({ navigation }) => (
     <Navigator
         screenOptions={{
-            headerStyle: {
-                backgroundColor: '#eee',
-                height: 60,
-            },
-
-            headerTintColor: '#444',
+            headerShown: false,
         }}
     >
 

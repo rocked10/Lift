@@ -41,6 +41,7 @@ export default function Community({ navigation, route }) {
                                             completed: item.workout.completed,
                                             id: item.id,
                                             forViewingOnly: true,
+                                            forDownload: true,
                                         });
                                     }}
                                 >

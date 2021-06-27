@@ -5,7 +5,9 @@ import Settings from "../screens/settings";
 import EditProfile from "../screens/editProfile";
 import Header from "../shared/header";
 import AthleteList from "../screens/athleteList"
+import ChangePassword from "../screens/changePassword";
 import { navigationStyles } from '../styles/global';
+import ChangeEmail from "../screens/changeEmail";
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -18,8 +20,12 @@ const ProfileStack = ({ navigation }) => (
                 options={{ headerTitle: () => <Header navigation={navigation} title='Settings' /> }}/>
         <Screen name='Edit Profile' component={EditProfile}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Edit Profile' />}} />
+        <Screen name='Change Password' component={ChangePassword}
+                options={{ headerTitle: () => <Header navigation={navigation} title='Change Password' />}} />
         <Screen name='Athlete List' component={AthleteList}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Athlete List' />}} />
+        <Screen name='Change Email' component={ChangeEmail}
+                options={{headerTitle: () => <Header navigation={navigation} title='Change Email' />}} />
     </Navigator>
 );
 
