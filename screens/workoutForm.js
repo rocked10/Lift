@@ -1,22 +1,39 @@
-import React, { useState } from 'react';
-import { View, FlatList, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard, Text, Alert, } from "react-native";
 import ExerciseDetails from "../shared/exerciseDetails"
 import Exercises from "./exercises"
 import { globalStyles } from "../styles/global";
-import { TextInput } from "react-native-paper"
-import { Button } from 'react-native-paper'
+import { Dialog, Button, Paragraph, TextInput } from "react-native-paper"
 
-export default function WorkoutForm({
-    _workoutTitle,
-    _exercises,
-    addWorkout,
-    createsANewWorkout,
-    showDialog
-}) {
-    const [workoutTitle, setWorkoutTitle] = useState(_workoutTitle)
-    const [exercises, setExercises] = useState(_exercises)
+export default function WorkoutForm({ route, navigation }) {
+    const { workout, addWorkout, createsANewWorkout, reusingWorkout, reusingTemplate } = route.params;
+
+    const [workoutTitle, setWorkoutTitle] = useState(workout.workoutTitle)
+    const [exercises, setExercises] = useState(workout.exercises)
     const [modalOpen, setModalOpen] = useState(false)
     const [formVisible, setFormVisible] = useState(true)
+
+
+    useEffect(() => {
+        if (reusingWorkout) {
+            let temp = workout.exercises.map(exercise => {
+                exercise.tableData = exercise.tableData.map(elem => { return { row: elem.row, column: elem.column, value: 0 } })
+                return exercise;
+            });
+            setExercises(temp);
+        } else if (reusingTemplate) {
+            let temp = workout.exercises.map(exercise => {
+                exercise.tableData = [
+                    { row: 0, column: 0, value: 0 },
+                    { row: 0, column: 1, value: 0 },
+                ]
+                return exercise;
+            })
+            setExercises(temp)
+        }
+    }, []);
+    
+    
 
     const ExerciseLibraryModal = () => {
         return (
@@ -46,6 +63,15 @@ export default function WorkoutForm({
     }
 
     // exerciseNum is zero indexed starting from top of exercises list 
+
+    const updateExerciseName = exerciseNum => name => {
+        setExercises(prev => {
+            const newExercises = [...prev]
+            newExercises[exerciseNum].exerciseName = name
+
+            return newExercises
+        })
+    }
 
     const handleSelect = exerciseNum => exerciseObj => {
         setExercises(prev => {
@@ -130,10 +156,51 @@ export default function WorkoutForm({
     }
 
     const submissionHandler = () => {
-        if (exercises.length === 0 || workoutTitle === '') {
-            showDialog()
-        } else {
-            addWorkout({ workoutTitle, exercises })
+        let alertMessage = 'Please';
+        let mistakes = 0;
+        let connector = ' ';
+
+        if (workoutTitle === '') {
+            connector = mistakes >= 1 ? ' and ' : ' '
+            alertMessage += connector + 'fill in a workout title' 
+            mistakes++;
+        }  
+
+        if (exercises.length === 0) { 
+            connector = mistakes >= 1 ? ' and ' : ' '
+            alertMessage += connector + 'select at least one exercise';
+            mistakes++;
+        } 
+
+        for (let i = 0; i < exercises.length; i++) {
+            let zeroReps = false;
+            for (let j = 0; j < exercises[i].tableData.length; j++) {
+                if (exercises[i].tableData[j].value === 0 || exercises[i].tableData[j].value === '') {
+                    connector = mistakes >= 1 ? ' and ' : ' '
+                    alertMessage += connector + 'ensure reps are more than zero' 
+                    mistakes++;
+                    break;
+                }
+            }
+            if (zeroReps) {
+                break;
+            }
+        }
+
+        Alert.alert(
+            'Oops',
+            alertMessage,
+            [{text: "Ok",}]
+        )           
+        
+        if (mistakes === 0) {
+            // console.log("workout boutta be added")
+            // console.log(exercises)
+            // console.log("workout title is: " + workoutTitle)
+            if (! createsANewWorkout) addWorkout({ id: workout.id, workoutTitle, exercises })
+            else addWorkout({ workoutTitle, exercises })
+            
+            navigation.goBack()
         }
     }
 
@@ -180,7 +247,7 @@ export default function WorkoutForm({
                         deleteExercise={() => deleteExercise(index)}
                         deleteSet={deleteSet(index)}
                         addSet={() => addSet(index)}
-                        // updateExerciseName={updateExerciseName(index)}
+                        updateExerciseName={updateExerciseName(index)}
                         visible={formVisible}
                     />
                 }

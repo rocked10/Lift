@@ -67,16 +67,14 @@ export default function Profile({ navigation, route }) {
         }
     }
 
+    // to put the log out icon at the top right corner 
+    const [position, setPosition] = useState("absolute");
+
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        onPress={signOut}
-                        style={{ alignSelf: 'flex-end' }}
-                    >
-                        <Entypo name="log-out" size={28} color="black"  />
-                    </TouchableOpacity>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.container}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'stretch', }}>
+
 
                     <View style={styles.profileImage}>
                         <Image
@@ -85,55 +83,65 @@ export default function Profile({ navigation, route }) {
                         />
                     </View>
 
-                    <Text style={styles.email}>{Auth.getCurrentUserEmail()}</Text>
-                    <Text style={styles.role}>{userProfile.role}</Text>
-                    <Text style={styles.bio}>{userProfile.bio}</Text>
-                    <View style={styles.personalRecordsTitle}>
-                        <Button
-                            mode="contained"
-                            onPress={() => navigation.navigate('Edit Profile', {
-                                userProfile: userProfile
-                            })}
-                            style={{ borderRadius: 10, marginHorizontal: 12 }}
-                        >
-                            <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
-                        </Button>
-                        <AthleteList role={userProfile.role} />
-                    </View>
+                    <TouchableOpacity
+                        onPress={signOut}
+                        style={{
+                            top: 0,
+                            right: 0,
+                            position,
+                        }}
+                    >
+                        <Entypo name="log-out" size={28} color="black" />
+                    </TouchableOpacity>
+
 
                 </View>
 
 
-                {/* <View style={styles.statsBar}>
-                    <View style={styles.statsBarItem}>
-                        <Text style={{ alignSelf: 'center' }}>30000</Text>
-                        <Text>Followers</Text>
-                    </View>
-                    <View style={styles.statsBarItem}>
-                        <Text style={{ alignSelf: 'center' }}>60000</Text>
-                        <Text>Following</Text>
-                    </View>
-                    <View>
-                        <Text style={{ alignSelf: 'center' }}>90000</Text>
-                        <Text>Workouts</Text>
-                    </View>
-                </View> */}
-                <Card>
-                    <View style={styles.personalRecordsTitle}>
-                        <FontAwesome name="trophy" size={24} color="gold" />
-                        <Text style={{ ...globalStyles.titleText, marginHorizontal: 6 }}>Personal Records</Text>
-                        <FontAwesome name="trophy" size={24} color="gold" />
-                    </View>
+                <Text style={styles.email}>{Auth.getCurrentUserEmail()}</Text>
+                <Text style={styles.role}>{userProfile.role}</Text>
+                <Text style={styles.bio}>{userProfile.bio}</Text>
+                <View style={styles.personalRecordsTitle}>
+                    <Button
+                        mode="contained"
+                        onPress={() => navigation.navigate('Edit Profile', {
+                            userProfile: userProfile
+                        })}
+                        style={{ borderRadius: 10, marginHorizontal: 12 }}
+                    >
+                        <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
+                    </Button>
+                    <AthleteList role={userProfile.role} />
+                </View>
 
-                    <PersonalRecords />
-                </Card>
-
-            </ScrollView>
+            </View>
 
 
+            {/* <View style={styles.statsBar}>
+                <View style={styles.statsBarItem}>
+                    <Text style={{ alignSelf: 'center' }}>30000</Text>
+                    <Text>Followers</Text>
+                </View>
+                <View style={styles.statsBarItem}>
+                    <Text style={{ alignSelf: 'center' }}>60000</Text>
+                    <Text>Following</Text>
+                </View>
+                <View>
+                    <Text style={{ alignSelf: 'center' }}>90000</Text>
+                    <Text>Workouts</Text>
+                </View>
+            </View> */}
+            <Card>
+                <View style={styles.personalRecordsTitle}>
+                    <FontAwesome name="trophy" size={24} color="gold" />
+                    <Text style={{ ...globalStyles.titleText, marginHorizontal: 6 }}>Personal Records</Text>
+                    <FontAwesome name="trophy" size={24} color="gold" />
+                </View>
 
+                <PersonalRecords />
+            </Card>
 
-        </View>
+        </ScrollView>
     );
 }
 
@@ -152,7 +160,7 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         width: undefined,
-        height: undefined
+        height: undefined,
     },
     // statsBar: {
     //     flexDirection: 'row',

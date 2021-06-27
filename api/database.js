@@ -114,8 +114,10 @@ export const addUserProfile = (userId, name, email, role) => {
 }
 
 export const addPR = (userId, exerciseName, pr) => {
-    db.ref(`users/${userId}/personalRecords`).set({
-        [exerciseName]: pr,
+    db.ref(`users/${userId}/personalRecords/${exerciseName}`).set({
+        exerciseName: exerciseName,
+        weight: pr[0],
+        reps: pr[1],
     }, (error) => {
         if (error) {
             console.log("Personal record not added");
@@ -124,6 +126,7 @@ export const addPR = (userId, exerciseName, pr) => {
         } 
     });
 }
+
 
 export const getPR = async (userId, exerciseName) => {
     try {

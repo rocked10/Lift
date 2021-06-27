@@ -125,7 +125,7 @@ export default function WorkoutDetails({ route, navigation }) {
                                             const currWeight = item[0].value;
                                             const currReps = item[1].value;
 
-                                            if (! prevPR || currWeight > prevPR[0]) {
+                                            if (! prevPR || (currWeight > prevPR[0] && currWeight !== 0)) {
                                                 DB.addPR(userId, exercises[exerciseNum].exerciseName, [currWeight, currReps]);
                                             }
                                         }
