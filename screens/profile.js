@@ -71,8 +71,9 @@ export default function Profile({ navigation, route }) {
     const [position, setPosition] = useState("absolute");
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'stretch', }}>
 
 
@@ -97,51 +98,38 @@ export default function Profile({ navigation, route }) {
 
                 </View>
 
-
-                <Text style={styles.email}>{Auth.getCurrentUserEmail()}</Text>
-                <Text style={styles.role}>{userProfile.role}</Text>
-                <Text style={styles.bio}>{userProfile.bio}</Text>
-                <View style={styles.personalRecordsTitle}>
-                    <Button
-                        mode="contained"
-                        onPress={() => navigation.navigate('Edit Profile', {
-                            userProfile: userProfile
-                        })}
-                        style={{ borderRadius: 10, marginHorizontal: 12 }}
-                    >
-                        <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
-                    </Button>
-                    <AthleteList role={userProfile.role} />
+                <View style={styles.container}>
+                    <Text style={styles.email}>{Auth.getCurrentUserEmail()}</Text>
+                    <Text style={styles.role}>{userProfile.role}</Text>
+                    <Text style={styles.bio}>{userProfile.bio}</Text>
+                    <View style={styles.personalRecordsTitle}>
+                        <Button
+                            mode="contained"
+                            onPress={() => navigation.navigate('Edit Profile', {
+                                userProfile: userProfile
+                            })}
+                            style={{ borderRadius: 10, marginHorizontal: 12 }}
+                        >
+                            <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
+                        </Button>
+                        <AthleteList role={userProfile.role} />
+                    </View>
                 </View>
 
-            </View>
 
 
-            {/* <View style={styles.statsBar}>
-                <View style={styles.statsBarItem}>
-                    <Text style={{ alignSelf: 'center' }}>30000</Text>
-                    <Text>Followers</Text>
-                </View>
-                <View style={styles.statsBarItem}>
-                    <Text style={{ alignSelf: 'center' }}>60000</Text>
-                    <Text>Following</Text>
-                </View>
-                <View>
-                    <Text style={{ alignSelf: 'center' }}>90000</Text>
-                    <Text>Workouts</Text>
-                </View>
-            </View> */}
-            <Card>
-                <View style={styles.personalRecordsTitle}>
-                    <FontAwesome name="trophy" size={24} color="gold" />
-                    <Text style={{ ...globalStyles.titleText, marginHorizontal: 6 }}>Personal Records</Text>
-                    <FontAwesome name="trophy" size={24} color="gold" />
-                </View>
+                <Card>
+                    <View style={styles.personalRecordsTitle}>
+                        <FontAwesome name="trophy" size={24} color="gold" />
+                        <Text style={{ ...globalStyles.titleText, marginHorizontal: 6 }}>Personal Records</Text>
+                        <FontAwesome name="trophy" size={24} color="gold" />
+                    </View>
 
-                <PersonalRecords />
-            </Card>
+                    <PersonalRecords />
+                </Card>
 
-        </ScrollView>
+            </ScrollView>
+        </View >
     );
 }
 

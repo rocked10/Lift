@@ -73,13 +73,16 @@ export default function WorkoutDetails({ route, navigation }) {
         )
     }
 
-    const WeightAndReps = ({ tableData, exerciseNum }) => {
+    const WeightAndReps = ({ tableData, exerciseNum, exerciseCategory }) => {
         if (forViewingOnly) {
             return (
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                        const label = exerciseCategory === 'cardio' 
+                            ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
+                            : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                            
                         return (
                             <View>
                                 <Checkbox.Item
@@ -181,7 +184,7 @@ export default function WorkoutDetails({ route, navigation }) {
                                     {item.exerciseName}
                                 </Text>
                             </TouchableOpacity>
-                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} exerciseNum={index} />
+                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} exerciseNum={index} exerciseCategory={item.exerciseCategory} />
                         </Card>
                     </View>
                 )}
