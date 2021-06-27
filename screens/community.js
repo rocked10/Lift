@@ -41,6 +41,7 @@ export default function Community({ navigation, route }) {
                                             completed: item.workout.completed,
                                             id: item.id,
                                             forViewingOnly: true,
+                                            forDownload: true,
                                         });
                                     }}
                                 >
@@ -95,7 +96,7 @@ export default function Community({ navigation, route }) {
                 Add Post
             </Button>
 
-            <CommunityPosts data={Object.values(posts).reverse()} />
+            <CommunityPosts data={posts ? Object.values(posts).reverse() : []} />
 
         </View>
     );

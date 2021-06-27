@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, TouchableOpacity, ScrollView, Keyboard, } from "react-native";
+import { View, TouchableOpacity, ScrollView, Keyboard } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
 import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
@@ -12,27 +12,25 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     const [legs, setLegs] = useState([]);
     const [chest, setChest] = useState([]);
     const [back, setBack] = useState([]);
+    const [arms, setArms] = useState([]);
     const [cardio, setCardio] = useState([]);
 
     const [alertVisible, setAlertVisible] = useState(false);
     const showAlert = () => setAlertVisible(true);
     const hideAlert = () => setAlertVisible(false);
 
-    const [expanded, setExpanded] = useState({
-        Olympic: false,
-        Legs: false,
-        Chest: false,
-        Back: false
-    });
+    const [expanded, setExpanded] = useState({});
 
     const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
-    { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Cardio', data: cardio }];
+    { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Arms', data: arms},
+        { title: 'Cardio', data: cardio }];
 
     useEffect(() => {
         DB.getExercisesByCategory("Olympic", setOlympic);
         DB.getExercisesByCategory("Legs", setLegs);
         DB.getExercisesByCategory("Chest", setChest);
         DB.getExercisesByCategory("Back", setBack);
+        DB.getExercisesByCategory("Arms", setArms);
         DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
@@ -72,13 +70,11 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={() => { hideAlert(); setModalOpen(false); setFormVisible(true); onSelectExercise(customExerciseObject) }}>Yes</Button>
-                    <Button onPress={hideAlert}>Nah</Button>
+                    <Button onPress={hideAlert}>No</Button>
                 </Dialog.Actions>
             </Dialog>
-        )
+        );
     }
-
-
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -140,6 +136,9 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
         const exercise = await DB.getExerciseByName(searchQuery.trim());
         console.log(exercise);
         if (exercise) {
+            for (let i in expanded) {
+                expanded[i] = false;
+            }
             setExpanded({ ...expanded, [exercise.category]: true });
         } else {
             if (cameFromWorkoutForm) {
@@ -149,15 +148,14 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     }
 
     const handleExpansion = (title) => {
-        const initialState = expanded[title]
+        const initialState = expanded[title];
         setExpanded({ ...expanded, [title]: !initialState });
     }
 
     // Exercise adder
-    // const handlePress = async () => {
-    //     DB.addExercise('Back', 'Barbell Row','9efgcAjQe7E').then();
-    //     DB.getExerciseByName('Clean and Jerk').then();
-    // }  
+    const handlePress = async () => {
+        DB.addExercise('Arms', 'Bicep Curl','sAq_ocpRh_I').then();
+    }
 
     return (
         <View style={globalStyles.container}>
@@ -191,7 +189,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
 
             <AlertMessage />
 
-            {/*<Button onPress={handlePress} title="Add" />*/}
+            {/*<Button onPress={handlePress}>Add</Button>*/}
 
         </View>
     );

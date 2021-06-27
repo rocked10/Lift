@@ -3,6 +3,7 @@ import {View, StyleSheet, TextInput } from 'react-native';
 import { Avatar, Card, Button, Chip } from 'react-native-paper';
 import { globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
+import ProfileCard from "../shared/profileCard";
 import * as DB from '../api/database';
 
 
@@ -13,8 +14,6 @@ export default function CreatePost({ navigation, route }) {
     const [attachedWorkouts, setAttachedWorkouts] = useState([]);
 
     const date = new Date();
-
-    const LeftContent = props => <Avatar.Icon {...props} color='white' icon="account" />
 
     const RightContent = props =>
         <Button
@@ -28,18 +27,6 @@ export default function CreatePost({ navigation, route }) {
         >
             Post
         </Button>
-
-    const PostCard = () => (
-        <Card style={{backgroundColor: '#F5F5F5'}}>
-            <Card.Title
-                titleStyle={{fontFamily: 'lato-bold'}}
-                title={name}
-                subtitle={role}
-                left={LeftContent}
-                right={RightContent}
-            />
-        </Card>
-    );
 
     const onSelect = (params) => {
         let newArray = [...attachedWorkouts, params];
@@ -69,7 +56,7 @@ export default function CreatePost({ navigation, route }) {
 
     return (
         <View style={globalStyles.container}>
-            <PostCard />
+            <ProfileCard title={name} subtitle={role} right={RightContent} />
 
             <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
                 <TextInput

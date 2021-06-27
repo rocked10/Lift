@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SectionList } from "react-native";
-import { globalStyles } from "../styles/global";
+import { settingStyles } from "../styles/global";
 import { TextInput } from 'react-native-paper';
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
@@ -17,7 +17,7 @@ export default function EditProfile({ navigation, route }) {
     const FlatListItemSeparator = () => {
         return (
             //Item Separator
-            <View style={styles.listItemSeparatorStyle} />
+            <View style={settingStyles.listItemSeparatorStyle} />
         );
     };
 
@@ -36,7 +36,7 @@ export default function EditProfile({ navigation, route }) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={settingStyles.container}>
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
@@ -65,43 +65,9 @@ export default function EditProfile({ navigation, route }) {
                     }
                 }}
 
-                renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                renderSectionHeader={({ section }) => <Text style={settingStyles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-
-    sectionHeader: {
-        paddingTop: 2,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 2,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: "#fff",
-        backgroundColor: '#6495ed',
-    },
-
-    itemLabel: {
-        padding: 10,
-        fontSize: 14,
-    },
-
-    item: {
-        padding: 10,
-        fontSize: 16,
-        height: 40,
-    },
-
-    listItemSeparatorStyle: {
-        height: 0.5,
-        width: '100%',
-        backgroundColor: '#C8C8C8',
-    },
-});

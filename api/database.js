@@ -3,7 +3,27 @@ import firebaseApp from "./firebase";
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
 
+
 const db = firebase.database();
+
+// Generic
+export const deleteUser = async (userId) => {
+    await Auth.signOut();
+
+    const ref = db.ref(`users/${userId}`);
+    ref.remove().then(() => {
+        console.log("Profile Removed")
+    }).catch((error) => {
+        console.log("Error removing profile: " + error.message);
+    });
+
+    const workoutRef = db.ref(`workouts/${userId}`);
+    workoutRef.remove().then(() => {
+        console.log("User Workouts Removed")
+    }).catch((error) => {
+        console.log("Error removing workouts: " + error.message);
+    });
+}
 
 // Workout
 export const addWorkout = async (userId, workout) => {
@@ -144,9 +164,17 @@ export const getPR = async (userId, exerciseName) => {
 
 export const addAthlete = async (userId, athleteId) => {
     try {
+        let name = '';
+        // Add Athlete's name
+        const info = db.ref(`users/${athleteId}`);
+        await info.once('value', snapshot => {
+            name = snapshot.val().name;
+        });
+
         const ref = db.ref(`users/${userId}/athletes/${athleteId}`)
         await ref.set({
-            id: athleteId
+            id: athleteId,
+            name: name,
         });
         console.log("Athlete added");
     } catch (error) {
@@ -160,9 +188,9 @@ export const findUserId = async (email) => {
         await db.ref('users').orderByChild('email').equalTo(email)
             .once('value', snapshot => {
                 ref = snapshot.val();
-            })
+            });
         const uidObject = ref;
-        return Object.keys(uidObject)[0];
+        return { id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name };
     } catch (error) {
         console.log(error);
     }
@@ -210,8 +238,8 @@ export const getUserType = (onValueChanged) => {
     });
 }
 
-export const getUserName = (onValueChanged) => {
-    const ref = db.ref(`users/${Auth.getCurrentUserId()}`);
+export const getUserName = (userId, onValueChanged) => {
+    const ref = db.ref(`users/${userId}`);
     ref.once('value', (snapshot) => {
         onValueChanged(snapshot.val().name);
     });

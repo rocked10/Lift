@@ -4,18 +4,13 @@ import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 import { Button, TextInput } from "react-native-paper"
 import { set } from 'react-native-reanimated';
+import ProfileCard from "../shared/profileCard";
 
 export default function AthleteList() {
-    // const userInfoFields = []
-    // const [username, setUsername] = useState('');
-
     const coachId = Auth.getCurrentUserId();
 
     const [coachProfile, setCoachProfile] = useState({});
 
-    console.log(coachProfile.athletes)
-
-    // the fuck is going on here?????
     useEffect(() => {
         DB.getUserProfile(Auth.getCurrentUserId(), setCoachProfile);
     }, []);
@@ -24,20 +19,29 @@ export default function AthleteList() {
 
     const handleAddAthlete = async () => {
         // Keyboard.dismiss()
-        const athleteId = await DB.findUserId(searchQuery.toLowerCase().trim());
-        if (athleteId) {
-            DB.addAthlete(coachId, athleteId)
-            console.log("added athlete")
-        } else {
+        const athlete = await DB.findUserId(searchQuery.toLowerCase().trim());
+        if (athlete) {
+            DB.addAthlete(coachId, athlete.id).then();
             Alert.alert(
                 '',
-                'No such athlete exists',
+                'Athlete added!',
                 [
                     {
                         text: "Ok",
                     }
                 ]
-            )
+            );
+            this.textInput.clear();
+        } else {
+            Alert.alert(
+                '',
+                'Athlete not found',
+                [
+                    {
+                        text: "Ok",
+                    }
+                ]
+            );
         }
     }
 
@@ -52,16 +56,18 @@ export default function AthleteList() {
 
     return (
         <View style={styles.container}>
-            <TextInput placeholder="enter athlete's email" onChangeText={query => setSearchQuery(query)} />
+            <TextInput placeholder="Enter Athlete's email" onChangeText={query => setSearchQuery(query)} ref={ input => { this.textInput = input }}/>
             <Button onPress={handleAddAthlete}>add</Button>
             <FlatList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 data={coachProfile.athletes ? Object.values(coachProfile.athletes) : null}
                 renderItem={
                     ({ item }) => (
-                        <TouchableOpacity>
-                            <Text style={styles.item}>{item.id}</Text>
-                        </TouchableOpacity>
+                        // <TouchableOpacity>
+                        //     <Text style={styles.item}>{item.id}</Text>
+                        // </TouchableOpacity>
+
+                        <ProfileCard title={item.name} subtitle='Athlete' />
                     )}
                 keyExtractor={(item, index) => index}
             />

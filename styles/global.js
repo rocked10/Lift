@@ -97,7 +97,41 @@ export const loginStyles = StyleSheet.create({
         fontSize: 28,
         marginVertical: 16
     }
-})
+});
+
+export const settingStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+
+    sectionHeader: {
+        paddingTop: 2,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 2,
+        fontSize: 20,
+        fontFamily: 'lato-bold',
+        color: "#fff",
+        backgroundColor: '#6200ee',
+    },
+
+    itemLabel: {
+        padding: 10,
+        fontSize: 14,
+    },
+
+    item: {
+        padding: 10,
+        fontSize: 16,
+        height: 40,
+    },
+
+    listItemSeparatorStyle: {
+        height: 0.5,
+        width: '100%',
+        backgroundColor: '#C8C8C8',
+    },
+});
 
 export const navigationStyles = {
     headerStyle: {
@@ -111,3 +145,4 @@ export const navigationStyles = {
 export const pictures = {
     'logo': require('../assets/LiftLogo-trimmy-trimmy.png'),
 }
+

@@ -46,7 +46,8 @@
     "react-native-table-component": "^1.2.1",
     "react-native-web": "~0.13.12",
     "react-native-webview": "^11.6.4",
-    "react-native-youtube-iframe": "^2.1.0"
+    "react-native-youtube-iframe": "^2.1.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

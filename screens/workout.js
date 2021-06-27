@@ -18,6 +18,7 @@ import {
     MenuTrigger,
 } from 'react-native-popup-menu';
 
+
 export default function Workout({ navigation, route }) {
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState({});
@@ -33,21 +34,23 @@ export default function Workout({ navigation, route }) {
     }, []);
 
     useEffect(() => {
-        if (workouts) {
-            const sortedWorkouts = [];
-            const workoutArray = Object.values(workouts).reverse();
-            const completedWorkouts = workoutArray.filter((workout) => workout.completed.every(i => i.every(j => j === true) === true));
-            const pendingWorkouts = workoutArray.filter((workout) => !workout.completed.every(i => i.every(j => j === true) === true));
+         if (workouts) {
+             const sortedWorkouts = [];
+             const workoutArray = Object.values(workouts).reverse();
+             const completedWorkouts = workoutArray.filter((workout) => workout.completed.every(i => i.every(j => j === true) === true));
+             const pendingWorkouts = workoutArray.filter((workout) => ! workout.completed.every(i => i.every(j => j === true) === true));
 
-            if (completedWorkouts.length > 0) {
-                sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
-            }
-            if (pendingWorkouts.length > 0) {
-                sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
-            }
+             if (pendingWorkouts.length > 0) {
+                 sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
+             }
+             if (completedWorkouts.length > 0) {
+                 sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
+             }
 
-            setSectionedWorkouts(sortedWorkouts);
-        }
+             setSectionedWorkouts(sortedWorkouts);
+         } else {
+             setSectionedWorkouts([]); // Ensures that if last workout is deleted sectioned Workouts will refresh
+         }
     }, [workouts]);
 
     const addCompletionStatus = (workout) => {
@@ -85,31 +88,6 @@ export default function Workout({ navigation, route }) {
     })
 
     function DropDownSelection({ workout }) {
-        // const exercisesCopy = new Array(workout.exercises.length)
-
-        // for (let i = 0; i < workout.exercises.length; i++) {
-        //     exercisesCopy[i] = workout.exercises[i];
-        //     for (let j = 0; j < exercisesCopy[i].tableData.length; j++) {
-        //         exercisesCopy[i][j] = { 
-        //             row: exercisesCopy[i][j].row, 
-        //             column: exercisesCopy[i][j].column, 
-        //             value: 0 
-        //         }
-        //     }
-        // }
-        // const reusedExercises = exercisesCopy.map(exercise => {
-        //     exercise.tableData = exercise.tableData.map(elem => { return { row: elem.row, column: elem.column, value: 0 } })
-        //     return exercise;
-        // })
-
-        // const exercisesCopy2 = [...workout.exercises]
-        // const templateExercises = exercisesCopy2.map(exercise => {
-        //     exercise.tableData = [
-        //         { row: 0, column: 0, value: 0 },
-        //         { row: 0, column: 1, value: 0 },
-        //     ]
-        //     return exercise;
-        // })
         console.log(workout.exercises)
 
         return (
@@ -183,17 +161,14 @@ export default function Workout({ navigation, route }) {
                     if (item.exercises !== undefined) {
                         let items = item.exercises.map(item2 => {
                             return (
-                                <ListItem key={Math.random()}
-                                    containerStyle={{ padding: 0, backgroundColor: '#F5F5F5' }}
+                                <Text
+                                    style={globalStyles.cardText}
+                                    key={Math.random()}
                                 >
-                                    <Text style={globalStyles.cardText}>{item2.exerciseName}</Text>
-                                </ListItem>
+                                    {item2.exerciseName}
+                                </Text>
                             );
                         });
-
-                        console.log("printing the fking exercises now ----------------------")
-                        // console.log(workouts)
-                        console.log(item.exercises)
 
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate('Workout Details', {

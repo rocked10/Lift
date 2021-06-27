@@ -236,7 +236,6 @@ export default function WorkoutForm({ route, navigation }) {
                 showsVerticalScrollIndicator={false}
                 data={exercises}
                 keyExtractor={(item, index) => index}
-                // showsVerticalScrollIndicator={false}
                 removeClippedSubviews={false}
                 renderItem={({ item, index }) =>
                     <ExerciseDetails
