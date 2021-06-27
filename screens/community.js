@@ -96,7 +96,7 @@ export default function Community({ navigation, route }) {
                 Add Post
             </Button>
 
-            <CommunityPosts data={Object.values(posts).reverse()} />
+            <CommunityPosts data={posts ? Object.values(posts).reverse() : []} />
 
         </View>
     );

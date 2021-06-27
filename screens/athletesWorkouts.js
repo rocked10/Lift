@@ -28,9 +28,9 @@ export default function AthletesWorkouts({ navigation }) {
 
     const onSubmitSearch = async () => {
         Keyboard.dismiss();
-        const uid = await DB.findUserId(searchQuery.toLowerCase().trim());
-        setUserFound(uid);
-        setAthleteId(uid);
+        const user = await DB.findUserId(searchQuery.toLowerCase().trim());
+        setUserFound(user);
+        setAthleteId(user.id);
     }
 
     const handleConfirmation = () => {
@@ -79,7 +79,9 @@ export default function AthletesWorkouts({ navigation }) {
             return (
                 <View style={{ padding: 10 }}>
                     <TouchableOpacity onPress={handleConfirmation}>
-                        <Text>
+                        <Text
+                            style={{fontFamily: 'lato-regular', fontSize: 16,}}
+                        >
                             {item}
                         </Text>
                     </TouchableOpacity>
@@ -100,7 +102,7 @@ export default function AthletesWorkouts({ navigation }) {
                 onSubmitEditing={onSubmitSearch}
             />
 
-            <ProfileCard item={userFound} />
+            <ProfileCard item={userFound.name} />
             <ListOfAthleteWorkouts workouts={workouts} displayWorkouts={displayWorkouts} />
         </View>
     );

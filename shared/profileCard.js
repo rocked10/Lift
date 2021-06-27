@@ -1,5 +1,4 @@
 import { Avatar, Card } from "react-native-paper";
-import * as DB from "../api/database";
 import React from "react";
 
 

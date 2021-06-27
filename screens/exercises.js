@@ -70,7 +70,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={() => { hideAlert(); setModalOpen(false); setFormVisible(true); onSelectExercise(customExerciseObject) }}>Yes</Button>
-                    <Button onPress={hideAlert}>Nah</Button>
+                    <Button onPress={hideAlert}>No</Button>
                 </Dialog.Actions>
             </Dialog>
         );

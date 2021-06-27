@@ -18,10 +18,10 @@ export default function ShareWorkout({ shareId = () => {} }) {
     const ProfileCard = ({ item }) => {
         if (item) {
             return (
-                <View style={{padding: 10, fontFamily: 'lato-regular'}}>
-                    <TouchableOpacity onPress={handleConfirmation}>
-                        <Text style={{fontSize: 16}}>
-                            {item}
+                <View style={{padding: 10}}>
+                    <TouchableOpacity onPress={() => handleConfirmation(item.id)}>
+                        <Text style={{fontSize: 16, fontFamily: 'lato-regular'}}>
+                            {item.name}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -39,7 +39,8 @@ export default function ShareWorkout({ shareId = () => {} }) {
 
                     <FlatList
                         data={data}
-                        renderItem={({item}) => <ProfileCard item={item.name}/>}
+                        renderItem={({item}) => <ProfileCard item={item} />}
+                        keyExtractor={(item, index) => index}
                     />
                 </View>
             );
@@ -67,12 +68,12 @@ export default function ShareWorkout({ shareId = () => {} }) {
         setDisplayAthleteList(false);
     }
 
-    const handleConfirmation = () => {
+    const handleConfirmation = (id) => {
         Alert.alert(
             "",
             "Upload workout for this user?",
             [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
-                { text: "OK", onPress: () => shareId(userFound.id) }
+                { text: "OK", onPress: () => shareId(id) }
                 ]
         );
     }
@@ -80,14 +81,14 @@ export default function ShareWorkout({ shareId = () => {} }) {
     return (
         <View>
             <Searchbar
-                placeholder='Search'
+                placeholder='Search email'
                 onChangeText={onChangeSearch}
                 value={searchQuery}
                 onIconPress={handleSearch}
                 onSubmitEditing={handleSearch}
             />
 
-            <ProfileCard item={userFound.name}/>
+            <ProfileCard item={userFound}/>
 
             <AthleteList data={userProfile.athletes ? Object.values(userProfile.athletes) : null} visible={displayAthleteList} />
         </View>
