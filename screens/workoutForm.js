@@ -177,8 +177,9 @@ export default function WorkoutForm({ route, navigation }) {
             for (let j = 0; j < exercises[i].tableData.length; j++) {
                 if (exercises[i].tableData[j].value === 0 || exercises[i].tableData[j].value === '') {
                     connector = mistakes >= 1 ? ' and ' : ' '
-                    alertMessage += connector + 'ensure reps are more than zero' 
+                    alertMessage += connector + 'ensure reps/weight is more than zero' 
                     mistakes++;
+                    zeroReps = true; 
                     break;
                 }
             }
@@ -187,18 +188,21 @@ export default function WorkoutForm({ route, navigation }) {
             }
         }
 
-        Alert.alert(
-            'Oops',
-            alertMessage,
-            [{text: "Ok",}]
-        )           
-        
+        if (mistakes !== 0) {
+            Alert.alert(
+                'Oops',
+                alertMessage,
+                [{text: "Ok", onPress: () => alertMessage= 'Please',}]
+            )          
+        }
+
         if (mistakes === 0) {
             // console.log("workout boutta be added")
             // console.log(exercises)
             // console.log("workout title is: " + workoutTitle)
-            if (! createsANewWorkout) addWorkout({ id: workout.id, workoutTitle, exercises })
-            else addWorkout({ workoutTitle, exercises })
+            if (! createsANewWorkout) {
+                addWorkout({ id: workout.id, workoutTitle, exercises })
+            } else addWorkout({ workoutTitle, exercises })
             
             navigation.goBack()
         }
@@ -236,6 +240,7 @@ export default function WorkoutForm({ route, navigation }) {
                 showsVerticalScrollIndicator={false}
                 data={exercises}
                 keyExtractor={(item, index) => index}
+                // showsVerticalScrollIndicator={false}
                 removeClippedSubviews={false}
                 renderItem={({ item, index }) =>
                     <ExerciseDetails

@@ -65,10 +65,10 @@ export const editWorkout = async (userId, workoutId, workout) => {
         await ref.update({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
-            completed: workout.completed,
         });
         console.log("Data updated");
     } catch (error) {
+        console.error(error)
         console.log("Update failed");
     }
 }
