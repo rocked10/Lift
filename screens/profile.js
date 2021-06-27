@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, FlatList }
 import { globalStyles } from "../styles/global";
 import * as Auth from '../api/auth';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import Card from '../shared/card'
 import * as DB from '../api/database'
 import { Button } from 'react-native-paper'
