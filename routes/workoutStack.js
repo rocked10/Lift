@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Workout from '../screens/workout';
 import WorkoutDetails from "../screens/workoutDetails";
 import ExerciseDescription from "../screens/exerciseDescription";
+import WorkoutForm from "../screens/workoutForm"
 import Header from "../shared/header";
 import { navigationStyles } from '../styles/global';
 import WorkoutTabs from "./workoutTabs";
@@ -27,6 +28,8 @@ const WorkoutStack = ({ navigation }) => {
                     options={{ headerTitle: () => <Header navigation={navigation} title='Workout Details' /> }}/>
             <Screen name='ExerciseDescription' component={ExerciseDescription}
                     options={{ headerTitle: () => <Header navigation={navigation} title='Exercise Description' /> }}/> 
+            <Screen name='WorkoutForm' component={WorkoutForm}
+                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' /> }}/> 
         </Navigator>
     )
 };

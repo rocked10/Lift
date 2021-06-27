@@ -54,6 +54,9 @@ export default function Profile({ navigation, route }) {
         }
     }
 
+    // to put the log out icon at the top right corner 
+    const [position, setPosition] = useState("absolute");
+
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -87,24 +90,10 @@ export default function Profile({ navigation, route }) {
                         </Button>
                         <AthleteListButton role={userProfile.role} />
                     </View>
-
                 </View>
 
 
-                {/* <View style={styles.statsBar}>
-                    <View style={styles.statsBarItem}>
-                        <Text style={{ alignSelf: 'center' }}>30000</Text>
-                        <Text>Followers</Text>
-                    </View>
-                    <View style={styles.statsBarItem}>
-                        <Text style={{ alignSelf: 'center' }}>60000</Text>
-                        <Text>Following</Text>
-                    </View>
-                    <View>
-                        <Text style={{ alignSelf: 'center' }}>90000</Text>
-                        <Text>Workouts</Text>
-                    </View>
-                </View> */}
+
                 <Card>
                     <View style={styles.personalRecordsTitle}>
                         <FontAwesome name="trophy" size={24} color="gold" />
@@ -136,7 +125,7 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         width: undefined,
-        height: undefined
+        height: undefined,
     },
     // statsBar: {
     //     flexDirection: 'row',

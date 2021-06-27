@@ -30,6 +30,14 @@ export default function Settings({ navigation }) {
                     }}
                 ]
             );
+        } else if (item === 'Personal Records') {
+            Alert.alert(
+                "",
+                "Do some shit here",
+                [
+                    { text: "OK", onPress: () => { Auth.deleteUser(); } }
+                ]
+            );
         }
     }
 
@@ -39,7 +47,7 @@ export default function Settings({ navigation }) {
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
                     { title: 'Account', data: ['Change email', 'Change password', 'Enable workout notifications', 'Delete account'] },
-                    // { title: 'General', data: [] }
+                    // { title: 'General', data: ['Personal Records'] }
                 ]}
 
                 renderItem = {({item, index, section}) => {

@@ -1,25 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Table, TableCell } from './table'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, } from "react-native-paper"
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
+import { Octicons } from '@expo/vector-icons';
 
 function ExerciseName({ value, onChangeText }) {
     return (
-        // <TextInput
-        //     mode='outlined'
-        //     style={{backgroundColor: 'white'}}
-        //     theme={{ colors: { text: '#483d8b' } }}
-        //     onChangeText={onChangeText}
-        //     placeholder='Enter exercise'
-        //     defaultValue={value}
-        //     selectionColor='blue'
-
-        // />
         <Text style={styles.exerciseName}>{value}</Text>
-        // <TouchableOpacity onPress={onChangeText}>
-        //     <MaterialIcons name="delete" size={24} color="black" />
-        // </TouchableOpacity>
     )
 }
 
@@ -53,6 +47,61 @@ function TopRow({ isCardio }) {
     }
 }
 
+// need to fix the regex....
+
+const handleSelectVariation = (variation, updateExerciseName, exerciseName) => {
+    if (variation === 'barbell') {
+        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Barbell)") : exerciseName + " (Barbell) ")
+    } else if (variation === 'dumbbell') {
+        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Dumbbell)") : exerciseName + " (Dumbbell) ")
+    } else if (variation === 'bodyweight') {
+        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Bodyweight)") : exerciseName + " (Bodyweight) ")
+    }
+}
+
+const selectVariation = (updateExerciseName, exerciseName) => {
+    Alert.alert(
+        'Choose a variation',
+        '',
+        [{text: "Barbell", onPress:() => handleSelectVariation('barbell', updateExerciseName, exerciseName)}, 
+        {text: 'Dumbbell', onPress:() => handleSelectVariation('dumbbell', updateExerciseName, exerciseName)}, 
+        {text: 'Bodyweight', onPress:() => handleSelectVariation('bodyweight', updateExerciseName, exerciseName)}]
+    )
+}
+
+const ExerciseVariationOption = ({exerciseCategory, updateExerciseName, exerciseName}) => {
+    if (exerciseCategory === 'Olympic' || exerciseCategory === 'Cardio') {
+        return null;
+    } else { 
+        return (
+            <MenuOption
+                customStyles={optionStyles}
+                onSelect={() => selectVariation(updateExerciseName, exerciseName)}
+                text='Select Variation'
+            />
+        )
+    }
+}
+
+function DropDownSelection({ deleteExercise, exerciseCategory, updateExerciseName, exerciseName }) {
+    return (
+        <Menu>
+            <MenuTrigger hitSlop={{ top: 20, bottom: 50, left: 60, right: 50 }} >
+                <Octicons name="kebab-horizontal" size={26} color="black" />
+            </MenuTrigger>
+            <MenuOptions customStyles={optionsStyles}>
+                <ExerciseVariationOption exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} />
+                <MenuOption
+                    customStyles={optionStyles}
+                    onSelect={deleteExercise}
+                >
+                    <Text style={{ color: 'red' }}>Delete</Text>
+                </MenuOption>
+            </MenuOptions>
+        </Menu>
+    )
+}
+
 export default function ExerciseDetails({ exerciseName, exerciseCategory, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName, visible }) {
     // console.log(exerciseCategory)
     const isCardio = exerciseCategory === 'Cardio'
@@ -65,9 +114,7 @@ export default function ExerciseDetails({ exerciseName, exerciseCategory, tableD
             <View style={{ padding: 6 }}>
                 <View style={styles.cardHeader}>
                     <ExerciseName value={exerciseName} />
-                    <TouchableOpacity style={styles.deleteExercise} onPress={() => deleteExercise()}>
-                        <MaterialIcons name="delete" size={24} color="black" />
-                    </TouchableOpacity>
+                    <DropDownSelection deleteExercise={deleteExercise} exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} />
                 </View>
                 <Table
                     headerComponent={<TopRow isCardio={isCardio} />}
@@ -79,7 +126,7 @@ export default function ExerciseDetails({ exerciseName, exerciseCategory, tableD
                     keyboardType='phone-pad'
                 />
 
-                <Button onPress={() => addSet()} style={{marginTop: 3}}>
+                <Button onPress={() => addSet()} style={{ marginTop: 3 }}>
                     <Text style={{ fontFamily: 'karla-bold' }}>ADD SET</Text>
                 </Button>
             </View>
@@ -125,4 +172,22 @@ const styles = StyleSheet.create({
         marginBottom: 8
     },
 
+    
+
 })
+
+const optionsStyles = {
+    optionsContainer: {
+        backgroundColor: '#f5f5f5',
+        width: 160,
+        borderRadius: 4,
+        padding: 4,
+    },
+};
+
+const optionStyles = {
+    optionText: {
+        color: 'black',
+        fontWeight: 'bold'
+    },
+};

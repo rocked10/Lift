@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-    View, Text, Button, FlatList, TouchableOpacity,
-    Modal, StatusBar, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert, SectionList
+    View, Text, TouchableOpacity,
+    StatusBar, StyleSheet, Alert, SectionList
 } from "react-native";
 import { List } from "react-native-paper";
 import { ListItem } from 'react-native-elements';
-import { globalStyles, loginStyles } from "../styles/global";
+import { globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from '@expo/vector-icons';
 import Card from "../shared/card";
-import WorkoutForm from "./workoutForm";
-import firebaseApp from "../api/firebase";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth.js';
 import {
@@ -19,18 +17,12 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
-import WorkoutFormModal from "../shared/workoutFormModal"
 
 
 export default function Workout({ navigation, route }) {
-    const [addWorkoutModalOpen, setAddWorkoutModalOpen] = useState(false);
-    const [editWorkoutModalOpen, setEditWorkoutModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState({});
     const [sectionedWorkouts, setSectionedWorkouts] = useState([]);
-    const [idOfWorkoutBeingEdited, setIdOfWorkoutBeingEdited] = useState(-1)
-    const [workoutBeingReused, setWorkoutBeingReused] = useState(false)
-    const [templateBeingReused, setTemplateBeingReused] = useState(false)
     const [role, setRole] = useState('');
 
     useEffect(() => {
@@ -74,107 +66,49 @@ export default function Workout({ navigation, route }) {
     const handleAddWorkout = (workout) => {
         // Adding completion status
         const newWorkout = addCompletionStatus(workout);
-
         DB.addWorkout(userId, newWorkout).then();
-        if (workoutBeingReused || templateBeingReused) {
-            setEditWorkoutModalOpen(false);
-            setIdOfWorkoutBeingEdited(-1);
-            if (workoutBeingReused) setWorkoutBeingReused(false);
-            else setTemplateBeingReused(false);
-        } else {
-            setAddWorkoutModalOpen(false);
-        }
     }
 
     const handleEditWorkout = (workout) => {
-        const newWorkout = addCompletionStatus(workout);
-
-        DB.editWorkout(Auth.getCurrentUserId(), idOfWorkoutBeingEdited, newWorkout).then();
-        setEditWorkoutModalOpen(false);
-        setIdOfWorkoutBeingEdited(-1);
+        // const newWorkout = addCompletionStatus(workout);
+        console.log(workout.id)
+        DB.editWorkout(userId, workout.id, workout).then();
     }
 
     const handleDeleteWorkout = (workout) => {
-        DB.deleteWorkout(Auth.getCurrentUserId(), workout.id).then();
+        DB.deleteWorkout(userId, workout.id).then();
     }
 
-    function EditWorkoutModal() {
-        if (workouts != null && idOfWorkoutBeingEdited != -1) {
-            const workout = workouts[idOfWorkoutBeingEdited]
-
-            let submissionHandler = '';
-            let createsANewWorkout = false;
-            let exercises = '';
-
-            if (workoutBeingReused || templateBeingReused) {
-                submissionHandler = handleAddWorkout
-                createsANewWorkout = true
-
-                if (workoutBeingReused) {
-                    exercises = workout.exercises.map(exercise => {
-                        exercise.tableData = exercise.tableData.map(elem => {return { row: elem.row, column : elem.column, value: 0}})
-                        return exercise;  
-                    });
-                } else {
-                    exercises = workout.exercises.map(exercise => {
-                        exercise.tableData = [
-                            { row: 0, column: 0, value: 0 },
-                            { row: 0, column: 1, value: 0 },
-                        ]
-                        return exercise;  
-                    });
-                }
-            } else {
-                submissionHandler = handleEditWorkout;
-                exercises = workout.exercises;
-            }
-
-            return (
-                <WorkoutFormModal
-                    modalOpen={editWorkoutModalOpen}
-                    setModalOpen={setEditWorkoutModalOpen}
-                    workoutTitle={workout.workoutTitle}
-                    exercises={exercises}
-                    addWorkout={submissionHandler}
-                    createsANewWorkout={createsANewWorkout}
-                    usesExistingWorkout={true}
-                />
-            );
-        } else {
-            return null;
-        }
-    }
-
-    function AddWorkoutModal() {
-        return (
-            <WorkoutFormModal
-                modalOpen={addWorkoutModalOpen}
-                setModalOpen={setAddWorkoutModalOpen}
-                addWorkout={handleAddWorkout}
-            />
-        );
-    }
+    const handleSelect = (workout, addWorkout, createsANewWorkout, reusingWorkout, reusingTemplate) => navigation.navigate('WorkoutForm', {
+        workout: workout,
+        addWorkout: addWorkout,
+        createsANewWorkout: createsANewWorkout,
+        reusingWorkout: reusingWorkout,
+        reusingTemplate: reusingTemplate,
+    })
 
     function DropDownSelection({ workout }) {
+        console.log(workout.exercises)
+
         return (
             <Menu>
-                <MenuTrigger hitSlop={{top: 20, bottom: 50, left: 60, right: 50}} >
+                <MenuTrigger hitSlop={{ top: 20, bottom: 50, left: 60, right: 50 }} >
                     <Octicons name="kebab-horizontal" size={26} color="black" />
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
                     <MenuOption
                         customStyles={optionStyles}
-                        onSelect={() => { console.log(workout.id); setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); }}
+                        onSelect={() => handleSelect(workout, handleEditWorkout, false, false, false)}
                         text='Edit Workout'
                     />
                     <MenuOption
                         customStyles={optionStyles}
-                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setWorkoutBeingReused(true); }}
+                        onSelect={() => handleSelect(workout, handleAddWorkout, true, true, false)}
                         text='Reuse Workout'
                     />
                     <MenuOption
                         customStyles={optionStyles}
-                        onSelect={() => { setEditWorkoutModalOpen(true); setIdOfWorkoutBeingEdited(workout.id); setTemplateBeingReused(true); }}
+                        onSelect={() => handleSelect(workout, handleAddWorkout, true, false, true)}
                         text='Reuse Template'
                     />
                     <MenuOption
@@ -206,17 +140,22 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <TouchableOpacity
-                style={{alignItems: 'flex-end', marginBottom: -18}}
-                onPress={() => setAddWorkoutModalOpen(true)}
+                style={{ alignItems: 'flex-end' }}
+                onPress={() => navigation.navigate('WorkoutForm', {
+                    workout: {
+                        workoutTitle: '',
+                        exercises: []
+                    },
+                    addWorkout: handleAddWorkout,
+                    createsANewWorkout: true,
+                })}
             >
                 <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
-            <AddWorkoutModal />
-
             <SectionList
                 showsVerticalScrollIndicator={false}
-                renderSectionHeader={({section: {title}}) => <List.Subheader style={{fontFamily: 'lato-bold'}}>{title} workouts</List.Subheader>}
+                renderSectionHeader={({ section: { title } }) => <List.Subheader style={{ fontFamily: 'lato-bold' }}>{title} workouts</List.Subheader>}
                 sections={sectionedWorkouts}
                 renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
@@ -232,12 +171,12 @@ export default function Workout({ navigation, route }) {
                         });
 
                         return (
-                            <TouchableOpacity onPress={() => navigation.navigate('Workout Details', { 
+                            <TouchableOpacity onPress={() => navigation.navigate('Workout Details', {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
                                 completed: item.completed,
                                 id: item.id,
-                                forViewingOnly: false, 
+                                forViewingOnly: false,
                             })}>
                                 <Card>
                                     <View style={styles.cardHeader}>
@@ -252,9 +191,6 @@ export default function Workout({ navigation, route }) {
                 }}
                 keyExtractor={(item, index) => item + index}
             />
-
-            <EditWorkoutModal />
-
             <StatusBar />
 
         </View>

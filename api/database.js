@@ -68,6 +68,7 @@ export const editWorkout = async (userId, workoutId, workout) => {
         });
         console.log("Data updated");
     } catch (error) {
+        console.error(error)
         console.log("Update failed");
     }
 }
@@ -145,6 +146,7 @@ export const addPR = (userId, exerciseName, pr) => {
         } 
     });
 }
+
 
 export const getPR = async (userId, exerciseName) => {
     try {
