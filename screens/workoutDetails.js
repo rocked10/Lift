@@ -119,14 +119,19 @@ export default function WorkoutDetails({ route, navigation }) {
                                         });
 
                                         if (completionStatus[exerciseNum][index]) {
+                                            // check if getPR is returning correctly?
                                             const prevPR = await DB.getPR(userId, exercises[exerciseNum].exerciseName)
-                                            console.log('hello')
-                                            console.log(prevPR)
                                             const currWeight = item[0].value;
                                             const currReps = item[1].value;
+                                            let displayOnProfile = false; 
+                                            console.log(prevPR)
 
-                                            if (! prevPR || (currWeight > prevPR[0] && currWeight !== 0)) {
-                                                DB.addPR(userId, exercises[exerciseNum].exerciseName, [currWeight, currReps]);
+                                            if (prevPR) {
+                                                displayOnProfile = prevPR.displayOnProfile; 
+                                            }
+
+                                            if (! prevPR || (currWeight > prevPR.weight && currWeight !== 0)) {
+                                                DB.addPR(userId, exercises[exerciseNum].exerciseName, [currWeight, currReps], displayOnProfile);
                                             }
                                         }
                                     }}
@@ -187,12 +192,12 @@ export default function WorkoutDetails({ route, navigation }) {
                     </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
-                ListFooterComponent={<TextInput
-                    multiline={true}
-                    label="Remarks"
-                    numberOfLines={4}
-                    onChangeText={setRemarks}
-                    value={remarks} />}
+                // ListFooterComponent={<TextInput
+                //     multiline={true}
+                //     label="Remarks"
+                //     numberOfLines={4}
+                //     onChangeText={setRemarks}
+                //     value={remarks} />}
             />
 
             <Provider>

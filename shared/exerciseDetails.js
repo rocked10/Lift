@@ -106,7 +106,7 @@ export default function ExerciseDetails({ exerciseName, exerciseCategory, tableD
     // console.log(exerciseCategory)
     const isCardio = exerciseCategory === 'Cardio'
     // console.log(isCardio)
-    console.log(exerciseName)
+    // console.log(exerciseName)
 
     if (visible) {
         return (

@@ -15,17 +15,17 @@ export default function WorkoutForm({ route, navigation }) {
 
 
     useEffect(() => {
-        if (reusingWorkout) {
-            let temp = workout.exercises.map(exercise => {
-                exercise.tableData = exercise.tableData.map(elem => { return { row: elem.row, column: elem.column, value: 0 } })
-                return exercise;
-            });
-            setExercises(temp);
-        } else if (reusingTemplate) {
+        // if (reusingWorkout) {
+        //     let temp = workout.exercises.map(exercise => {
+        //         exercise.tableData = exercise.tableData.map(elem => { return { row: elem.row, column: elem.column, value: 0 } })
+        //         return exercise;
+        //     });
+        //     setExercises(temp);
+        if (reusingTemplate) {
             let temp = workout.exercises.map(exercise => {
                 exercise.tableData = [
-                    { row: 0, column: 0, value: 0 },
-                    { row: 0, column: 1, value: 0 },
+                    { row: 0, column: 0, value: '' },
+                    { row: 0, column: 1, value: '' },
                 ]
                 return exercise;
             })
@@ -49,6 +49,7 @@ export default function WorkoutForm({ route, navigation }) {
                         <View style={globalStyles.modalContent}>
                             <Exercises
                                 cameFromWorkoutForm={true}
+                                currentExercisesInForm={exercises}
                                 onSelectExercise={exerciseObj => {
                                     handleSelect(exercises.length - 1)(exerciseObj);
                                 }}
