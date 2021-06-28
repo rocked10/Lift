@@ -88,7 +88,7 @@ export default function Workout({ navigation, route }) {
     })
 
     function DropDownSelection({ workout }) {
-        console.log(workout.exercises)
+        // console.log(workout.exercises)
 
         return (
             <Menu>

@@ -29,7 +29,7 @@ const WorkoutStack = ({ navigation }) => {
             <Screen name='ExerciseDescription' component={ExerciseDescription}
                     options={{ headerTitle: () => <Header navigation={navigation} title='Exercise Description' /> }}/> 
             <Screen name='WorkoutForm' component={WorkoutForm}
-                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' /> }}/> 
+                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' />, headerLeft: ()=> null,}}/> 
         </Navigator>
     )
 };

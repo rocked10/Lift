@@ -8,6 +8,7 @@ import AthleteList from "../screens/athleteList"
 import ChangePassword from "../screens/changePassword";
 import { navigationStyles } from '../styles/global';
 import ChangeEmail from "../screens/changeEmail";
+import PersonalRecords from "../screens/personalRecords";
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -26,6 +27,8 @@ const ProfileStack = ({ navigation }) => (
                 options={{ headerTitle: () => <Header navigation={navigation} title='Athlete List' />}} />
         <Screen name='Change Email' component={ChangeEmail}
                 options={{headerTitle: () => <Header navigation={navigation} title='Change Email' />}} />
+        <Screen name='Personal Records' component={PersonalRecords}
+                options={{headerTitle: () => <Header navigation={navigation} title='Personal Records' />}} />
     </Navigator>
 );
 

@@ -133,31 +133,32 @@ export const addUserProfile = (userId, name, email, role) => {
     });
 }
 
-export const addPR = (userId, exerciseName, pr) => {
+export const addPR = (userId, exerciseName, pr, displayOnProfile) => {
     db.ref(`users/${userId}/personalRecords/${exerciseName}`).set({
         exerciseName: exerciseName,
         weight: pr[0],
         reps: pr[1],
+        displayOnProfile: displayOnProfile,
     }, (error) => {
         if (error) {
             console.log("Personal record not added");
         } else {
             console.log("Personal record added");
-        } 
+        }
     });
 }
-
 
 export const getPR = async (userId, exerciseName) => {
     try {
         let ref = '';
-        await db.ref(`users/${userId}/${personalRecords}`)
+        await db.ref(`users/${userId}/personalRecords`)
             .once('value', snapshot => {
                 const obj = snapshot.val();
                 ref = obj[exerciseName];
             });
         return ref;
     } catch (error) {
+        console.error(error)
         console.log("Error finding PR");
     }
 }

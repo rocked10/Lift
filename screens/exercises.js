@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Keyboard } from "react-native";
+import { View, TouchableOpacity, ScrollView, Keyboard, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
 import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
 
 
-export default function Exercises({ navigation, route, cameFromWorkoutForm, onSelectExercise, setModalOpen, setFormVisible }) {
+export default function Exercises({ navigation, route, cameFromWorkoutForm, currentExercisesInForm, onSelectExercise, setModalOpen, setFormVisible }) {
     const [searchQuery, setSearchQuery] = useState('');
 
     const [olympic, setOlympic] = useState([]);
@@ -15,15 +15,11 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     const [arms, setArms] = useState([]);
     const [cardio, setCardio] = useState([]);
 
-    const [alertVisible, setAlertVisible] = useState(false);
-    const showAlert = () => setAlertVisible(true);
-    const hideAlert = () => setAlertVisible(false);
-
     const [expanded, setExpanded] = useState({});
 
     const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
-    { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Arms', data: arms},
-        { title: 'Cardio', data: cardio }];
+    { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Arms', data: arms },
+    { title: 'Cardio', data: cardio }];
 
     useEffect(() => {
         DB.getExercisesByCategory("Olympic", setOlympic);
@@ -51,30 +47,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
     // const getExerciseBgColor = (item, index) => {
     //     selected[item.category][index] ? 'blue' : 'white'
     // }
-
-
-
-    // can be abstracted. will be abstracted. 
-
-    const AlertMessage = () => {
-        let customExerciseObject = {
-            category: "userDefined",
-            exerciseName: searchQuery,
-        };
-
-        return (
-            <Dialog visible={alertVisible} dismissable={false}>
-                <Dialog.Title>Hmm... we don't know what that exercise is</Dialog.Title>
-                <Dialog.Content>
-                    <Paragraph>Add it anyway?</Paragraph>
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <Button onPress={() => { hideAlert(); setModalOpen(false); setFormVisible(true); onSelectExercise(customExerciseObject) }}>Yes</Button>
-                    <Button onPress={hideAlert}>No</Button>
-                </Dialog.Actions>
-            </Dialog>
-        );
-    }
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -104,16 +76,24 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                             //     newSelected[item.category][index] = true
                             //     return newSelected
                             // })
-                            onSelectExercise(item)
-                            setModalOpen(false)
-                            setFormVisible(true)
+                            if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes("item.exerciseName")) {
+                                Alert.alert(
+                                    "You have already added this exercise to your workout form",
+                                    "Please choose another exercise",
+                                    [{ text: "Ok", }]
+                                )
+                            } else {
+                                onSelectExercise(item)
+                                setModalOpen(false)
+                                setFormVisible(true)
+                            }
                         }
                     }}
                 >
                     <List.Item
                         titleStyle={{ fontFamily: 'lato-regular', color: highlight }}
                         title={item.exerciseName}
-                        // style={{ backgroundColor: getExerciseBgColor(item, index) }}
+                    // style={{ backgroundColor: getExerciseBgColor(item, index) }}
                     />
                 </TouchableOpacity>
             );
@@ -142,7 +122,26 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
             setExpanded({ ...expanded, [exercise.category]: true });
         } else {
             if (cameFromWorkoutForm) {
-                showAlert();
+                let customExerciseObject = {
+                    category: "userDefined",
+                    exerciseName: searchQuery,
+                };
+
+                if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes(searchQuery)) {
+                    Alert.alert(
+                        "You have already added this exercise to your workout form",
+                        "Please choose another exercise",
+                        [{ text: "Ok", }]
+                    )
+                } else {
+                    Alert.alert(
+                        "Hmm, we don't know what that exercise is",
+                        "Add it anyway?",
+                        [{ text: "Yes", onPress: () => { setModalOpen(false); setFormVisible(true); onSelectExercise(customExerciseObject); } },
+                        { text: "No", }
+                        ]
+                    )
+                }   
             }
         }
     }
@@ -154,7 +153,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
 
     // Exercise adder
     const handlePress = async () => {
-        DB.addExercise('Arms', 'Bicep Curl','sAq_ocpRh_I').then();
+        DB.addExercise('Arms', 'Bicep Curl', 'sAq_ocpRh_I').then();
     }
 
     return (
@@ -186,8 +185,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, onSe
                     }
                 </List.Section>
             </ScrollView>
-
-            <AlertMessage />
 
             {/*<Button onPress={handlePress}>Add</Button>*/}
 

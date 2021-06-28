@@ -35,25 +35,37 @@ export default function Profile({ navigation, route }) {
         }
     }
 
-    const PersonalRecords = () => {
+    const PersonalRecordsCard = () => {
         if (userProfile.personalRecords) {
+            let count = 0; 
             const entries = Object.values(userProfile.personalRecords).map(item => {
                 const label = item.exerciseName + ": " + item.weight + "kg" + " x " + item.reps;
-                return (
-                    <Text key={Math.random()} style={globalStyles.text}>{label}</Text>
-                );
+                if (item.displayOnProfile) {
+                    count++;
+                    return (
+                        <Text key={Math.random()} style={globalStyles.text}>{label}</Text>
+                    );
+                }
             });
 
-            return (
-                <View style={styles.container}>
-                    {entries}
-                </View>
-            );
+            if (count === 0) {
+                return (
+                    <Text style={globalStyles.text}>We see that you've been putting in the work. How about showing those PRs off to your friends!</Text>
+                )
+            } else {
+                return (
+                    <View style={styles.container}>
+                        {entries}
+                    </View>
+                );
+            }
         } else {
-            return null;
+            return (
+                <Text style={globalStyles.text}>You don't have any yet! Time to get to work...</Text>
+            )
         }
     }
-
+    
     // to put the log out icon at the top right corner 
     const [position, setPosition] = useState("absolute");
 
@@ -101,7 +113,7 @@ export default function Profile({ navigation, route }) {
                         <FontAwesome name="trophy" size={24} color="gold" />
                     </View>
 
-                    <PersonalRecords />
+                    <PersonalRecordsCard />
                 </Card>
 
             </ScrollView>
