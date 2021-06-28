@@ -65,10 +65,11 @@ export const editWorkout = async (userId, workoutId, workout) => {
         await ref.update({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
+            completed: workout.completed,
         });
         console.log("Data updated");
     } catch (error) {
-        console.error(error)
+        console.error(error);
         console.log("Update failed");
     }
 }
@@ -151,7 +152,7 @@ export const addPR = (userId, exerciseName, pr) => {
 export const getPR = async (userId, exerciseName) => {
     try {
         let ref = '';
-        await db.ref(`users/${userId}/${personalRecords}`)
+        await db.ref(`users/${userId}/personalRecords`)
             .once('value', snapshot => {
                 const obj = snapshot.val();
                 ref = obj[exerciseName];

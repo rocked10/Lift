@@ -4,7 +4,6 @@ import {
     StatusBar, StyleSheet, Alert, SectionList
 } from "react-native";
 import { List } from "react-native-paper";
-import { ListItem } from 'react-native-elements';
 import { globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from '@expo/vector-icons';

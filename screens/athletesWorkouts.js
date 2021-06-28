@@ -10,7 +10,6 @@ export default function AthletesWorkouts({ navigation }) {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [userFound, setUserFound] = useState('');
     const [athleteId, setAthleteId] = useState('');
-    // const [userProfile, setUserProfile] = useState('');
     const [workouts, setWorkouts] = useState([]);
     const [displayWorkouts, setDisplayWorkouts] = useState(false);
 
