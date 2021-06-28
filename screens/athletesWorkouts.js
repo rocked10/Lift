@@ -94,7 +94,7 @@ export default function AthletesWorkouts({ navigation }) {
     return (
         <View style={globalStyles.container}>
             <Searchbar
-                placeholder="Search for an athlete..."
+                placeholder="Search for an athlete via email..."
                 value={searchQuery}
                 onChangeText={onChangeSearch}
                 onIconPress={onSubmitSearch}

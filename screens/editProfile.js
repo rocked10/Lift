@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SectionList } from "react-native";
 import { settingStyles } from "../styles/global";
 import { TextInput } from 'react-native-paper';
-import firebase from 'firebase';
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 

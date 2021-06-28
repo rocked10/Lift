@@ -10,6 +10,7 @@ export default function WorkoutForm({ route, navigation }) {
 
     const [workoutTitle, setWorkoutTitle] = useState(workout.workoutTitle)
     const [exercises, setExercises] = useState(workout.exercises)
+    const [completed, setCompleted] = useState(workout.completed);
     const [modalOpen, setModalOpen] = useState(false)
     const [formVisible, setFormVisible] = useState(true)
 
@@ -202,7 +203,7 @@ export default function WorkoutForm({ route, navigation }) {
             // console.log(exercises)
             // console.log("workout title is: " + workoutTitle)
             if (! createsANewWorkout) {
-                addWorkout({ id: workout.id, workoutTitle, exercises })
+                addWorkout({ id: workout.id, workoutTitle, exercises, completed })
             } else addWorkout({ workoutTitle, exercises })
             
             navigation.goBack()

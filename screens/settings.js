@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SectionList, Alert } from "react-native";
 import * as Auth from "../api/auth";
 import { settingStyles } from "../styles/global";
@@ -6,15 +6,27 @@ import * as DB from "../api/database";
 
 
 export default function Settings({ navigation }) {
+    const [userProfile, setUserProfile] = useState({});
+    const [userId, setUserId] = useState(Auth.getCurrentUserId());
+
+    useEffect(() => {
+        DB.getUserProfile(userId, setUserProfile);
+    }, []);
 
     const FlatListItemSeparator = () => {
         return (
-          //Item Separator
-          <View style={settingStyles.listItemSeparatorStyle} />
+            //Item Separator
+            <View style={settingStyles.listItemSeparatorStyle} />
         );
     };
 
     const handleAccount = (item) => {
+        let recordsToDisplay = userProfile.personalRecords
+            ? Object.entries(userProfile.personalRecords).map(item => item[1].displayOnProfile)
+            : []
+
+        console.log(recordsToDisplay);
+
         if (item === 'Change password') {
             navigation.navigate('Change Password');
         } else if (item === 'Change email') {
@@ -25,13 +37,13 @@ export default function Settings({ navigation }) {
                 "Are you sure you want to delete your account? This action cannot be undone.",
                 [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
                     { text: "OK", onPress: () => {
-                        DB.deleteUser(Auth.getCurrentUserId()).then();
-                        Auth.deleteUser();
-                    }}
+                            DB.deleteUser(Auth.getCurrentUserId()).then();
+                            Auth.deleteUser();
+                        }}
                 ]
             );
         } else if (item === 'Personal Records') {
-            navigation.navigate('Personal Records')
+            navigation.navigate('Personal Records', { _recordstoDisplay: recordsToDisplay })
         }
     }
 

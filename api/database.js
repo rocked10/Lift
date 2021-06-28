@@ -149,13 +149,19 @@ export const addPR = (userId, exerciseName, pr, displayOnProfile) => {
     });
 }
 
-export const getPR = async (userId, exerciseName) => {
+export const getPR = async (userId, exerciseName, all=false) => {
     try {
         let ref = '';
         await db.ref(`users/${userId}/personalRecords`)
             .once('value', snapshot => {
                 const obj = snapshot.val();
-                ref = obj[exerciseName];
+                if (obj) {
+                    if (all) {
+                        ref = obj;
+                    } else {
+                        ref = obj[exerciseName];
+                    }
+                }
             });
         return ref;
     } catch (error) {
@@ -204,17 +210,6 @@ export const getUserProfile = (userId, onValueChanged) => {
         onValueChanged(snapshot.val());
     });
     return () => ref.off("value");
-}
-
-export const updateFitnessInfo = async (userId, detail, value) => {
-    try {
-        const ref = db.ref(`users/${userId}/fitnessInfo`);
-        await ref.update({
-            [detail]: value,
-        });
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 export const updateInfo = async (userId, reference, key, value) => {

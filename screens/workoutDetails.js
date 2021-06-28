@@ -76,7 +76,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = exerciseCategory === 'cardio' 
+                        const label = exerciseCategory === 'Cardio'
                             ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
                             : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
                             
@@ -100,7 +100,10 @@ export default function WorkoutDetails({ route, navigation }) {
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
-                        const label = "Set " + (item[0].row + 1) + ": " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                        const label = exerciseCategory === 'Cardio'
+                            ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
+                            : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+
                         return (
                             <View>
                                 <Checkbox.Item

@@ -53,13 +53,27 @@ export default function Workout({ navigation, route }) {
     }, [workouts]);
 
     const addCompletionStatus = (workout) => {
-        let completed = [];
-        workout.exercises.forEach((item) => {
-            completed.push(new Array(item.tableData.length / 2));
-        });
-        completed.map((arr) => arr.fill(false));
-        workout.completed = completed;
-        return workout;
+        if (! workout.completed) {
+            let completed = [];
+            workout.exercises.forEach((item) => {
+                completed.push(new Array(item.tableData.length / 2));
+            });
+            completed.map((arr) => arr.fill(false));
+            workout.completed = completed;
+            return workout;
+        } else {
+            let counter = 1;
+            workout.exercises.forEach((item) => {
+                if (counter < workout.completed.length) {
+                    counter++
+                } else {
+                    let temp = new Array(item.tableData.length / 2);
+                    temp.fill(false);
+                    workout.completed.push(temp);
+                }
+            });
+            return workout;
+        }
     }
 
     const handleAddWorkout = (workout) => {
@@ -69,9 +83,9 @@ export default function Workout({ navigation, route }) {
     }
 
     const handleEditWorkout = (workout) => {
-        // const newWorkout = addCompletionStatus(workout);
+        const newWorkout = addCompletionStatus(workout);
         console.log(workout.id)
-        DB.editWorkout(userId, workout.id, workout).then();
+        DB.editWorkout(userId, workout.id, newWorkout).then();
     }
 
     const handleDeleteWorkout = (workout) => {
