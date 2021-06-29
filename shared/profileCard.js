@@ -1,7 +1,6 @@
 import { Avatar, Card } from "react-native-paper";
 import React from "react";
 
-
 const LeftContent = props => <Avatar.Icon {...props} color='white' icon="account" />
 
 const ProfileCard = ({ title, subtitle, onPress, right }) => (

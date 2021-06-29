@@ -66,7 +66,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                             console.log(item)
                             navigation.navigate('ExerciseDescription', {
                                 exercise: item,
-                            })
+                            });
                         } else {
                             // setSelected(prev => {
                             //     console.log("****8")
@@ -78,14 +78,14 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                             // })
                             if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes(item.exerciseName)) {
                                 Alert.alert(
-                                    "You have already added this exercise to your workout form",
+                                    "Exercise already added!",
                                     "Please choose another exercise",
                                     [{ text: "Ok", }]
-                                )
+                                );
                             } else {
-                                onSelectExercise(item)
-                                setModalOpen(false)
-                                setFormVisible(true)
+                                onSelectExercise(item);
+                                setModalOpen(false);
+                                setFormVisible(true);
                             }
                         }
                     }}

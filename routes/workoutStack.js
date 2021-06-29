@@ -20,6 +20,8 @@ const WorkoutStack = ({ navigation }) => {
         DB.getUserType(setRole);
     }, [role]);
 
+    // headerLeft: ()=> null
+
     return (
         <Navigator screenOptions={navigationStyles} >
             <Screen name='Workout' component={role === 'Coach' ? WorkoutTabs : Workout}
@@ -29,9 +31,9 @@ const WorkoutStack = ({ navigation }) => {
             <Screen name='ExerciseDescription' component={ExerciseDescription}
                     options={{ headerTitle: () => <Header navigation={navigation} title='Exercise Description' /> }}/> 
             <Screen name='WorkoutForm' component={WorkoutForm}
-                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' />, headerLeft: ()=> null,}}/> 
+                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' />, }}/>
         </Navigator>
-    )
+    );
 };
 
 export default WorkoutStack;

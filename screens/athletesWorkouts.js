@@ -10,7 +10,6 @@ export default function AthletesWorkouts({ navigation }) {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [userFound, setUserFound] = useState('');
     const [athleteId, setAthleteId] = useState('');
-    // const [userProfile, setUserProfile] = useState('');
     const [workouts, setWorkouts] = useState([]);
     const [displayWorkouts, setDisplayWorkouts] = useState(false);
 
@@ -95,7 +94,7 @@ export default function AthletesWorkouts({ navigation }) {
     return (
         <View style={globalStyles.container}>
             <Searchbar
-                placeholder="Search for an athlete..."
+                placeholder="Search for an athlete via email..."
                 value={searchQuery}
                 onChangeText={onChangeSearch}
                 onIconPress={onSubmitSearch}

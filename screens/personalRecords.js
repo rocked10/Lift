@@ -8,7 +8,7 @@ import * as DB from '../api/database';
 
 
 export default function PersonalRecords({ navigation, route }) {
-    const { _recordsToDisplay } = route.params 
+    const { _recordsToDisplay } = route.params
     const [userProfile, setUserProfile] = useState({});
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [recordsToDisplay, setRecordsToDisplay] = useState(_recordsToDisplay);
@@ -25,27 +25,13 @@ export default function PersonalRecords({ navigation, route }) {
         );
     };
 
-    // const handleEditInfo = (title, index, item, text) => {
-    //     if (title === 'Fitness Information') {
-    //         let temp = [...fitnessInfo];
-    //         temp[index][1] = text;
-    //         setFitnessInfo(temp);
-    //         DB.updateInfo(uid, 'fitnessInfo', item, text).then();
-    //     } else if (title === 'User Information') {
-    //         let temp = [...userInfo];
-    //         temp[index][1] = text;
-    //         setUserInfo(temp);
-    //         DB.updateInfo(uid, 'userInfo', item, text).then();
-    //     }
-    // }
-
     const ExplanatoryText = ({ recordsToDisplay }) => {
         if (recordsToDisplay !== []) {
             return <Text style={globalStyles.text}>This is going on your profile! Choose what you want to show</Text>
-        } else { 
+        } else {
             return <Text style={globalStyles.text}>Start breaking some records!</Text>
         }
-        
+
     }
 
     return (
@@ -58,23 +44,21 @@ export default function PersonalRecords({ navigation, route }) {
                     let label = ''
                     // if (item.exerciseCategory === cardio) {
                     //     label = item.exerciseName + ": " + item.weight + "kg" + " x " + item.reps;
-                    // } else { 
+                    // } else {
                     label = item.exerciseName + ": " + item.weight + "kg" + " x " + item.reps;
                     // }
 
                     return (
-                        
                         <Checkbox.Item
                             label={label}
                             labelStyle={globalStyles.cardText}
                             status={item.displayOnProfile ? 'checked' : 'unchecked'}
                             onPress={() => DB.addPR(userId, item.exerciseName, [item.weight, item.reps], ! item.displayOnProfile)}
                         />
-                        
                     );
                 }
                 }
-            keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => index}
             />
         </View>
     );

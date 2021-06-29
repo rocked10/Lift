@@ -65,10 +65,11 @@ export const editWorkout = async (userId, workoutId, workout) => {
         await ref.update({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
+            completed: workout.completed,
         });
         console.log("Data updated");
     } catch (error) {
-        console.error(error)
+        console.error(error);
         console.log("Update failed");
     }
 }
@@ -148,14 +149,18 @@ export const addPR = (userId, exerciseName, pr, displayOnProfile) => {
     });
 }
 
-export const getPR = async (userId, exerciseName) => {
+export const getPR = async (userId, exerciseName, all=false) => {
     try {
         let ref = '';
         await db.ref(`users/${userId}/personalRecords`)
             .once('value', snapshot => {
                 const obj = snapshot.val();
                 if (obj) {
-                    ref = obj[exerciseName];
+                    if (all) {
+                        ref = obj;
+                    } else {
+                        ref = obj[exerciseName];
+                    }
                 }
             });
         return ref;
@@ -193,7 +198,11 @@ export const findUserId = async (email) => {
                 ref = snapshot.val();
             });
         const uidObject = ref;
-        return { id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name };
+        if (ref) {
+            return {id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name};
+        } else {
+            return {id: '', name : ''};
+        }
     } catch (error) {
         console.log(error);
     }
@@ -205,17 +214,6 @@ export const getUserProfile = (userId, onValueChanged) => {
         onValueChanged(snapshot.val());
     });
     return () => ref.off("value");
-}
-
-export const updateFitnessInfo = async (userId, detail, value) => {
-    try {
-        const ref = db.ref(`users/${userId}/fitnessInfo`);
-        await ref.update({
-            [detail]: value,
-        });
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 export const updateInfo = async (userId, reference, key, value) => {

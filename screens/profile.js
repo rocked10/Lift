@@ -50,7 +50,7 @@ export default function Profile({ navigation, route }) {
 
             if (count === 0) {
                 return (
-                    <Text style={globalStyles.text}>We see that you've been putting in the work. How about showing those PRs off to your friends!</Text>
+                    <Text style={globalStyles.text}>We see that you've been putting in the work. How about showing those PRs off!</Text>
                 )
             } else {
                 return (
@@ -70,15 +70,16 @@ export default function Profile({ navigation, route }) {
     const [position, setPosition] = useState("absolute");
 
     return (
-        <View style={styles.container}>
+        <View style={{padding: 18,}}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
-                    <TouchableOpacity
+                    <Entypo
+                        name="log-out"
+                        size={28}
+                        color="black"
                         onPress={Auth.signOut}
-                        style={{ alignSelf: 'flex-end' }}
-                    >
-                        <Entypo name="log-out" size={28} color="black"  />
-                    </TouchableOpacity>
+                        style={{ position: 'absolute', top: 0, right: 0 }}
+                    />
 
                     <View style={styles.profileImage}>
                         <Image
