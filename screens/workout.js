@@ -64,7 +64,7 @@ export default function Workout({ navigation, route }) {
         } else {
             let counter = 1;
             workout.exercises.forEach((item) => {
-                if (counter < workout.completed.length) {
+                if (counter <= workout.completed.length) {
                     counter++
                 } else {
                     let temp = new Array(item.tableData.length / 2);

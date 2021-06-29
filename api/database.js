@@ -198,7 +198,11 @@ export const findUserId = async (email) => {
                 ref = snapshot.val();
             });
         const uidObject = ref;
-        return { id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name };
+        if (ref) {
+            return {id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name};
+        } else {
+            return {id: '', name : ''};
+        }
     } catch (error) {
         console.log(error);
     }
