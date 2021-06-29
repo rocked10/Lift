@@ -79,6 +79,9 @@ export default function WorkoutDetails({ route, navigation }) {
                         const label = exerciseCategory === 'cardio' 
                             ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
                             : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+
+                        console.log(exerciseNum)
+                        console.log(index)
                             
                         return (
                             <View>
@@ -109,6 +112,8 @@ export default function WorkoutDetails({ route, navigation }) {
                                     status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
                                     onPress={async () => {
                                         setCompletionStatus(prev => {
+                                            console.log("fucking hell")
+                                            console.log(prev)
                                             const newCompletionStatus = [...prev];
                                             newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
                                             DB.updateSetCompletionStatus(userId, id, newCompletionStatus).then();

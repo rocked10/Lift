@@ -76,7 +76,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                             //     newSelected[item.category][index] = true
                             //     return newSelected
                             // })
-                            if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes("item.exerciseName")) {
+                            if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes(item.exerciseName)) {
                                 Alert.alert(
                                     "You have already added this exercise to your workout form",
                                     "Please choose another exercise",

@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, } from "react-native";
 import { settingStyles, globalStyles } from "../styles/global";
-import { TextInput } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import firebase from 'firebase';
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 
 
 export default function PersonalRecords({ navigation, route }) {
+    const { _recordsToDisplay } = route.params 
     const [userProfile, setUserProfile] = useState({});
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
+    const [recordsToDisplay, setRecordsToDisplay] = useState(_recordsToDisplay);
 
     useEffect(() => {
         DB.getUserProfile(userId, setUserProfile);
+        DB.subscribe(userId, setRecordsToDisplay);
     }, []);
 
     const FlatListItemSeparator = () => {
@@ -36,13 +39,18 @@ export default function PersonalRecords({ navigation, route }) {
     //     }
     // }
 
-    const handleSelect = (item) => {
-        DB.addPR(userId, item.exerciseName, [item.weight, item.reps], true)
+    const ExplanatoryText = ({ recordsToDisplay }) => {
+        if (recordsToDisplay !== []) {
+            return <Text style={globalStyles.text}>This is going on your profile! Choose what you want to show</Text>
+        } else { 
+            return <Text style={globalStyles.text}>Start breaking some records!</Text>
+        }
+        
     }
 
     return (
         <View style={globalStyles.container}>
-            <Text style={globalStyles.text}>This is going on your profile! Choose what you want to show your friends.</Text>
+            <ExplanatoryText recordsToDisplay={recordsToDisplay} />
             <FlatList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 data={userProfile.personalRecords ? Object.values(userProfile.personalRecords) : null}
@@ -55,9 +63,14 @@ export default function PersonalRecords({ navigation, route }) {
                     // }
 
                     return (
-                        <TouchableOpacity onPress={() => handleSelect(item)}>
-                            <Text style={settingStyles.item}>{label}</Text>
-                        </TouchableOpacity>
+                        
+                        <Checkbox.Item
+                            label={label}
+                            labelStyle={globalStyles.cardText}
+                            status={item.displayOnProfile ? 'checked' : 'unchecked'}
+                            onPress={() => DB.addPR(userId, item.exerciseName, [item.weight, item.reps], ! item.displayOnProfile)}
+                        />
+                        
                     );
                 }
                 }

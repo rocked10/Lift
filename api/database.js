@@ -154,7 +154,9 @@ export const getPR = async (userId, exerciseName) => {
         await db.ref(`users/${userId}/personalRecords`)
             .once('value', snapshot => {
                 const obj = snapshot.val();
-                ref = obj[exerciseName];
+                if (obj) {
+                    ref = obj[exerciseName];
+                }
             });
         return ref;
     } catch (error) {
