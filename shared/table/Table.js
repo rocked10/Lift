@@ -8,14 +8,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-export default function Table({ headerComponent, rows, columns, data, onUpdate, deleteRow, keyboardType }) {
-    const cells = new Array(rows * columns);
-    for (let { row, column, value } of data) {
-        cells[row * columns + column] = value;
-    }
+export default function Table({ headerComponent, data, onUpdate, deleteRow, keyboardType }) {
+    // const cells = new Array(rows * columns);
+    // for (let { set, weight, reps } of data) {
+    //     cells[row * columns + column] = value;
+    // }
 
-    const listData = chunkArray(cells, columns)
-        .map((value, index) => ({ vals: value, key: `${index}` }));
+    // const listData = chunkArray(cells, columns)
+    //     .map((value, index) => ({ vals: value, key: `${index}` }));
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
@@ -31,9 +31,8 @@ export default function Table({ headerComponent, rows, columns, data, onUpdate, 
     const renderItem = (data, rowMap) => {
         return (
             <TableRow
-                rowNumber={data.item.key}
-                rowValues={data.item.vals}
-                onColumnUpdate={onUpdate(parseInt(data.item.key))}
+                data={data.item}
+                onColumnUpdate={onUpdate(parseInt(data.item.set))}
                 keyboardType={keyboardType}
             />
         )
@@ -43,7 +42,7 @@ export default function Table({ headerComponent, rows, columns, data, onUpdate, 
         <View style={styles.rowBack}>
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => _deleteRow(rowMap, data.item.key)}
+                onPress={() => _deleteRow(rowMap, data.item.set)}
             >
                 <Text style={styles.backTextWhite}>Delete</Text>
             </TouchableOpacity>
@@ -52,7 +51,7 @@ export default function Table({ headerComponent, rows, columns, data, onUpdate, 
 
     return (
         <SwipeListView
-            data={listData}
+            data={data}
             renderItem={renderItem}
             renderHiddenItem={renderHiddenItem}
             ListHeaderComponent={headerComponent}
@@ -86,18 +85,22 @@ export default function Table({ headerComponent, rows, columns, data, onUpdate, 
     // );
 }
 
-function TableRow({ rowNumber, rowValues, onColumnUpdate, deleteRow, keyboardType }) {
+function TableRow({ data, onColumnUpdate, deleteRow, keyboardType }) {
     return (
         <View style={styles.row}>
-            <TableCell value={parseInt(rowNumber) + 1} editable={false} />
-            {rowValues.map((value, index) =>
-                <TableCell
-                    key={index.toString() + onColumnUpdate}
-                    value={value}
-                    onUpdate={onColumnUpdate(index)}
-                    keyboardType={keyboardType}
-                />)
-            }
+            <TableCell value={data.set} editable={false} />
+            
+            <TableCell
+                value={data.weight}
+                onUpdate={onColumnUpdate(0)}
+                keyboardType={keyboardType}
+            />
+            <TableCell
+                value={data.reps}
+                onUpdate={onColumnUpdate(1)}
+                keyboardType={keyboardType}
+            />
+            
 
             {/* <TouchableOpacity style={styles.delete} onPress={() => deleteRow(rowNumber)}>
                     <MaterialIcons name="delete" size={24} color="black" />
@@ -155,16 +158,16 @@ const styles = StyleSheet.create({
     },
 });
 
-function chunkArray(arr, n) {
-    return arr.reduce((acc, item, index) => {
-        const remainder = index % n;
-        if (remainder === 0) return [...acc, [item]];
-        const updatedArr = [...acc];
-        const subArrIndexToUpdate = (index - remainder) / n;
-        updatedArr[subArrIndexToUpdate] = [
-            ...updatedArr[subArrIndexToUpdate],
-            item,
-        ];
-        return updatedArr;
-    }, []);
-}
+// function chunkArray(arr, n) {
+//     return arr.reduce((acc, item, index) => {
+//         const remainder = index % n;
+//         if (remainder === 0) return [...acc, [item]];
+//         const updatedArr = [...acc];
+//         const subArrIndexToUpdate = (index - remainder) / n;
+//         updatedArr[subArrIndexToUpdate] = [
+//             ...updatedArr[subArrIndexToUpdate],
+//             item,
+//         ];
+//         return updatedArr;
+//     }, []);
+// }

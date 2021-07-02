@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, View} from "react-native";
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../styles/global";
 import { Avatar, Button, Card, FAB, Title, Paragraph } from 'react-native-paper';
 import MyCard from '../shared/card';
@@ -25,41 +25,47 @@ export default function Community({ navigation, route }) {
     const CommunityCard = ({ name, role, title, body, workouts }) => {
 
         return (
-            <Card style={{backgroundColor: '#F5F5F5', margin: 10}} onPress={() => {}}>
-                <Card.Title titleStyle={{fontFamily: 'lato-bold'}} title={name} subtitle={role} left={LeftContent} />
+            <Card style={{ backgroundColor: '#F5F5F5', margin: 10 }} onPress={() => { }}>
+                <Card.Title titleStyle={{ fontFamily: 'lato-bold' }} title={name} subtitle={role} left={LeftContent} />
                 <Card.Content>
-                    <Title style={{fontFamily: 'lato-bold'}} >{ title }</Title>
+                    <Title style={{ fontFamily: 'lato-bold' }} >{title}</Title>
 
-                        { workouts &&
-                            workouts.map((item) => (
-                                <TouchableOpacity
-                                    key={Math.random()}
-                                    onPress={() => {
-                                        navigation.navigate('Workout Details', {
-                                            workoutTitle: item.workout.workoutTitle,
-                                            exercises: item.workout.exercises,
-                                            completed: item.workout.completed,
-                                            id: item.id,
-                                            forViewingOnly: true,
-                                            forDownload: true,
-                                        });
-                                    }}
-                                >
-                                    <MyCard>
-                                        <View style={styles.cardHeader}>
-                                            <Title style={{fontFamily: 'lato-bold'}} >{item.workout.workoutTitle}</Title>
-                                        </View>
-                                    </MyCard>
-                                </TouchableOpacity>
-                            ))
-                        }
+                    {workouts &&
+                        workouts.map((item) => (
+                            <TouchableOpacity
+                                key={Math.random()}
+                                onPress={() => {
+                                    navigation.navigate('Workout Details', {
+                                        workoutTitle: item.workout.workoutTitle,
+                                        exercises: item.workout.exercises,
+                                        _completionStatus: item.workout.exercises.map(exercise => {
+                                            let arr = [];
+                                            for (let i = 0; i < exercise.tableData.length; i++) {
+                                                arr.push(exercise.tableData[i].completed);
+                                            }
+                                            return arr;
+                                        }),
+                                        id: item.id,
+                                        forViewingOnly: true,
+                                        forDownload: true,
+                                    });
+                                }}
+                            >
+                                <MyCard>
+                                    <View style={styles.cardHeader}>
+                                        <Title style={{ fontFamily: 'lato-bold' }} >{item.workout.workoutTitle}</Title>
+                                    </View>
+                                </MyCard>
+                            </TouchableOpacity>
+                        ))
+                    }
 
-                    <Paragraph style={{fontFamily: 'lato-regular'}} >{ body }</Paragraph>
+                    <Paragraph style={{ fontFamily: 'lato-regular' }} >{body}</Paragraph>
                 </Card.Content>
 
                 <Card.Actions>
-                    <Button onPress={() => {}}>Like</Button>
-                    <Button onPress={() => {}}>Comment</Button>
+                    <Button onPress={() => { }}>Like</Button>
+                    <Button onPress={() => { }}>Comment</Button>
                 </Card.Actions>
             </Card>
         );
@@ -73,7 +79,7 @@ export default function Community({ navigation, route }) {
                     data={data}
                     renderItem={({ item, index }) => {
                         return (
-                            <CommunityCard name={item.name} role={item.role} title={item.postTitle} body={item.body} workouts={item.workouts}/>
+                            <CommunityCard name={item.name} role={item.role} title={item.postTitle} body={item.body} workouts={item.workouts} />
                         );
                     }}
                     keyExtractor={(item, index) => item + index}
@@ -84,14 +90,14 @@ export default function Community({ navigation, route }) {
 
     return (
         <View style={globalStyles.container}>
-            <Button style={{marginBottom: 20}} mode='contained' compact={true}
-                    onPress={() => {
-                        navigation.navigate('Create Post', {
-                            name: userProfile.name,
-                            role: userProfile.role,
-                            userId: userId,
-                        });
-                    }}
+            <Button style={{ marginBottom: 20 }} mode='contained' compact={true}
+                onPress={() => {
+                    navigation.navigate('Create Post', {
+                        name: userProfile.name,
+                        role: userProfile.role,
+                        userId: userId,
+                    });
+                }}
             >
                 Add Post
             </Button>
