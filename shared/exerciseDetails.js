@@ -11,7 +11,7 @@ import {
 } from 'react-native-popup-menu';
 import { Octicons } from '@expo/vector-icons';
 
-function ExerciseName({ value, onChangeText }) {
+function ExerciseName({ value, }) {
     return (
         <Text style={styles.exerciseName}>{value}</Text>
     )
@@ -103,10 +103,7 @@ function DropDownSelection({ deleteExercise, exerciseCategory, updateExerciseNam
 }
 
 export default function ExerciseDetails({ exerciseName, exerciseCategory, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName, visible }) {
-    // console.log(exerciseCategory)
     const isCardio = exerciseCategory === 'Cardio'
-    // console.log(isCardio)
-    // console.log(exerciseName)
 
     if (visible) {
         return (
@@ -118,15 +115,13 @@ export default function ExerciseDetails({ exerciseName, exerciseCategory, tableD
                 </View>
                 <Table
                     headerComponent={<TopRow isCardio={isCardio} />}
-                    rows={tableData.length / 2}
-                    columns={2}
                     data={tableData}
                     onUpdate={onUpdate}
                     deleteRow={deleteSet}
                     keyboardType='phone-pad'
                 />
 
-                <Button onPress={() => addSet()} style={{ marginTop: 3 }}>
+                <Button onPress={addSet} style={{ marginTop: 3 }}>
                     <Text style={{ fontFamily: 'karla-bold' }}>ADD SET</Text>
                 </Button>
             </View>

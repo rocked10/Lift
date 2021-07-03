@@ -10,15 +10,16 @@ import { Checkbox } from 'react-native-paper';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import ExerciseDescription from "./exerciseDescription";
 
-
 // remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
-    const { workoutTitle, exercises, completed, sharedBy, id, forViewingOnly, forDownload } = route.params;
+    const { workoutTitle, exercises, sharedBy, id, forViewingOnly, _completionStatus, forDownload } = route.params;
     const [modalOpen, setModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
-    const [completionStatus, setCompletionStatus] = useState(completed);
     const [remarks, setRemarks] = useState('');
+    const [completionStatus, setCompletionStatus] = useState(_completionStatus)
+
+    console.log(completionStatus);
 
     useEffect(() => {
         DB.getUserType(setRole);
@@ -70,15 +71,15 @@ export default function WorkoutDetails({ route, navigation }) {
         )
     }
 
-    const WeightAndReps = ({ tableData, exerciseNum, exerciseCategory }) => {
+    const WeightAndReps = ({ tableData, exerciseCategory, exerciseName, exerciseNum }) => {
         if (forViewingOnly) {
             return (
                 <FlatList
                     data={tableData}
                     renderItem={({ item, index }) => {
                         const label = exerciseCategory === 'Cardio'
-                            ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
-                            : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                            ? "Set " + (item.set) + " " + (item.weight) + " km " + (item.reps) + " mins"
+                            : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
                             
                         return (
                             <View>
@@ -101,8 +102,8 @@ export default function WorkoutDetails({ route, navigation }) {
                     data={tableData}
                     renderItem={({ item, index }) => {
                         const label = exerciseCategory === 'Cardio'
-                            ? "Set " + (item[0].row + 1) + " " + (item[0].value) + " km " + (item[1].value) + " mins"
-                            : "Set " + (item[0].row + 1) + " " + (item[0].value) + " kg " + (item[1].value) + " reps"
+                            ? "Set " + (item.set) + " " + (item.weight) + " km " + (item.reps) + " mins"
+                            : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
 
                         return (
                             <View>
@@ -111,30 +112,31 @@ export default function WorkoutDetails({ route, navigation }) {
                                     labelStyle={globalStyles.cardText}
                                     status={completionStatus[exerciseNum][index] ? 'checked' : 'unchecked'}
                                     onPress={async () => {
+                                        // insert set completion code here 
                                         setCompletionStatus(prev => {
                                             const newCompletionStatus = [...prev];
                                             newCompletionStatus[exerciseNum][index] = !newCompletionStatus[exerciseNum][index];
-                                            DB.updateSetCompletionStatus(userId, id, newCompletionStatus).then();
+                                            DB.updateSetCompletionStatus(userId, id, exerciseName, item.set);
                                             if (sharedBy) {
-                                                DB.updateSetCompletionStatus(sharedBy, id, newCompletionStatus).then();
+                                                DB.updateSetCompletionStatus(sharedBy, id, exerciseName, item.set);
                                             }
                                             return newCompletionStatus;
                                         });
 
+                                        // i know the same code is being reused elsewhere i'll create a function for this eventually...
                                         if (completionStatus[exerciseNum][index]) {
-                                            // check if getPR is returning correctly?
-                                            const prevPR = await DB.getPR(userId, exercises[exerciseNum].exerciseName)
-                                            const currWeight = item[0].value;
-                                            const currReps = item[1].value;
+                                            const prevPR = await DB.getPR(userId, exerciseName)
+                                            const currWeight = parseInt(item.weight);
+                                            const currReps = parseInt(item.reps);
                                             let displayOnProfile = false; 
-                                            console.log(prevPR)
 
                                             if (prevPR) {
                                                 displayOnProfile = prevPR.displayOnProfile; 
                                             }
 
-                                            if (! prevPR || (currWeight > prevPR.weight && currWeight !== 0)) {
-                                                DB.addPR(userId, exercises[exerciseNum].exerciseName, [currWeight, currReps], displayOnProfile);
+                                            if (! prevPR || ((currWeight > parseInt(prevPR.weight)) && currWeight !== 0)) {
+                                                console.log("hello")
+                                                DB.addPR(userId, exerciseName, [currWeight, currReps], displayOnProfile);
                                             }
                                         }
                                     }}
@@ -179,10 +181,10 @@ export default function WorkoutDetails({ route, navigation }) {
                     <View>
                         <Card>
                             <TouchableOpacity onPress={async () => {
-                                console.log(item.exerciseName)
+                                // console.log(item.exerciseName)
                                 const exerciseObj = await DB.getExerciseByName(item.exerciseName)
                                 if (exerciseObj) {
-                                    console.log(exerciseObj)
+                                    // console.log(exerciseObj)
                                     navigation.navigate("ExerciseDescription", { exercise: exerciseObj })
                                 }
                             }}>
@@ -190,7 +192,7 @@ export default function WorkoutDetails({ route, navigation }) {
                                     {item.exerciseName}
                                 </Text>
                             </TouchableOpacity>
-                            <WeightAndReps tableData={chunkArray(item.tableData, 2)} exerciseNum={index} exerciseCategory={item.exerciseCategory} />
+                            <WeightAndReps tableData={item.tableData} exerciseCategory={item.exerciseCategory} exerciseName={item.exerciseName} exerciseNum={index} />
                         </Card>
                     </View>
                 )}

@@ -49,14 +49,12 @@ export default function PersonalRecords({ navigation, route }) {
                     // }
 
                     return (
-
                         <Checkbox.Item
                             label={label}
                             labelStyle={globalStyles.cardText}
                             status={item.displayOnProfile ? 'checked' : 'unchecked'}
                             onPress={() => DB.addPR(userId, item.exerciseName, [item.weight, item.reps], ! item.displayOnProfile)}
                         />
-
                     );
                 }
                 }

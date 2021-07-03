@@ -36,8 +36,15 @@ export default function Workout({ navigation, route }) {
          if (workouts) {
              const sortedWorkouts = [];
              const workoutArray = Object.values(workouts).reverse();
-             const completedWorkouts = workoutArray.filter((workout) => workout.completed.every(i => i.every(j => j === true) === true));
-             const pendingWorkouts = workoutArray.filter((workout) => ! workout.completed.every(i => i.every(j => j === true) === true));
+             const isCompletedWorkout = (workout) => {
+                 console.log(workout.exercises)
+                 return workout.exercises.every(exercise => isCompletedExercise(exercise))
+             }
+             const isCompletedExercise = (exercise) => {
+                 return exercise.tableData.every(set => set.completed)
+             }
+             const completedWorkouts = workoutArray.filter((workout) => isCompletedWorkout(workout));
+             const pendingWorkouts = workoutArray.filter((workout) => ! isCompletedWorkout(workout));
 
              if (pendingWorkouts.length > 0) {
                  sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
@@ -52,40 +59,13 @@ export default function Workout({ navigation, route }) {
          }
     }, [workouts]);
 
-    const addCompletionStatus = (workout) => {
-        if (! workout.completed) {
-            let completed = [];
-            workout.exercises.forEach((item) => {
-                completed.push(new Array(item.tableData.length / 2));
-            });
-            completed.map((arr) => arr.fill(false));
-            workout.completed = completed;
-            return workout;
-        } else {
-            let counter = 1;
-            workout.exercises.forEach((item) => {
-                if (counter <= workout.completed.length) {
-                    counter++
-                } else {
-                    let temp = new Array(item.tableData.length / 2);
-                    temp.fill(false);
-                    workout.completed.push(temp);
-                }
-            });
-            return workout;
-        }
-    }
-
     const handleAddWorkout = (workout) => {
-        // Adding completion status
-        const newWorkout = addCompletionStatus(workout);
-        DB.addWorkout(userId, newWorkout).then();
+        DB.addWorkout(userId, workout).then();
     }
 
     const handleEditWorkout = (workout) => {
-        const newWorkout = addCompletionStatus(workout);
         console.log(workout.id)
-        DB.editWorkout(userId, workout.id, newWorkout).then();
+        DB.editWorkout(userId, workout.id, workout).then();
     }
 
     const handleDeleteWorkout = (workout) => {
@@ -187,9 +167,15 @@ export default function Workout({ navigation, route }) {
                             <TouchableOpacity onPress={() => navigation.navigate('Workout Details', {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
-                                completed: item.completed,
                                 id: item.id,
                                 forViewingOnly: false,
+                                _completionStatus: item.exercises.map(exercise => {
+                                    let arr = [];
+                                    for (let i = 0; i < exercise.tableData.length; i++) {
+                                        arr.push(exercise.tableData[i].completed);
+                                    }
+                                    return arr;
+                                    }),
                             })}>
                                 <Card>
                                     <View style={styles.cardHeader}>

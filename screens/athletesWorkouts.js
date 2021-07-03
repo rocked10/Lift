@@ -53,7 +53,13 @@ export default function AthletesWorkouts({ navigation }) {
                         <TouchableOpacity onPress={() => navigation.navigate('Workout Details', {
                                 workoutTitle: item.workoutTitle,
                                 exercises: item.exercises,
-                                completed: item.completed,
+                                _completionStatus: item.exercises.map(exercise => {
+                                    let arr = [];
+                                    for (let i = 0; i < exercise.tableData.length; i++) {
+                                        arr.push(exercise.tableData[i].completed);
+                                    }
+                                    return arr;
+                                    }),
                                 id: item.id,
                                 forViewingOnly: true,
                         })}>

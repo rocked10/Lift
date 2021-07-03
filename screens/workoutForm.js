@@ -4,37 +4,39 @@ import ExerciseDetails from "../shared/exerciseDetails"
 import Exercises from "./exercises"
 import { globalStyles } from "../styles/global";
 import { Dialog, Button, Paragraph, TextInput } from "react-native-paper"
+import * as DB from '../api/database';
+import * as Auth from '../api/auth';
 
 export default function WorkoutForm({ route, navigation }) {
     const { workout, addWorkout, createsANewWorkout, reusingWorkout, reusingTemplate } = route.params;
 
     const [workoutTitle, setWorkoutTitle] = useState(workout.workoutTitle)
     const [exercises, setExercises] = useState(workout.exercises)
-    const [completed, setCompleted] = useState(workout.completed);
     const [modalOpen, setModalOpen] = useState(false)
     const [formVisible, setFormVisible] = useState(true)
+    const [userId, setUserId] = useState(Auth.getCurrentUserId());
 
 
     useEffect(() => {
-        // if (reusingWorkout) {
-        //     let temp = workout.exercises.map(exercise => {
-        //         exercise.tableData = exercise.tableData.map(elem => { return { row: elem.row, column: elem.column, value: 0 } })
-        //         return exercise;
-        //     });
-        //     setExercises(temp);
         if (reusingTemplate) {
             let temp = workout.exercises.map(exercise => {
                 exercise.tableData = [
-                    { row: 0, column: 0, value: '' },
-                    { row: 0, column: 1, value: '' },
+                    { set: 1, weight: '', reps: '', completed: false }
                 ]
                 return exercise;
             })
             setExercises(temp)
+        } else if (reusingWorkout) {
+            let temp = workout.exercises.map(exercise => {
+                let temp1 = exercise;
+                temp1.tableData = temp1.tableData.map(row => { return { set: row.set, weight: row.weight, reps: row.reps, completed: false } })
+                return temp1;
+            })
+            setExercises(temp)
         }
     }, []);
-    
-    
+
+
 
     const ExerciseLibraryModal = () => {
         return (
@@ -96,8 +98,7 @@ export default function WorkoutForm({ route, navigation }) {
                 exerciseName: '',
                 exerciseCategory: '',
                 tableData: [
-                    { row: 0, column: 0, value: '' },
-                    { row: 0, column: 1, value: '' }
+                    { set: 1, weight: '', reps: '', completed: false }
                 ]
             })
 
@@ -114,41 +115,48 @@ export default function WorkoutForm({ route, navigation }) {
         });
     }
 
-    const onUpdate = exerciseNum => row => column => value =>
+    const onUpdate = exerciseNum => setNum => column => value =>
         setExercises(prev => {
             const newExercises = [...prev]
-            newExercises[exerciseNum].tableData = newExercises[exerciseNum].tableData.map(cell =>
-            ((cell.row === row && cell.column === column)
-                ? { row, column, value }
-                : cell))
+            if (column === 0) {
+                newExercises[exerciseNum].tableData[setNum - 1].weight = value;
+            } else {
+                newExercises[exerciseNum].tableData[setNum - 1].reps = value;
+            }
 
             return newExercises
         })
 
     const addSet = exerciseNum => {
-        const row = exercises[exerciseNum].tableData.length / 2;
-        const columnOne = { row, column: 0, value: '' };
-        const columnTwo = { row, column: 1, value: '' };
+        const setNum = exercises[exerciseNum].tableData.length + 1;
         setExercises(prev => {
             const newExercises = [...prev]
-            newExercises[exerciseNum].tableData.push(columnOne, columnTwo)
+
+            console.log("adding set")
+            console.log(newExercises);
+            newExercises[exerciseNum].tableData.push({ set: setNum, weight: '', reps: '', completed: false })
+
+            console.log(newExercises);
             return newExercises
         })
     };
 
-    const deleteSet = exerciseNum => row => {
-        if (exercises[exerciseNum].tableData.length == 2) {
+    const deleteSet = exerciseNum => setNum => {
+        if (exercises[exerciseNum].tableData.length == 1) {
             deleteExercise(exerciseNum)
         } else {
             setExercises(prev => {
                 const newExercises = [...prev]
 
-                const newTableData = newExercises[exerciseNum].tableData.filter(cell => cell.row !== row)
+                console.log(newExercises);
+                const newTableData = newExercises[exerciseNum].tableData.filter(row => row.set !== setNum)
                 newExercises[exerciseNum].tableData = newTableData
 
-                for (let i = 0; i < newTableData.length; i++) {
-                    newExercises[exerciseNum].tableData[i].row = Math.floor(i / 2)
+                for (let i = 1; i <= newTableData.length; i++) {
+                    newExercises[exerciseNum].tableData[i - 1].set = i;
                 }
+
+                console.log(newExercises);
 
                 return newExercises
             }
@@ -164,28 +172,28 @@ export default function WorkoutForm({ route, navigation }) {
 
         if (workoutTitle === '') {
             connector = mistakes >= 1 ? ' and ' : ' '
-            alertMessage += connector + 'fill in a workout title' 
+            alertMessage += connector + 'fill in a workout title'
             mistakes++;
-        }  
+        }
 
-        if (exercises.length === 0) { 
+        if (exercises.length === 0) {
             connector = mistakes >= 1 ? ' and ' : ' '
             alertMessage += connector + 'select at least one exercise';
             mistakes++;
-        } 
+        }
 
         for (let i = 0; i < exercises.length; i++) {
-            let zeroReps = false;
+            let inputIsZeroOrEmpty = false;
             for (let j = 0; j < exercises[i].tableData.length; j++) {
-                if (exercises[i].tableData[j].value === 0 || exercises[i].tableData[j].value === '') {
+                if (exercises[i].tableData[j].weight === 0 || exercises[i].tableData[j].reps === '') {
                     connector = mistakes >= 1 ? ' and ' : ' '
-                    alertMessage += connector + 'ensure reps/weight is more than zero' 
+                    alertMessage += connector + 'ensure reps/weight is more than zero'
                     mistakes++;
-                    zeroReps = true; 
+                    inputIsZeroOrEmpty = true;
                     break;
                 }
             }
-            if (zeroReps) {
+            if (inputIsZeroOrEmpty) {
                 break;
             }
         }
@@ -194,18 +202,44 @@ export default function WorkoutForm({ route, navigation }) {
             Alert.alert(
                 'Oops',
                 alertMessage,
-                [{text: "Ok", onPress: () => alertMessage= 'Please',}]
-            )          
+                [{ text: "Ok", onPress: () => alertMessage = 'Please', }]
+            )
         }
 
         if (mistakes === 0) {
             // console.log("workout boutta be added")
             // console.log(exercises)
             // console.log("workout title is: " + workoutTitle)
-            if (! createsANewWorkout) {
-                addWorkout({ id: workout.id, workoutTitle, exercises, completed })
+            if (!createsANewWorkout) {
+                (async () => {
+                    for (let i = 0; i < exercises.length; i++) {
+                        for (let j = 0; j < exercises[i].tableData.length; j++) {
+                            if (exercises[i].tableData[j].completed) {
+                                const prevPR = await DB.getPR(userId, exercises[i].exerciseName)
+                                console.log("printing prevPR")
+                                console.log(prevPR)
+                                console.log("prevPR printed")
+                                const currWeight = parseInt(exercises[i].tableData[j].weight);
+                                const currReps = parseInt(exercises[i].tableData[j].reps);
+                                let displayOnProfile = false;
+
+                                if (prevPR) {
+                                    console.log("hello i'm in first block")
+                                    displayOnProfile = prevPR.displayOnProfile;
+                                }
+
+                                if (!prevPR || ((currWeight > parseInt(prevPR.weight)) && currWeight !== 0)) {
+                                    console.log("hello i'm in the second block")
+                                    DB.addPR(userId, exercises[i].exerciseName, [currWeight, currReps], displayOnProfile);
+                                }
+                            }
+                        }
+                    }
+                })();
+
+                addWorkout({ id: workout.id, workoutTitle, exercises, })
             } else addWorkout({ workoutTitle, exercises })
-            
+
             navigation.goBack()
         }
     }
@@ -226,6 +260,18 @@ export default function WorkoutForm({ route, navigation }) {
         }
     }
 
+    const FooterComponent = () => {
+        return (
+            <View style={{marginTop: 10}}>
+                <Button onPress={addExercise}>
+                    <Text style={{ fontFamily: 'karla-bold' }}>ADD EXERCISE</Text>
+                </Button>
+                <SubmitButton />
+            </View>
+        )
+
+    }
+
     return (
         <View style={globalStyles.modalContent}>
             <TextInput
@@ -233,7 +279,7 @@ export default function WorkoutForm({ route, navigation }) {
                 onChangeText={(text) => { setWorkoutTitle(text) }}
                 placeholder='Workout Title'
                 defaultValue={workoutTitle}
-                theme={{ fonts: { regular: {fontFamily: 'lato-regular' }} }}
+                theme={{ fonts: { regular: { fontFamily: 'lato-regular' } } }}
             />
 
             <ExerciseLibraryModal />
@@ -257,14 +303,9 @@ export default function WorkoutForm({ route, navigation }) {
                         visible={formVisible}
                     />
                 }
+                ListFooterComponent={<FooterComponent />}
             // stickyHeaderIndices={[0]}
             />
-
-            <Button onPress={addExercise}>
-                <Text style={{ fontFamily: 'karla-bold' }}>ADD EXERCISE</Text>
-            </Button>
-            <SubmitButton />
-
         </View>
 
     );

@@ -32,7 +32,6 @@ export const addWorkout = async (userId, workout) => {
         await ref.set({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
-            completed: workout.completed,
             id: ref.key,
         });
         console.log("Data saved");
@@ -48,7 +47,6 @@ export const addSharedWorkout = async (ownUserId, sharedUserId, workoutId, worko
         await ref.set({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
-            completed: workout.completed,
             sharedBy: ownUserId,
             id: workoutId,
         });
@@ -65,7 +63,6 @@ export const editWorkout = async (userId, workoutId, workout) => {
         await ref.update({
             exercises: workout.exercises,
             workoutTitle: workout.workoutTitle,
-            completed: workout.completed,
         });
         console.log("Data updated");
     } catch (error) {
@@ -84,25 +81,14 @@ export const deleteWorkout = async (userId, workoutId) => {
     }
 }
 
-// export const updateSetCompletionStatus = async (userId, workoutId, completed) => {
-//     try {
-//         const ref = db.ref(`workouts/${userId}/${workoutId}`);
-//         await ref.update({
-//             completed: completed
-//         });
-//         console.log("Set completed");
-//     } catch (error) {
-//         console.log("Error updating set");
-//     }
-// }
 
 export const updateSetCompletionStatus = async (userId, workoutId, exerciseName, setNumber) => {
     try {
         const ref = db.ref(`workouts/${userId}/${workoutId}/exercises`).orderByChild('exerciseName')
             .equalTo(exerciseName);
         await ref.once('child_added', (snapshot) => {
-            let data = snapshot.val().tableData;
-            data[setNumber - 1].completed = ! data[setNumber].completed;
+            let data = snapshot.val().tableData
+            data[setNumber - 1].completed = ! data[setNumber - 1].completed;
             snapshot.ref.update({
                 tableData: data
             });
