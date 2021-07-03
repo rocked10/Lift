@@ -25,8 +25,6 @@ export default function Settings({ navigation }) {
             ? Object.entries(userProfile.personalRecords).map(item => item[1].displayOnProfile)
             : []
 
-        console.log(recordsToDisplay);
-
         if (item === 'Change password') {
             navigation.navigate('Change Password');
         } else if (item === 'Change email') {

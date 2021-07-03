@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { View, Text, TouchableOpacity, Alert, Keyboard, FlatList } from "react-native";
 import { Searchbar, List } from 'react-native-paper';
+import ProfileCard from "../shared/profileCard";
+
 import * as DB from "../api/database";
 import * as Auth from "../api/auth";
 
@@ -15,16 +17,10 @@ export default function ShareWorkout({ shareId = () => {} }) {
         DB.getUserProfile(Auth.getCurrentUserId(), setUserProfile);
     }, []);
 
-    const ProfileCard = ({ item }) => {
+    const ProfileCardConditional = ({ item }) => {
         if (item) {
             return (
-                <View style={{padding: 10}}>
-                    <TouchableOpacity onPress={() => handleConfirmation(item.id)}>
-                        <Text style={{fontSize: 16, fontFamily: 'lato-regular'}}>
-                            {item.name}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <ProfileCard title={item.name} subtitle="Athlete" onPress={() => handleConfirmation(item.id)}/>
             );
         } else {
             return null;
@@ -39,7 +35,7 @@ export default function ShareWorkout({ shareId = () => {} }) {
 
                     <FlatList
                         data={data}
-                        renderItem={({item}) => <ProfileCard item={item} />}
+                        renderItem={({item}) => <ProfileCardConditional item={item} />}
                         keyExtractor={(item, index) => index}
                     />
                 </View>
@@ -88,7 +84,7 @@ export default function ShareWorkout({ shareId = () => {} }) {
                 onSubmitEditing={handleSearch}
             />
 
-            <ProfileCard item={userFound}/>
+            <ProfileCardConditional item={userFound}/>
 
             <AthleteList data={userProfile.athletes ? Object.values(userProfile.athletes) : null} visible={displayAthleteList} />
         </View>

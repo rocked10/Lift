@@ -4,6 +4,7 @@ import { globalStyles, loginStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
 import Card from "../shared/card";
+import ProfileCard from "../shared/profileCard";
 
 
 export default function AthletesWorkouts({ navigation }) {
@@ -79,17 +80,11 @@ export default function AthletesWorkouts({ navigation }) {
         }
     }
 
-    const ProfileCard = ({ item }) => {
+    const ProfileCardConditional = ({ item }) => {
         if (item) {
             return (
-                <View style={{ padding: 10 }}>
-                    <TouchableOpacity onPress={handleConfirmation}>
-                        <Text
-                            style={{fontFamily: 'lato-regular', fontSize: 16,}}
-                        >
-                            {item}
-                        </Text>
-                    </TouchableOpacity>
+                <View style={{ padding: 8 }}>
+                    <ProfileCard title={item} subtitle="Athlete" onPress={handleConfirmation}/>
                 </View>
             );
         } else {
@@ -107,7 +102,7 @@ export default function AthletesWorkouts({ navigation }) {
                 onSubmitEditing={onSubmitSearch}
             />
 
-            <ProfileCard item={userFound.name} />
+            <ProfileCardConditional item={userFound.name} />
             <ListOfAthleteWorkouts workouts={workouts} displayWorkouts={displayWorkouts} />
         </View>
     );

@@ -23,7 +23,7 @@ const WorkoutStack = ({ navigation }) => {
     // headerLeft: ()=> null
 
     return (
-        <Navigator screenOptions={navigationStyles} >
+        <Navigator screenOptions={ navigationStyles } >
             <Screen name='Workout' component={role === 'Coach' ? WorkoutTabs : Workout}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Workout' /> }}/>
             <Screen name="Workout Details" component={WorkoutDetails}

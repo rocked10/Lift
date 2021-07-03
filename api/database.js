@@ -193,6 +193,16 @@ export const addAthlete = async (userId, athleteId) => {
     }
 }
 
+export const deleteAthlete = async (userId, athleteId) => {
+    try {
+        const ref = db.ref(`users/${userId}/athletes/${athleteId}`);
+        await ref.remove();
+        console.log("Athlete removed");
+    } catch (error) {
+        console.log("Remove failed");
+    }
+}
+
 export const findUserId = async (email) => {
     try {
         let ref = '';
@@ -242,12 +252,12 @@ export const getUserType = (onValueChanged) => {
     });
 }
 
-export const getUserName = (userId, onValueChanged) => {
-    const ref = db.ref(`users/${userId}`);
-    ref.once('value', (snapshot) => {
-        onValueChanged(snapshot.val().name);
-    });
-}
+// export const getUserName = (userId, onValueChanged) => {
+//     const ref = db.ref(`users/${userId}`);
+//     ref.once('value', (snapshot) => {
+//         onValueChanged(snapshot.val().name);
+//     });
+// }
 
 // Exercises
 export const addExercise = async (exerciseCategory, exerciseName, videoId) => {
@@ -295,11 +305,26 @@ export const addCommunityPost = async (userId, name, role, postTitle, body, date
             date: date,
             workouts: workouts,
             userId: userId,
+            postId: ref.key,
             name: name,
             role: role,
+            likes: 0,
         });
         console.log('Post added');
     } catch (error) {
+        console.log(error);
+    }
+}
+
+export const likePost = async (userId, postId) => {
+    try {
+        const ref = db.ref(`community/${postId}/likes/${userId}`);
+        await ref.set({
+            id: userId,
+        });
+        console.log("Liked Post");
+    } catch (error) {
+        console.log("Failed to like post");
         console.log(error);
     }
 }

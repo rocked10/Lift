@@ -37,7 +37,6 @@ export default function Workout({ navigation, route }) {
              const sortedWorkouts = [];
              const workoutArray = Object.values(workouts).reverse();
              const isCompletedWorkout = (workout) => {
-                 console.log(workout.exercises)
                  return workout.exercises.every(exercise => isCompletedExercise(exercise))
              }
              const isCompletedExercise = (exercise) => {

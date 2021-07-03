@@ -19,8 +19,6 @@ export default function WorkoutDetails({ route, navigation }) {
     const [remarks, setRemarks] = useState('');
     const [completionStatus, setCompletionStatus] = useState(_completionStatus)
 
-    console.log(completionStatus);
-
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
@@ -51,6 +49,21 @@ export default function WorkoutDetails({ route, navigation }) {
             return (
                 <MaterialCommunityIcons
                     name='download'
+                    size={26}
+                    color='black'
+                    onPress={onPress}
+                />
+            );
+        } else {
+            return null;
+        }
+    }
+
+    const BackButton = ({ onPress, visible }) => {
+        if (visible) {
+            return (
+                <MaterialCommunityIcons
+                    name='arrow-left'
                     size={26}
                     color='black'
                     onPress={onPress}
@@ -169,7 +182,10 @@ export default function WorkoutDetails({ route, navigation }) {
     return (
         <View style={globalStyles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={globalStyles.titleText}>{workoutTitle}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <BackButton onPress={() => navigation.goBack()} visible={forViewingOnly && ! forDownload} />
+                    <Text style={globalStyles.titleText}>{workoutTitle}</Text>
+                </View>
                 <ShareButton onPress={() => setModalOpen(true)} visible={!forViewingOnly} />
                 <DownloadButton onPress={handleDownload} visible={forViewingOnly && forDownload} />
             </View>

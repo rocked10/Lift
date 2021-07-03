@@ -12,7 +12,7 @@ export default function Header({ navigation, title, displaySettings }) {
     const SettingsIcon = () => {
         if (displaySettings) {
             return (
-                <MaterialIcons name='settings' size={28} onPress={openSettings} style={styles.icon}/>
+                <MaterialIcons name='settings' size={26} onPress={openSettings} style={styles.icon}/>
             );
         } else {
             return null;

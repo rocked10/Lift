@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Keyboard, Alert, } from "react-native";
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 import { Button, TextInput } from "react-native-paper"
 import { set } from 'react-native-reanimated';
 import ProfileCard from "../shared/profileCard";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function AthleteList() {
+export default function AthleteList({ navigation, route }) {
     const coachId = Auth.getCurrentUserId();
 
     const [coachProfile, setCoachProfile] = useState({});
+    const textInputRef = useRef();
 
     useEffect(() => {
         DB.getUserProfile(Auth.getCurrentUserId(), setCoachProfile);
@@ -31,7 +33,7 @@ export default function AthleteList() {
                     }
                 ]
             );
-            this.textInput.clear();
+            textInputRef.current.clear();
         } else {
             Alert.alert(
                 '',
@@ -52,27 +54,52 @@ export default function AthleteList() {
         );
     };
 
+    const handleDelete = (item) => {
+        Alert.alert(
+            "",
+            `Remove ${item.name} from your list?`,
+            [
+                { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+                { text: "OK", onPress: () => { DB.deleteAthlete(Auth.getCurrentUserId(), item.id).then() }}
+            ]
+        );
+    }
+
     // why didn't it work when i placed the textinput and button outside??
 
     return (
         <View style={styles.container}>
-            <TextInput placeholder="Enter Athlete's email" onChangeText={query => setSearchQuery(query)} ref={ input => { this.textInput = input }}/>
+            <TextInput placeholder="Enter Athlete's email" onChangeText={query => setSearchQuery(query)} ref={textInputRef}/>
             <Button onPress={handleAddAthlete}>add</Button>
             <FlatList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 data={coachProfile.athletes ? Object.values(coachProfile.athletes) : null}
                 renderItem={
                     ({ item }) => (
-                        // <TouchableOpacity>
-                        //     <Text style={styles.item}>{item.id}</Text>
-                        // </TouchableOpacity>
-
-                        <ProfileCard title={item.name} subtitle='Athlete' />
+                        <ProfileCard
+                            title={item.name}
+                            subtitle='Athlete'
+                            right={() => {
+                                return (
+                                    <MaterialCommunityIcons
+                                        onPress={() => handleDelete(item)}
+                                        style={{marginRight: 10,}}
+                                        name='close'
+                                        size={20}
+                                    />
+                                );
+                            }}
+                            onPress={() => {
+                                navigation.navigate('View Profile', {
+                                    viewUser: item.id,
+                                });
+                            }}
+                        />
                     )}
                 keyExtractor={(item, index) => index}
             />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({ 

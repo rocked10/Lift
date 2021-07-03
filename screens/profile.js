@@ -9,14 +9,37 @@ import { Button } from 'react-native-paper'
 
 
 export default function Profile({ navigation, route }) {
+    const { viewUser } = route.params ? route.params : '';
     const [userProfile, setUserProfile] = useState({});
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [workouts, setWorkouts] = useState([]);
 
     useEffect(() => {
-        DB.getUserProfile(userId, setUserProfile);
-        DB.subscribe(userId, setWorkouts);
+        if (viewUser) {
+            DB.getUserProfile(viewUser, setUserProfile);
+            DB.subscribe(viewUser, setWorkouts);
+        } else {
+            DB.getUserProfile(userId, setUserProfile);
+            DB.subscribe(userId, setWorkouts);
+        }
+
     }, []);
+
+    const SignOutButton = () => {
+        if (! viewUser) {
+            return (
+                <Entypo
+                    name="log-out"
+                    size={28}
+                    color="black"
+                    onPress={Auth.signOut}
+                    style={{ position: 'absolute', top: 0, right: 0 }}
+                />
+            );
+        } else {
+            return null;
+        }
+    }
 
     const AthleteListButton = ({ role }) => {
         if (role === 'Coach') {
@@ -28,8 +51,25 @@ export default function Profile({ navigation, route }) {
                 >
                     <Text style={{ fontFamily: 'karla-bold' }}>ATHLETES</Text>
                 </Button>
+            );
+        } else {
+            return null;
+        }
+    }
 
-            )
+    const EditProfileButton = () => {
+        if (! viewUser) {
+            return (
+                <Button
+                    mode="contained"
+                    onPress={() => navigation.navigate('Edit Profile', {
+                        userProfile: userProfile
+                    })}
+                    style={{borderRadius: 10, marginHorizontal: 12}}
+                >
+                    <Text style={{fontFamily: 'karla-bold'}}>EDIT PROFILE</Text>
+                </Button>
+            );
         } else {
             return null;
         }
@@ -65,21 +105,12 @@ export default function Profile({ navigation, route }) {
             )
         }
     }
-    
-    // to put the log out icon at the top right corner 
-    const [position, setPosition] = useState("absolute");
 
     return (
         <View style={{padding: 18,}}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
-                    <Entypo
-                        name="log-out"
-                        size={28}
-                        color="black"
-                        onPress={Auth.signOut}
-                        style={{ position: 'absolute', top: 0, right: 0 }}
-                    />
+                    <SignOutButton />
 
                     <View style={styles.profileImage}>
                         <Image
@@ -92,15 +123,7 @@ export default function Profile({ navigation, route }) {
                     <Text style={styles.role}>{userProfile.role}</Text>
                     <Text style={styles.bio}>{userProfile.bio}</Text>
                     <View style={styles.personalRecordsTitle}>
-                        <Button
-                            mode="contained"
-                            onPress={() => navigation.navigate('Edit Profile', {
-                                userProfile: userProfile
-                            })}
-                            style={{ borderRadius: 10, marginHorizontal: 12 }}
-                        >
-                            <Text style={{ fontFamily: 'karla-bold' }}>EDIT PROFILE</Text>
-                        </Button>
+                        <EditProfileButton />
                         <AthleteListButton role={userProfile.role} />
                     </View>
                 </View>

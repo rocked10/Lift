@@ -1,12 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { navigationStyles } from '../styles/global';
+
 import Profile from "../screens/profile";
 import Settings from "../screens/settings";
 import EditProfile from "../screens/editProfile";
 import Header from "../shared/header";
 import AthleteList from "../screens/athleteList"
 import ChangePassword from "../screens/changePassword";
-import { navigationStyles } from '../styles/global';
 import ChangeEmail from "../screens/changeEmail";
 import PersonalRecords from "../screens/personalRecords";
 
@@ -17,6 +18,8 @@ const ProfileStack = ({ navigation }) => (
     <Navigator screenOptions={ navigationStyles } >
         <Screen name='Profile' component={Profile}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Profile' displaySettings={true}/> }}/>
+        <Screen name='View Profile' component={Profile}
+                options={{ headerTitle: () => <Header navigation={navigation} title='Profile' /> }}/>
         <Screen name='Settings' component={Settings}
                 options={{ headerTitle: () => <Header navigation={navigation} title='Settings' /> }}/>
         <Screen name='Edit Profile' component={EditProfile}

@@ -1,18 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useState, useEffect } from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WorkoutStack from "./workoutStack";
-import ProfileStack from './profileStack';
+import ProfileStack from "./profileStack";
 import ExercisesStack from "./exercisesStack";
 import CommunityStack from "./communityStack";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as DB from '../api/database';
 
 
-const { Navigator, Screen } = createBottomTabNavigator();
-
 const Stack = createStackNavigator();
+
+const Tab = createMaterialBottomTabNavigator();
 
 export const TabStack = () => {
     const [role, setRole] = useState('');
@@ -23,66 +23,55 @@ export const TabStack = () => {
 
     return (
         <NavigationContainer>
-            <Navigator
+            <Tab.Navigator
                 initialRouteName='Workout'
-                tabBarOptions={{
-                    activeTintColor: '#7B68EE',
-                    style: {
-                        backgroundColor: '#DCDCDC',
-                        height: 58,
-                        padding: 8,
-                    },
-                    labelStyle: {
-                        fontSize: 12,
-                        padding: 4
-                    }
-                }}
+                shifting={true}
+                // tabBarOptions={{
+                //     activeTintColor: '#7B68EE',
+                //     style: {
+                //         backgroundColor: '#DCDCDC',
+                //         height: 58,
+                //         padding: 8,
+                //     },
+                //     labelStyle: {
+                //         fontSize: 12,
+                //         padding: 4
+                //     }
+                // }}
             >
-                <Screen
+                <Tab.Screen
                     name='Profile'
                     component={ProfileStack}
                     options={{
-                        tabBarLabel: 'Profile',
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='account-circle' color='black' size={26} />
-                        )
+                        tabBarIcon: 'account-circle'
                     }}
                 />
 
-                <Screen
+                <Tab.Screen
                     name='Workout'
-                    component={WorkoutStack} // role === 'Coach' ? WorkoutTabs : WorkoutStack}
+                    component={WorkoutStack}
                     options={{
-                        tabBarLabel: 'Workout',
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='weight-lifter' color='black' size={26} />
-                        )
+                        tabBarIcon: 'weight-lifter'
                     }}
                 />
 
-                <Screen
+                <Tab.Screen
                     name='Exercises'
                     component={ExercisesStack}
                     options={{
-                        tabBarLabel: 'Exercises',
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='dumbbell' color='black' size={26} />
-                        )
+                        tabBarIcon: 'dumbbell'
                     }}
                 />
 
-                <Screen
+                <Tab.Screen
                     name='Community'
                     component={CommunityStack}
                     options={{
-                        tabBarLabel: 'Community',
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name='account-multiple' color='black' size={26} />
-                        )
+                        tabBarIcon: 'account-multiple'
                     }}
                 />
 
-            </Navigator>
+            </Tab.Navigator>
 
         </NavigationContainer>
     ) 
