@@ -24,14 +24,11 @@ export default function Community({ navigation, route }) {
         DB.likePost(userId, id).then();
     }
 
-    const handleComment = () => {
-
-    }
-
     const CommunityPosts = ({ data }) => {
         return (
             <View>
                 <FlatList
+                    contentContainerStyle={{paddingBottom: 50}}
                     showsVerticalScrollIndicator={false}
                     data={data}
                     renderItem={({ item, index }) => {
@@ -41,21 +38,23 @@ export default function Community({ navigation, route }) {
                                 role={item.role}
                                 title={item.postTitle}
                                 body={item.body}
+                                limitBody={true}
                                 workouts={item.workouts}
                                 likes={item.likes}
                                 comments={item.comments}
                                 onPress={() => navigation.navigate('Community Post', {
+                                    userId: userId,
+                                    username: userProfile.name,
+                                    postId: item.postId,
                                     name: item.name,
                                     role: item.role,
                                     title: item.postTitle,
                                     body: item.body,
                                     workouts: item.workouts,
                                     likes: item.likes,
-                                    comments: item.comments
                                 })}
                                 navigation={navigation}
                                 handleLike={() => handleLike(item.postId)}
-                                handleComment={() => handleComment()}
                             />
                         );
                     }}

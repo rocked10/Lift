@@ -21,7 +21,8 @@ export default function CreatePost({ navigation, route }) {
             style={{marginRight: 14}}
             onPress={() => {
                 console.log('POST')
-                DB.addCommunityPost(userId, name, role, postTitle, postBody, date.getDate(), attachedWorkouts);
+                DB.addCommunityPost(userId, name, role, postTitle.trim(),
+                    postBody.trim(), date.getDate(), attachedWorkouts).then();
                 navigation.goBack();
             }}
         >
@@ -88,7 +89,6 @@ export default function CreatePost({ navigation, route }) {
             >
                 <WorkoutChips data={attachedWorkouts} />
             </View>
-
         </View>
     );
 }
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
         padding: 12,
         fontSize: 18,
         fontFamily: 'lato-regular',
+        flex: 1
     },
 
     chipContainer: {

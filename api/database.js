@@ -309,6 +309,7 @@ export const addCommunityPost = async (userId, name, role, postTitle, body, date
             name: name,
             role: role,
             likes: 0,
+            comments: 0,
         });
         console.log('Post added');
     } catch (error) {
@@ -329,10 +330,33 @@ export const likePost = async (userId, postId) => {
     }
 }
 
+export const addComment = async (userId, postId, username, comment) => {
+    try {
+        const ref = db.ref(`community/${postId}/comments`).push();
+        await ref.set({
+            id: userId,
+            name: username,
+            comment: comment,
+        });
+        console.log("Commented");
+    } catch (error) {
+        console.log("Failed to comment");
+        console.log(error);
+    }
+}
+
 export const getCommunityPosts = (onValueChanged) => {
     const posts = db.ref(`community`);
     posts.on("value", (snapshot) => {
         onValueChanged(snapshot.val())
     });
     return () => posts.off("value");
+}
+
+export const getPostComments = (postId, onValueChanged) => {
+    const comments = db.ref(`community/${postId}/comments`);
+    comments.on("value", (snapshot) => {
+        onValueChanged(snapshot.val());
+    });
+    return () => comments.off("value");
 }

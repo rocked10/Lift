@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Keyboard, StyleSheet } from "react-native";
-import { globalStyles, loginStyles } from "../styles/global";
+import { globalStyles } from "../styles/global";
 import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
 import Card from "../shared/card";
@@ -21,10 +21,6 @@ export default function AthletesWorkouts({ navigation }) {
         } 
         setSearchQuery(query);  
     }
-
-    // useEffect(() => {
-    //     DB.getUserProfile(athleteId, setUserProfile);
-    // }, []);
 
     const onSubmitSearch = async () => {
         Keyboard.dismiss();

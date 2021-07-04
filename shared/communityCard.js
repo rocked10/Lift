@@ -3,11 +3,32 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import MyCard from "./card";
 import React from "react";
 
-export const CommunityCard = ({ name, role, title, body, workouts, likes, comments, onPress, handleLike, handleComment, navigation }) => {
+export const CommunityCard = ({ name, role, title, body, limitBody=false, workouts, likes, comments, onPress, handleLike, handleComment, navigation }) => {
     const LeftContent = props => <Avatar.Icon {...props} icon="account" />
 
+    const ConditionalParagraph = ({ text }) => {
+        if (limitBody) {
+            return (
+                <Paragraph
+                    style={{ fontFamily: 'lato-regular', fontSize: 16, marginBottom: 12 }}
+                    numberOfLines={4}
+                >
+                    {text}
+                </Paragraph>
+            );
+        } else {
+            return (
+                <Paragraph
+                    style={{ fontFamily: 'lato-regular', fontSize: 16, marginBottom: 12 }}
+                >
+                    {text}
+                </Paragraph>
+            );
+        }
+    }
+
     return (
-        <Card style={{ backgroundColor: '#F5F5F5', margin: 10 }} onPress={onPress} >
+        <Card style={{ backgroundColor: '#F5F5F5', margin: 4, marginBottom: 8 }} onPress={onPress} >
             <Card.Title titleStyle={{ fontFamily: 'lato-bold' }} title={name} subtitle={role} left={LeftContent} />
             <Card.Content>
                 <Title style={{ fontFamily: 'lato-bold' }} >{title}</Title>
@@ -42,7 +63,7 @@ export const CommunityCard = ({ name, role, title, body, workouts, likes, commen
                 ))
                 }
 
-                <Paragraph style={{ fontFamily: 'lato-regular', fontSize: 16, marginBottom: 12 }} >{body}</Paragraph>
+                <ConditionalParagraph text={body} />
 
                 <View
                     style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: -8}}
@@ -54,7 +75,7 @@ export const CommunityCard = ({ name, role, title, body, workouts, likes, commen
 
             <Card.Actions>
                 <Button onPress={handleLike}>Like</Button>
-                <Button onPress={handleComment}>Comment</Button>
+                <Button onPress={handleComment ? handleComment : onPress}>Comment</Button>
             </Card.Actions>
         </Card>
     );
