@@ -122,6 +122,7 @@ export const addUserProfile = (userId, name, email, role) => {
         email: email,
         role: role,
         bio: '',
+        userId: userId,
     }, (error) => {
         if (error) {
             console.log("User not saved");
@@ -203,7 +204,7 @@ export const deleteAthlete = async (userId, athleteId) => {
     }
 }
 
-export const findUserId = async (email) => {
+export const findUserByEmail = async (email) => {
     try {
         let ref = '';
         await db.ref('users').orderByChild('email').equalTo(email)
@@ -215,6 +216,21 @@ export const findUserId = async (email) => {
             return {id: Object.keys(uidObject)[0], name: Object.values(uidObject)[0].name};
         } else {
             return {id: '', name : ''};
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const findUserByName = async (name, limit) => {
+    try {
+        let ref = '';
+        await db.ref('users').orderByChild('name').startAt(name).endAt(name+"\uf8ff").limitToFirst(limit)
+            .once('value', snapshot => {
+                ref = snapshot.val();
+            });
+        if (ref) {
+            return Object.values(ref);
         }
     } catch (error) {
         console.log(error);

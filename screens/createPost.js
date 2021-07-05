@@ -80,6 +80,7 @@ export default function CreatePost({ navigation, route }) {
                 placeholder="What's on your mind?"
                 multiline={true}
                 style={styles.input}
+                textAlignVertical='top'
                 defaultValue={postBody}
                 onChangeText={input => setPostBody(input)}
             />

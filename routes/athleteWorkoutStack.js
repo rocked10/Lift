@@ -11,7 +11,6 @@ const AthleteWorkoutStack = ({ navigation }) => (
             headerShown: false,
         }}
     >
-
         <Screen name="Athletes' Workouts" component={AthletesWorkouts} />
         <Screen name="Workout Details" component={WorkoutDetails} /> 
     </Navigator>

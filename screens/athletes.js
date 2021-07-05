@@ -7,7 +7,7 @@ import { set } from 'react-native-reanimated';
 import ProfileCard from "../shared/profileCard";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function AthleteList({ navigation, route }) {
+export default function Athletes({ navigation, route }) {
     const coachId = Auth.getCurrentUserId();
 
     const [coachProfile, setCoachProfile] = useState({});
@@ -21,7 +21,7 @@ export default function AthleteList({ navigation, route }) {
 
     const handleAddAthlete = async () => {
         // Keyboard.dismiss()
-        const athlete = await DB.findUserId(searchQuery.toLowerCase().trim());
+        const athlete = await DB.findUserByEmail(searchQuery.toLowerCase().trim());
         if (athlete) {
             DB.addAthlete(coachId, athlete.id).then();
             Alert.alert(

@@ -23,55 +23,45 @@ export const TabStack = () => {
 
     return (
         <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName='Workout'
-                shifting={true}
-                // tabBarOptions={{
-                //     activeTintColor: '#7B68EE',
-                //     style: {
-                //         backgroundColor: '#DCDCDC',
-                //         height: 58,
-                //         padding: 8,
-                //     },
-                //     labelStyle: {
-                //         fontSize: 12,
-                //         padding: 4
-                //     }
-                // }}
-            >
-                <Tab.Screen
-                    name='Profile'
-                    component={ProfileStack}
-                    options={{
-                        tabBarIcon: 'account-circle'
-                    }}
-                />
+            <React.Fragment>
+                <Tab.Navigator
+                    initialRouteName='Workout'
+                    shifting={true}
+                >
+                    <Tab.Screen
+                        name='Profile'
+                        component={ProfileStack}
+                        options={{
+                            tabBarIcon: 'account-circle'
+                        }}
+                    />
 
-                <Tab.Screen
-                    name='Workout'
-                    component={WorkoutStack}
-                    options={{
-                        tabBarIcon: 'weight-lifter'
-                    }}
-                />
+                    <Tab.Screen
+                        name='Workout'
+                        component={WorkoutStack}
+                        options={{
+                            tabBarIcon: 'weight-lifter'
+                        }}
+                    />
 
-                <Tab.Screen
-                    name='Exercises'
-                    component={ExercisesStack}
-                    options={{
-                        tabBarIcon: 'dumbbell'
-                    }}
-                />
+                    <Tab.Screen
+                        name='Exercises'
+                        component={ExercisesStack}
+                        options={{
+                            tabBarIcon: 'dumbbell'
+                        }}
+                    />
 
-                <Tab.Screen
-                    name='Community'
-                    component={CommunityStack}
-                    options={{
-                        tabBarIcon: 'account-multiple'
-                    }}
-                />
+                    <Tab.Screen
+                        name='Community'
+                        component={CommunityStack}
+                        options={{
+                            tabBarIcon: 'account-multiple'
+                        }}
+                    />
 
-            </Tab.Navigator>
+                </Tab.Navigator>
+            </React.Fragment>
 
         </NavigationContainer>
     ) 

@@ -62,7 +62,7 @@ export default function CommunityPost({ navigation, route }) {
                         comments={postComments}
                         navigation={navigation}
                         handleLike={() => handleLike(postDetails.postId)}
-                        handleComment={Keyboard.dismiss}
+                        handleComment={() => textInputRef.current.focus()}
                     />
                 )}
                 renderItem={({ item }) => {

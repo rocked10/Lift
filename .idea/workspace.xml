@@ -7,11 +7,14 @@
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/athleteList.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/communityPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/communityPost.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/createPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/createPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/communityCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/communityCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/shareWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shareWorkout.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,19 +51,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift\screens" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -138,7 +128,8 @@
       <workItem from="1625064373820" duration="8017000" />
       <workItem from="1625131430478" duration="1866000" />
       <workItem from="1625291603828" duration="23679000" />
-      <workItem from="1625375054436" duration="7659000" />
+      <workItem from="1625375054436" duration="21641000" />
+      <workItem from="1625465633491" duration="343000" />
     </task>
     <servers />
   </component>
