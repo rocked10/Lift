@@ -3,7 +3,7 @@ import { View, FlatList, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard, 
 import ExerciseDetails from "../shared/exerciseDetails"
 import Exercises from "./exercises"
 import { globalStyles } from "../styles/global";
-import { Dialog, Button, Paragraph, TextInput } from "react-native-paper"
+import { Button, TextInput } from "react-native-paper"
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 
@@ -67,6 +67,14 @@ export default function WorkoutForm({ route, navigation }) {
     }
 
     // exerciseNum is zero indexed starting from top of exercises list 
+    const updateExerciseVariation = exerciseNum => variation => {
+        setExercises(prev => {
+            const newExercises = [...prev]
+            newExercises[exerciseNum].variation = variation
+
+            return newExercises
+        })
+    }
 
     const updateExerciseName = exerciseNum => name => {
         setExercises(prev => {
@@ -97,6 +105,7 @@ export default function WorkoutForm({ route, navigation }) {
             newExercises.push({
                 exerciseName: '',
                 exerciseCategory: '',
+                variation: '',
                 tableData: [
                     { set: 1, weight: '', reps: '', completed: false }
                 ]
@@ -216,20 +225,15 @@ export default function WorkoutForm({ route, navigation }) {
                         for (let j = 0; j < exercises[i].tableData.length; j++) {
                             if (exercises[i].tableData[j].completed) {
                                 const prevPR = await DB.getPR(userId, exercises[i].exerciseName)
-                                console.log("printing prevPR")
-                                console.log(prevPR)
-                                console.log("prevPR printed")
                                 const currWeight = parseInt(exercises[i].tableData[j].weight);
                                 const currReps = parseInt(exercises[i].tableData[j].reps);
                                 let displayOnProfile = false;
 
                                 if (prevPR) {
-                                    console.log("hello i'm in first block")
                                     displayOnProfile = prevPR.displayOnProfile;
                                 }
 
                                 if (!prevPR || ((currWeight > parseInt(prevPR.weight)) && currWeight !== 0)) {
-                                    console.log("hello i'm in the second block")
                                     DB.addPR(userId, exercises[i].exerciseName, [currWeight, currReps], displayOnProfile);
                                 }
                             }
@@ -300,6 +304,7 @@ export default function WorkoutForm({ route, navigation }) {
                         deleteSet={deleteSet(index)}
                         addSet={() => addSet(index)}
                         updateExerciseName={updateExerciseName(index)}
+                        updateExerciseVariation={updateExerciseVariation(index)}
                         visible={formVisible}
                     />
                 }

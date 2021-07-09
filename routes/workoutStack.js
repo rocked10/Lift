@@ -4,6 +4,7 @@ import Workout from '../screens/workout';
 import WorkoutDetails from "../screens/workoutDetails";
 import ExerciseDescription from "../screens/exerciseDescription";
 import WorkoutForm from "../screens/workoutForm"
+import PlatesCalculator from "../screens/platesCalculator"
 import Header from "../shared/header";
 import { navigationStyles } from '../styles/global';
 import WorkoutTabs from "./workoutTabs";
@@ -23,15 +24,17 @@ const WorkoutStack = ({ navigation }) => {
     // headerLeft: ()=> null
 
     return (
-        <Navigator screenOptions={ navigationStyles } >
+        <Navigator screenOptions={navigationStyles} >
             <Screen name='Workout' component={role === 'Coach' ? WorkoutTabs : Workout}
-                options={{ headerTitle: () => <Header navigation={navigation} title='Workout' /> }}/>
+                options={{ headerTitle: () => <Header navigation={navigation} title='Workout' /> }} />
             <Screen name="Workout Details" component={WorkoutDetails}
-                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Details' /> }}/>
+                options={{ headerTitle: () => <Header navigation={navigation} title='Workout Details' /> }} />
             <Screen name='ExerciseDescription' component={ExerciseDescription}
-                    options={{ headerTitle: () => <Header navigation={navigation} title='Exercise Description' /> }}/> 
+                options={{ headerTitle: () => <Header navigation={navigation} title='Exercise Description' /> }} />
             <Screen name='WorkoutForm' component={WorkoutForm}
-                    options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' />, }}/>
+                options={{ headerTitle: () => <Header navigation={navigation} title='Workout Form' />, }} />
+            <Screen name='Plates Calculator' component={PlatesCalculator}
+                options={{ headerTitle: () => <Header navigation={navigation} title='Plates Calculator' />, }} />
         </Navigator>
     );
 };

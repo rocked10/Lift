@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextInput, View, Button, FlatList, TouchableOpacity, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
 export default function customButton({ onPress, title }) {
     return (

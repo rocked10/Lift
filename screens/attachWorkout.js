@@ -2,7 +2,7 @@ import {ListItem} from "react-native-elements";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {globalStyles} from "../styles/global";
 import Card from "../shared/card";
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import * as DB from "../api/database";
 import * as Auth from "../api/auth";
 

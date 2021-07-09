@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Keyboard, Alert, } from "react-native";
+import { View, StyleSheet, FlatList, Alert, } from "react-native";
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 import { Button, TextInput } from "react-native-paper"
-import { set } from 'react-native-reanimated';
 import ProfileCard from "../shared/profileCard";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SectionList } from "react-native";
+import { View, Text, SectionList } from "react-native";
 import { settingStyles } from "../styles/global";
 import { TextInput } from 'react-native-paper';
 import * as Auth from '../api/auth';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {View, StyleSheet, TextInput } from 'react-native';
-import { Avatar, Card, Button, Chip } from 'react-native-paper';
+import { Button, Chip } from 'react-native-paper';
 import { globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProfileCard from "../shared/profileCard";

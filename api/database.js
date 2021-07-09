@@ -115,6 +115,14 @@ export const subscribeOnce = (userId) => {
     return ref;
 }
 
+export const subscribeOnceAsync = async (userId) => {
+    let ref = db.ref(`workouts/${userId}`);
+    await ref.once('value', (snapshot) => {
+        ref = snapshot.val();
+    });
+    return ref;
+}
+
 // Profile
 export const addUserProfile = (userId, name, email, role) => {
     db.ref(`users/${userId}`).set({
@@ -291,10 +299,28 @@ export const addExercise = async (exerciseCategory, exerciseName, videoId) => {
     }
 }
 
+export const addCustomExercise = async (exerciseCategory, exerciseName, videoId, userId) => {
+    try {
+        const ref = db.ref(`exercises/${exerciseName.toLowerCase()}`);
+        await ref.set({
+            category: exerciseCategory,
+            exerciseName: exerciseName,
+            videoId: videoId,
+            userId: userId,
+        });
+        console.log("Custom Exercise added!")
+    } catch (error) {
+        console.log(error);
+        console.log("Failed to add exercise");
+    }
+}
+
 export const getExercisesByCategory = (category, onValueChanged) => {
-    db.ref(`exercises`).orderByChild('category').equalTo(category)
+    db.ref('exercises').orderByChild('category').equalTo(category)
         .once('value', snapshot => {
-            onValueChanged(Object.values(snapshot.val()));
+            // onValueChanged(Object.values(snapshot.val()));
+            const exercises = Object.values(snapshot.val()).filter(ex => ! ex.userId || ex.userId === Auth.getCurrentUserId());
+            onValueChanged(exercises);
         });
 }
 

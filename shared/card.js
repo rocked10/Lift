@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import { MaterialIcons } from "@expo/vector-icons";
+import {StyleSheet, View} from 'react-native';
 
 const Card = (props) => {
     return (

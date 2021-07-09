@@ -1,7 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React, {useState} from 'react';
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { Table, TableCell } from './table'
-import { MaterialIcons } from '@expo/vector-icons';
 import { Button, } from "react-native-paper"
 import {
     Menu,
@@ -47,50 +46,63 @@ function TopRow({ isCardio }) {
     }
 }
 
-// need to fix the regex....
-
-const handleSelectVariation = (variation, updateExerciseName, exerciseName) => {
-    if (variation === 'barbell') {
-        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Barbell)") : exerciseName + " (Barbell) ")
-    } else if (variation === 'dumbbell') {
-        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Dumbbell)") : exerciseName + " (Dumbbell) ")
-    } else if (variation === 'bodyweight') {
-        updateExerciseName(/\([a-zA-Z]+\)/.test(exerciseName) ? exerciseName.replace(/\[(.+?)\]/g, "(Bodyweight)") : exerciseName + " (Bodyweight) ")
+const generateExerciseNameWithVariation = (variation, exerciseName) => {
+    for (let i = 0; i < exerciseName.length; i++) {
+        if (exerciseName.charAt(i) === '(') {
+            return exerciseName.substring(0, i - 1) + ' (' + variation + ')';
+        }
     }
+    return exerciseName + ' (' + variation + ')'; 
 }
 
-const selectVariation = (updateExerciseName, exerciseName) => {
+const handleSelectVariation = (variation, updateExerciseName, exerciseName, updateVariation, setVariation) => {
+    if (variation === 'Barbell') {
+        updateVariation('Barbell')
+        setVariation('Barbell')
+    } else if (variation === 'Dumbbell') {
+        updateVariation('Dumbbell')
+        setVariation('Dumbbell')
+    } else if (variation === 'Bodyweight') {
+        updateVariation('Bodyweight')
+        setVariation('Bodyweight')
+    }
+    const newName = generateExerciseNameWithVariation(variation, exerciseName)
+    console.log(newName)
+    updateExerciseName(newName)
+}
+
+const selectVariation = (updateExerciseName, exerciseName, updateVariation, setVariation) => {
     Alert.alert(
         'Choose a variation',
         '',
-        [{text: "Barbell", onPress:() => handleSelectVariation('barbell', updateExerciseName, exerciseName)}, 
-        {text: 'Dumbbell', onPress:() => handleSelectVariation('dumbbell', updateExerciseName, exerciseName)}, 
-        {text: 'Bodyweight', onPress:() => handleSelectVariation('bodyweight', updateExerciseName, exerciseName)}]
+        [{text: "Barbell", onPress:() => handleSelectVariation('Barbell', updateExerciseName, exerciseName, updateVariation, setVariation)}, 
+        {text: 'Dumbbell', onPress:() => handleSelectVariation('Dumbbell', updateExerciseName, exerciseName, updateVariation, setVariation)}, 
+        {text: 'Bodyweight', onPress:() => handleSelectVariation('Bodyweight', updateExerciseName, exerciseName, updateVariation, setVariation)}]
     )
 }
 
-const ExerciseVariationOption = ({exerciseCategory, updateExerciseName, exerciseName}) => {
+const ExerciseVariationOption = ({exerciseCategory, updateExerciseName, exerciseName, updateVariation, setVariation}) => {
     if (exerciseCategory === 'Olympic' || exerciseCategory === 'Cardio') {
         return null;
     } else { 
         return (
             <MenuOption
                 customStyles={optionStyles}
-                onSelect={() => selectVariation(updateExerciseName, exerciseName)}
+                onSelect={() => selectVariation(updateExerciseName, exerciseName, updateVariation, setVariation)}
                 text='Select Variation'
             />
         )
     }
 }
 
-function DropDownSelection({ deleteExercise, exerciseCategory, updateExerciseName, exerciseName }) {
+function DropDownSelection({ deleteExercise, exerciseCategory, updateExerciseName, exerciseName, updateVariation, setVariation }) {
     return (
         <Menu>
             <MenuTrigger hitSlop={{ top: 20, bottom: 50, left: 60, right: 50 }} >
                 <Octicons name="kebab-horizontal" size={26} color="black" />
             </MenuTrigger>
             <MenuOptions customStyles={optionsStyles}>
-                <ExerciseVariationOption exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} />
+                <ExerciseVariationOption exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} updateVariation={updateVariation} setVariation={setVariation} />
                 <MenuOption
                     customStyles={optionStyles}
                     onSelect={deleteExercise}
@@ -102,8 +114,9 @@ function DropDownSelection({ deleteExercise, exerciseCategory, updateExerciseNam
     )
 }
 
-export default function ExerciseDetails({ exerciseName, exerciseCategory, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName, visible }) {
+export default function ExerciseDetails({ exerciseName, exerciseCategory, tableData, onUpdate, deleteExercise, deleteSet, addSet, updateExerciseName, updateExerciseVariation, visible }) {
     const isCardio = exerciseCategory === 'Cardio'
+    const [variation, setVariation] = useState('');
 
     if (visible) {
         return (
@@ -111,13 +124,14 @@ export default function ExerciseDetails({ exerciseName, exerciseCategory, tableD
             <View style={{ padding: 6 }}>
                 <View style={styles.cardHeader}>
                     <ExerciseName value={exerciseName} />
-                    <DropDownSelection deleteExercise={deleteExercise} exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} />
+                    <DropDownSelection deleteExercise={deleteExercise} exerciseCategory={exerciseCategory} updateExerciseName={updateExerciseName} exerciseName={exerciseName} updateVariation={updateExerciseVariation} setVariation={setVariation} />
                 </View>
                 <Table
                     headerComponent={<TopRow isCardio={isCardio} />}
                     data={tableData}
                     onUpdate={onUpdate}
                     deleteRow={deleteSet}
+                    variation={variation}
                     keyboardType='phone-pad'
                 />
 

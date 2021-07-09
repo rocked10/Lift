@@ -1,14 +1,11 @@
 import React from 'react';
 import {
-    View, FlatList, StyleSheet, Button, KeyboardAvoidingView, Text, TouchableOpacity, Animated,
-    TouchableHighlight, StatusBar
+    View, StyleSheet, Text, TouchableOpacity, 
 } from "react-native";
 import TableCell from "./TableCell";
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-export default function Table({ headerComponent, data, onUpdate, deleteRow, keyboardType }) {
+export default function Table({ headerComponent, data, onUpdate, deleteRow, variation, keyboardType }) {
     // const cells = new Array(rows * columns);
     // for (let { set, weight, reps } of data) {
     //     cells[row * columns + column] = value;
@@ -33,6 +30,7 @@ export default function Table({ headerComponent, data, onUpdate, deleteRow, keyb
             <TableRow
                 data={data.item}
                 onColumnUpdate={onUpdate(parseInt(data.item.set))}
+                variation={variation}
                 keyboardType={keyboardType}
             />
         )
@@ -85,7 +83,7 @@ export default function Table({ headerComponent, data, onUpdate, deleteRow, keyb
     // );
 }
 
-function TableRow({ data, onColumnUpdate, deleteRow, keyboardType }) {
+function TableRow({ data, onColumnUpdate, variation, keyboardType }) {
     return (
         <View style={styles.row}>
             <TableCell value={data.set} editable={false} />
@@ -93,6 +91,7 @@ function TableRow({ data, onColumnUpdate, deleteRow, keyboardType }) {
             <TableCell
                 value={data.weight}
                 onUpdate={onColumnUpdate(0)}
+                editable={variation !== 'Bodyweight'}
                 keyboardType={keyboardType}
             />
             <TableCell
