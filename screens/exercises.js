@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Keyboard, Alert } from "react-native";
+import React, {useEffect, useState} from 'react';
+import { Alert, Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
-import * as Auth from '../api/auth';
-import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
+import { List, Searchbar } from "react-native-paper"
 import { MaterialIcons } from "@expo/vector-icons";
 
 
@@ -207,7 +206,4 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
             </ScrollView>
         </View>
     );
-
 }
-
-
