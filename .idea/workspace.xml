@@ -5,36 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/screens/athleteWorkoutList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/customExercise.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/platesCalculator.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared/TimerModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/communityStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/communityStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/exercisesStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/exercisesStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athletes.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/attachWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/attachWorkout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/createPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/createPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/editProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/editProfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/exerciseDescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exerciseDescription.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/personalRecords.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/personalRecords.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/workoutDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/workoutForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/customButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/customButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/exerciseDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/exerciseDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/table/TableCell.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/table/TableCell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +127,7 @@
       <workItem from="1625668915164" duration="7797000" />
       <workItem from="1625736289574" duration="3128000" />
       <workItem from="1625898920380" duration="7968000" />
-      <workItem from="1625990836859" duration="8234000" />
+      <workItem from="1625990836859" duration="9793000" />
     </task>
     <servers />
   </component>

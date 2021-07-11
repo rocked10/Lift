@@ -182,7 +182,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 style={{ alignSelf: 'flex-end', marginTop: 12 }}
                 onPress={handleAddCustomExercise}
             >
-                <MaterialIcons name='add' size={32} />
+                <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
 
