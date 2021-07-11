@@ -10,6 +10,7 @@ import Athletes from "../screens/athletes"
 import ChangePassword from "../screens/changePassword";
 import ChangeEmail from "../screens/changeEmail";
 import PersonalRecords from "../screens/personalRecords";
+import Test from "../api/notifications";
 
 
 const { Navigator, Screen } = createStackNavigator();

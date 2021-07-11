@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View, Text, TouchableOpacity,
     StatusBar, StyleSheet, Alert, SectionList
@@ -16,6 +16,8 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import * as Notifs from "../api/notifications";
+import * as Notifications from "expo-notifications";
 
 
 export default function Workout({ navigation, route }) {
@@ -44,6 +46,7 @@ export default function Workout({ navigation, route }) {
              }
              const completedWorkouts = workoutArray.filter((workout) => isCompletedWorkout(workout));
              const pendingWorkouts = workoutArray.filter((workout) => ! isCompletedWorkout(workout));
+             const unseenWorkouts = workoutArray.filter((workout) => workout.unseen);
 
              if (pendingWorkouts.length > 0) {
                  sortedWorkouts.push({ title: 'Pending', data: pendingWorkouts });
@@ -52,11 +55,56 @@ export default function Workout({ navigation, route }) {
                  sortedWorkouts.push({ title: 'Completed', data: completedWorkouts });
              }
 
+             if (unseenWorkouts.length > 0) {
+                 unseenWorkouts.forEach(workout => {
+                     Notifs.schedulePushNotification(workout); // Schedules notification for each workout
+                     DB.seenWorkout(userId, workout.id).then(); // Updates workout that shows that workout has been seen
+                 });
+             }
+
              setSectionedWorkouts(sortedWorkouts);
          } else {
              setSectionedWorkouts([]); // Ensures that if last workout is deleted sectioned Workouts will refresh
          }
     }, [workouts]);
+
+
+    // init notifications
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        Notifs.registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            const workout = response.notification.request.content.data;
+            navigation.navigate('Workout Details', {
+                workoutTitle: workout.workoutTitle,
+                exercises: workout.exercises,
+                id: workout.id,
+                forViewingOnly: false,
+                _completionStatus: workout.exercises.map(exercise => {
+                    let arr = [];
+                    for (let i = 0; i < exercise.tableData.length; i++) {
+                        arr.push(exercise.tableData[i].completed);
+                    }
+                    return arr;
+                }),
+            });
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
 
     const handleAddWorkout = (workout) => {
         DB.addWorkout(userId, workout).then();

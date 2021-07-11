@@ -49,12 +49,26 @@ export const addSharedWorkout = async (ownUserId, sharedUserId, workoutId, worko
             workoutTitle: workout.workoutTitle,
             sharedBy: ownUserId,
             id: workoutId,
+            unseen: true,
         });
         console.log("Data saved");
     } catch (error) {
         console.log(error);
         console.log("Write failed");
     }
+}
+
+export const seenWorkout = async (userId, workoutId) => {
+    try {
+        const ref = db.ref(`workouts/${userId}/${workoutId}`);
+        await ref.update({
+            unseen: false,
+        });
+    } catch (error) {
+        console.error(error);
+        console.log('Error');
+    }
+
 }
 
 export const editWorkout = async (userId, workoutId, workout) => {
@@ -110,6 +124,14 @@ export const subscribe = (userId, onValueChanged) => {
 export const subscribeOnce = (userId) => {
     let ref = db.ref(`workouts/${userId}`);
     ref.once('value', (snapshot) => {
+        ref = snapshot.val();
+    });
+    return ref;
+}
+
+export const subscribeOnceAsync = async (userId) => {
+    let ref = db.ref(`workouts/${userId}`);
+    await ref.once('value', (snapshot) => {
         ref = snapshot.val();
     });
     return ref;
@@ -291,10 +313,28 @@ export const addExercise = async (exerciseCategory, exerciseName, videoId) => {
     }
 }
 
+export const addCustomExercise = async (exerciseCategory, exerciseName, videoId, userId) => {
+    try {
+        const ref = db.ref(`exercises/${exerciseName.toLowerCase()}`);
+        await ref.set({
+            category: exerciseCategory,
+            exerciseName: exerciseName,
+            videoId: videoId,
+            userId: userId,
+        });
+        console.log("Custom Exercise added!")
+    } catch (error) {
+        console.log(error);
+        console.log("Failed to add exercise");
+    }
+}
+
 export const getExercisesByCategory = (category, onValueChanged) => {
     db.ref(`exercises`).orderByChild('category').equalTo(category)
         .once('value', snapshot => {
-            onValueChanged(Object.values(snapshot.val()));
+            // onValueChanged(Object.values(snapshot.val()));
+            const exercises = Object.values(snapshot.val()).filter(ex => ! ex.userId || ex.userId === Auth.getCurrentUserId());
+            onValueChanged(exercises);
         });
 }
 
@@ -316,7 +356,7 @@ export const addCommunityPost = async (userId, name, role, postTitle, body, date
     try {
         const ref = db.ref(`community`).push();
         await ref.set({
-            postTitle: postTitle,
+            // postTitle: postTitle,
             body: body,
             date: date,
             workouts: workouts,

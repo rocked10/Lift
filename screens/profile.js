@@ -6,6 +6,7 @@ import { FontAwesome, Entypo } from '@expo/vector-icons';
 import Card from '../shared/card'
 import * as DB from '../api/database'
 import { Button } from 'react-native-paper'
+import * as Notifs from '../api/notifications';
 
 
 export default function Profile({ navigation, route }) {

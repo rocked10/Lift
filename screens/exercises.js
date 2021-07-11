@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView, Keyboard, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
+import * as Auth from '../api/auth';
 import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
 
 
@@ -46,7 +47,9 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
 
     // const getExerciseBgColor = (item, index) => {
     //     selected[item.category][index] ? 'blue' : 'white'
-    // }
+    // }]
+
+    // Make exercise category bigger
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -153,7 +156,8 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
 
     // Exercise adder
     const handlePress = async () => {
-        DB.addExercise('Arms', 'Bicep Curl', 'sAq_ocpRh_I').then();
+        // await DB.addExercise('Olympic', 'Power Clean', '-RX9YvX8ZOg');
+        // DB.getExercisesByCategory('Olympic', setOlympic);
     }
 
     return (
@@ -186,7 +190,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 </List.Section>
             </ScrollView>
 
-            {/*<Button onPress={handlePress}>Add</Button>*/}
+            <Button onPress={handlePress}>Add Exercise</Button>
 
         </View>
     );

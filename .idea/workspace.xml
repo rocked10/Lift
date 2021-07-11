@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/notifications.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/athleteWorkoutStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/tabStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/tabStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athleteList.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/communityPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/communityPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/attachWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/attachWorkout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/createPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/createPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/shareWorkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/shareWorkout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/communityCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/communityCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +134,13 @@
       <workItem from="1625131430478" duration="1866000" />
       <workItem from="1625291603828" duration="23679000" />
       <workItem from="1625375054436" duration="21641000" />
-      <workItem from="1625465633491" duration="343000" />
+      <workItem from="1625465633491" duration="1230000" />
+      <workItem from="1625569722915" duration="1062000" />
+      <workItem from="1625632155766" duration="4165000" />
+      <workItem from="1625668915164" duration="7797000" />
+      <workItem from="1625736289574" duration="3128000" />
+      <workItem from="1625898920380" duration="7968000" />
+      <workItem from="1625990836859" duration="7555000" />
     </task>
     <servers />
   </component>

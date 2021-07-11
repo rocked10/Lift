@@ -1,9 +1,9 @@
-import { Avatar, Button, Card, Paragraph, Title } from "react-native-paper";
+import { Avatar, Button, Card, Paragraph, Title, Divider } from "react-native-paper";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import MyCard from "./card";
 import React from "react";
 
-export const CommunityCard = ({ name, role, title, body, limitBody=false, workouts, likes, comments, onPress, handleLike, handleComment, navigation }) => {
+export const CommunityCard = ({ name, role, body, limitBody=false, workouts, likes, comments, onPress, handleLike, handleComment, navigation }) => {
     const LeftContent = props => <Avatar.Icon {...props} icon="account" />
 
     const ConditionalParagraph = ({ text }) => {
@@ -30,8 +30,7 @@ export const CommunityCard = ({ name, role, title, body, limitBody=false, workou
     return (
         <Card style={{ backgroundColor: '#F5F5F5', margin: 4, marginBottom: 8 }} onPress={onPress} >
             <Card.Title titleStyle={{ fontFamily: 'lato-bold' }} title={name} subtitle={role} left={LeftContent} />
-            <Card.Content>
-                <Title style={{ fontFamily: 'lato-bold' }} >{title}</Title>
+            <Card.Content style={{marginTop: 6,}}>
 
                 {workouts &&
                 workouts.map((item) => (
@@ -66,14 +65,16 @@ export const CommunityCard = ({ name, role, title, body, limitBody=false, workou
                 <ConditionalParagraph text={body} />
 
                 <View
-                    style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: -8}}
+                    style={[styles.cardHeader, {marginVertical: 12 }]}
                 >
                     <Text style={styles.captionText}>{`${likes !== 0 ? Object.keys(likes).length : 0} likes`}</Text>
                     <Text style={styles.captionText}>{`${comments !== 0 ? Object.keys(comments).length : 0} comments`}</Text>
                 </View>
             </Card.Content>
 
-            <Card.Actions>
+            <Divider />
+
+            <Card.Actions style={{marginVertical: -4}}>
                 <Button onPress={handleLike}>Like</Button>
                 <Button onPress={handleComment ? handleComment : onPress}>Comment</Button>
             </Card.Actions>
