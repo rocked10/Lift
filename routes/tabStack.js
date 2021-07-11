@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WorkoutStack from "./workoutStack";
 import ProfileStack from "./profileStack";
 import ExercisesStack from "./exercisesStack";

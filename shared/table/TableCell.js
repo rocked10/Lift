@@ -10,7 +10,7 @@ export default function TableCell ({ value, onUpdate, editable=true, additionalS
             style={{...styles.userInput, ...additionalStyles,}}
             editable={editable}
             value={value.toString()}
-            placeholder={'0'}
+            placeholder={editable ? '0': '-'}
             onChangeText={onUpdate}
             keyboardType={keyboardType}
         />

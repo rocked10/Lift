@@ -1,27 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, Alert, StyleSheet, TouchableOpacity, } from 'react-native';
 import { globalStyles } from "../styles/global";
-import { Modal, Portal, Provider, Searchbar, TextInput } from 'react-native-paper';
+import { Modal, Portal, Provider, } from 'react-native-paper';
 import Card from "../shared/card";
 import ShareWorkout from "./shareWorkout";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Checkbox } from 'react-native-paper';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import ExerciseDescription from "./exerciseDescription";
+import { Entypo } from '@expo/vector-icons';
+import TimerModal from "../shared/TimerModal"
 
 // remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
-    const { workoutTitle, exercises, sharedBy, id, forViewingOnly, _completionStatus, forDownload } = route.params;
-    const [modalOpen, setModalOpen] = useState(false);
+    const {
+        workoutTitle,
+        exercises,
+        sharedBy,
+        id,
+        forViewingOnly,
+        _completionStatus,
+        forDownload,
+    } = route.params;
+
+    const [shareWorkoutModalOpen, setShareWorkoutModalOpen] = useState(false);
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [role, setRole] = useState('');
     const [remarks, setRemarks] = useState('');
-    const [completionStatus, setCompletionStatus] = useState(_completionStatus)
+    const [completionStatus, setCompletionStatus] = useState(_completionStatus);
+
+    const [timerModalOpen, setTimerModalOpen] = useState(false);
 
     useEffect(() => {
         DB.getUserType(setRole);
     }, [role]);
+
+    const TimerButton = ({ onPress, visible }) => {
+        if (visible) {
+            return (
+                <MaterialCommunityIcons 
+                    name="timer" 
+                    size={26} 
+                    color="black" 
+                    onPress={onPress}  
+                    style={! forViewingOnly ? {marginRight: 12} : {marginRight: 0}}
+                />
+            )
+        } else {
+            return null;
+        }
+    }
+
+    const PlatesCalculatorButton = ({ onPress, visible }) => {
+        if (visible) {
+            return (
+                <Entypo name="calculator" size={26} color="black" onPress={onPress} />
+            )
+        } else {
+            return null;
+        }
+    }
 
     const ShareButton = ({ onPress, visible }) => {
         if (role === 'Coach' && visible) {
@@ -31,6 +69,7 @@ export default function WorkoutDetails({ route, navigation }) {
                     size={26}
                     color='black'
                     onPress={onPress}
+                    style={! forViewingOnly ? {marginRight: 12} : {marginRight: 0}}
                 />
             );
         } else {
@@ -40,8 +79,24 @@ export default function WorkoutDetails({ route, navigation }) {
 
     const handleShare = (shareId) => {
         console.log("SHARE");
-        setModalOpen(false);
+        setShareWorkoutModalOpen(false);
         DB.addSharedWorkout(userId, shareId, id, route.params).then();
+    }
+
+    const ShareWorkoutModal = () => {
+        return (
+            <Provider>
+                <Portal>
+                    <Modal
+                        visible={shareWorkoutModalOpen}
+                        onDismiss={() => setShareWorkoutModalOpen(false)}
+                        contentContainerStyle={styles.shareWorkoutModalContainer}
+                    >
+                        <ShareWorkout shareId={handleShare} />
+                    </Modal>
+                </Portal>
+            </Provider>
+        )
     }
 
     const DownloadButton = ({ onPress, visible }) => {
@@ -79,12 +134,12 @@ export default function WorkoutDetails({ route, navigation }) {
             "Download Workout",
             "Add this workout to your workout list?",
             [{ text: "Cancel", onPress: () => console.log("Cancel Pressed") },
-                { text: "OK", onPress: () => DB.addWorkout(userId, route.params).then() }
+            { text: "OK", onPress: () => DB.addWorkout(userId, route.params).then() }
             ]
         )
     }
 
-    const WeightAndReps = ({ tableData, exerciseCategory, exerciseName, exerciseNum }) => {
+    const WeightAndReps = ({ tableData, exerciseCategory, variation, exerciseName, exerciseNum }) => {
         if (forViewingOnly) {
             return (
                 <FlatList
@@ -92,8 +147,9 @@ export default function WorkoutDetails({ route, navigation }) {
                     renderItem={({ item, index }) => {
                         const label = exerciseCategory === 'Cardio'
                             ? "Set " + (item.set) + " " + (item.weight) + " km " + (item.reps) + " mins"
-                            : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
-                            
+                            : variation === 'Bodyweight'
+                                ? "Set " + (item.set) + " " + (item.reps) + " reps"
+                                : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
                         return (
                             <View>
                                 <Checkbox.Item
@@ -116,8 +172,9 @@ export default function WorkoutDetails({ route, navigation }) {
                     renderItem={({ item, index }) => {
                         const label = exerciseCategory === 'Cardio'
                             ? "Set " + (item.set) + " " + (item.weight) + " km " + (item.reps) + " mins"
-                            : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
-
+                            : variation === 'Bodyweight'
+                                ? "Set " + (item.set) + " " + (item.reps) + " reps"
+                                : "Set " + (item.set) + " " + (item.weight) + " kg " + (item.reps) + " reps"
                         return (
                             <View>
                                 <Checkbox.Item
@@ -141,13 +198,13 @@ export default function WorkoutDetails({ route, navigation }) {
                                             const prevPR = await DB.getPR(userId, exerciseName)
                                             const currWeight = parseInt(item.weight);
                                             const currReps = parseInt(item.reps);
-                                            let displayOnProfile = false; 
+                                            let displayOnProfile = false;
 
                                             if (prevPR) {
-                                                displayOnProfile = prevPR.displayOnProfile; 
+                                                displayOnProfile = prevPR.displayOnProfile;
                                             }
 
-                                            if (! prevPR || ((currWeight > parseInt(prevPR.weight)) && currWeight !== 0)) {
+                                            if (!prevPR || ((currWeight > parseInt(prevPR.weight)) && currWeight !== 0)) {
                                                 console.log("hello")
                                                 DB.addPR(userId, exerciseName, [currWeight, currReps], displayOnProfile);
                                             }
@@ -182,14 +239,19 @@ export default function WorkoutDetails({ route, navigation }) {
     return (
         <View style={globalStyles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{flexDirection: 'row'}}>
-                    <BackButton onPress={() => navigation.goBack()} visible={forViewingOnly && ! forDownload} />
+                <View style={{ flexDirection: 'row' }}>
+                    <BackButton onPress={() => navigation.goBack()} visible={forViewingOnly && !forDownload} />
                     <Text style={globalStyles.titleText}>{workoutTitle}</Text>
                 </View>
-                <ShareButton onPress={() => setModalOpen(true)} visible={!forViewingOnly} />
-                <DownloadButton onPress={handleDownload} visible={forViewingOnly && forDownload} />
-            </View>
 
+                <View style={{ flexDirection: 'row', }}>
+                    <ShareButton onPress={() => setShareWorkoutModalOpen(true)} visible={!forViewingOnly} />
+                    <DownloadButton onPress={handleDownload} visible={forViewingOnly && forDownload} />
+                    <TimerButton onPress={() => { setTimerModalOpen(true); }} visible={!forViewingOnly} />
+                    <PlatesCalculatorButton onPress={() => { navigation.navigate('Plates Calculator') }} visible={!forViewingOnly} />
+                </View>
+
+            </View>
 
             <FlatList
                 data={exercises}
@@ -208,41 +270,36 @@ export default function WorkoutDetails({ route, navigation }) {
                                     {item.exerciseName}
                                 </Text>
                             </TouchableOpacity>
-                            <WeightAndReps tableData={item.tableData} exerciseCategory={item.exerciseCategory} exerciseName={item.exerciseName} exerciseNum={index} />
+                            <WeightAndReps tableData={item.tableData} exerciseCategory={item.exerciseCategory} variation={item.variation} exerciseName={item.exerciseName} exerciseNum={index} />
                         </Card>
                     </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
-                // ListFooterComponent={<TextInput
-                //     multiline={true}
-                //     label="Remarks"
-                //     numberOfLines={4}
-                //     onChangeText={setRemarks}
-                //     value={remarks} />}
+            // ListFooterComponent={<TextInput
+            //     multiline={true}
+            //     label="Remarks"
+            //     numberOfLines={4}
+            //     onChangeText={setRemarks}
+            //     value={remarks} />}
             />
 
-            <Provider>
-                <Portal>
-                    <Modal
-                        visible={modalOpen}
-                        onDismiss={() => setModalOpen(false)}
-                        contentContainerStyle={styles.modalContainer}
-                    >
-                        <ShareWorkout shareId={handleShare} />
-                    </Modal>
-                </Portal>
-            </Provider>
+            <TimerModal
+                isOpen={timerModalOpen}
+                setTimerModalOpen={setTimerModalOpen}
+            />
+            <ShareWorkoutModal />
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    modalContainer: {
+    shareWorkoutModalContainer: {
         backgroundColor: 'white',
         padding: 20,
         height: 280,
         // justifyContent: 'flex-start'
-    }
+    },
 });
 
 

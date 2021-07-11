@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SectionList, Alert } from "react-native";
+import { View, Text, TouchableOpacity, SectionList, Alert } from "react-native";
 import * as Auth from "../api/auth";
 import { settingStyles } from "../styles/global";
 import * as DB from "../api/database";

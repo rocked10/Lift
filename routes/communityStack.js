@@ -6,7 +6,6 @@ import Header from "../shared/header";
 import AttachWorkout from "../screens/attachWorkout";
 import CommunityPost from "../screens/communityPost"
 import { navigationStyles } from '../styles/global';
-import { StyleSheet } from 'react-native';
 import WorkoutDetails from "../screens/workoutDetails";
 
 

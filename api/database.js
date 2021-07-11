@@ -330,7 +330,7 @@ export const addCustomExercise = async (exerciseCategory, exerciseName, videoId,
 }
 
 export const getExercisesByCategory = (category, onValueChanged) => {
-    db.ref(`exercises`).orderByChild('category').equalTo(category)
+    db.ref('exercises').orderByChild('category').equalTo(category)
         .once('value', snapshot => {
             // onValueChanged(Object.values(snapshot.val()));
             const exercises = Object.values(snapshot.val()).filter(ex => ! ex.userId || ex.userId === Auth.getCurrentUserId());

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as Auth from '../api/auth';
 import { FontAwesome, Entypo } from '@expo/vector-icons';

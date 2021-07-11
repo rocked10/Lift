@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, } from "react-native";
+import { View, Text, FlatList, } from "react-native";
 import { settingStyles, globalStyles } from "../styles/global";
 import { Checkbox } from 'react-native-paper';
-import firebase from 'firebase';
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 

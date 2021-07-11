@@ -4,6 +4,7 @@ import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
 import * as Auth from '../api/auth';
 import { Searchbar, Dialog, Button, Paragraph, List } from "react-native-paper"
+import { MaterialIcons } from "@expo/vector-icons";
 
 
 export default function Exercises({ navigation, route, cameFromWorkoutForm, currentExercisesInForm, onSelectExercise, setModalOpen, setFormVisible }) {
@@ -17,6 +18,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
     const [cardio, setCardio] = useState([]);
 
     const [expanded, setExpanded] = useState({});
+    const [customExerciseAdded, setCustomExerciseAdded] = useState(false);
 
     const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
     { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Arms', data: arms },
@@ -31,6 +33,12 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
         DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
+    const handleAddCustomExercise = () => {
+        // setCustomExerciseFormOpen(true);
+        navigation.navigate('Custom Exercise', {
+            setCustomExerciseAdded: setCustomExerciseAdded
+        })
+    }
 
     // const f = () => {
     //     let initialSelectedState = {}
@@ -144,7 +152,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                         { text: "No", }
                         ]
                     )
-                }   
+                }
             }
         }
     }
@@ -158,6 +166,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
     const handlePress = async () => {
         // await DB.addExercise('Olympic', 'Power Clean', '-RX9YvX8ZOg');
         // DB.getExercisesByCategory('Olympic', setOlympic);
+        // DB.addExercise('Cardio', 'Swimming', 'pFN2n7CRqhw').then();
     }
 
     return (
@@ -170,6 +179,13 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 onSubmitEditing={handleSearch}
                 inputStyle={{ fontFamily: 'lato-regular' }}
             />
+            <TouchableOpacity
+                style={{ alignSelf: 'flex-end', marginTop: 12 }}
+                onPress={handleAddCustomExercise}
+            >
+                <MaterialIcons name='add' size={32} />
+            </TouchableOpacity>
+
 
             <ScrollView showsVerticalScrollIndicator={false} >
                 <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold' }}>
@@ -189,10 +205,9 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                     }
                 </List.Section>
             </ScrollView>
-
-            <Button onPress={handlePress}>Add Exercise</Button>
-
         </View>
     );
 
 }
+
+
