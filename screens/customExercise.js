@@ -28,7 +28,7 @@ const FormField = ({ onChangeText, placeholder, val, }) => {
 }
 
 export default function CustomExercise({ navigation, route }) {
-    const { setCustomExerciseAdded } = route.params;
+    const { categoryExercisesSetters } = route.params;
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [name, setName] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -44,7 +44,13 @@ export default function CustomExercise({ navigation, route }) {
             }
             const videoId = YouTubeGetID(url); 
             DB.addCustomExercise(selectedCategory, name, videoId, userId);
-            setCustomExerciseAdded(true);
+            
+            const categoryNames = ['Olympic', 'Legs', 'Chest', 'Back', 'Arms', 'Cardio'];
+            categoryExercisesSetters[categoryNames.indexOf(selectedCategory)](prev => {
+                const newCategoryExercises = [... prev];
+                newCategoryExercises.push({ category: selectedCategory, exerciseName: name, userId: userId, videoId: videoId})
+                return newCategoryExercises;  
+            })
             navigation.goBack();
         }
     }

@@ -195,7 +195,7 @@ export default function Workout({ navigation, route }) {
 
             <SectionList
                 showsVerticalScrollIndicator={false}
-                renderSectionHeader={({ section: { title } }) => <List.Subheader style={{ fontFamily: 'lato-bold' }}>{title} workouts</List.Subheader>}
+                renderSectionHeader={({ section: { title } }) => <List.Subheader style={{ fontFamily: 'lato-bold', }}>{title} workouts</List.Subheader>}
                 sections={sectionedWorkouts}
                 renderItem={({ item, index }) => {
                     if (item.exercises !== undefined) {
