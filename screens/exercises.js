@@ -17,7 +17,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
     const [cardio, setCardio] = useState([]);
 
     const [expanded, setExpanded] = useState({});
-    const [customExerciseAdded, setCustomExerciseAdded] = useState(false);
 
     const exercises = [{ title: 'Olympic', data: olympic }, { title: 'Legs', data: legs },
     { title: 'Chest', data: chest }, { title: 'Back', data: back }, { title: 'Arms', data: arms },
@@ -35,7 +34,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
     const handleAddCustomExercise = () => {
         // setCustomExerciseFormOpen(true);
         navigation.navigate('Custom Exercise', {
-            setCustomExerciseAdded: setCustomExerciseAdded
+            categoryExercisesSetters: [setOlympic, setLegs, setChest, setBack, setArms, setCardio], 
         })
     }
 
@@ -178,12 +177,12 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 style={{ alignSelf: 'flex-end', marginTop: 12 }}
                 onPress={handleAddCustomExercise}
             >
-                <MaterialIcons name='add' size={32} />
+                <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
 
             <ScrollView showsVerticalScrollIndicator={false} >
-                <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold' }}>
+                <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold', marginTop: -6 }}>
                     {
                         exercises.map((exercise, index) => (
                             <List.Accordion
