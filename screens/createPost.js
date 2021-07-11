@@ -59,12 +59,21 @@ export default function CreatePost({ navigation, route }) {
         <View style={globalStyles.container}>
             <ProfileCard title={name} subtitle={role} right={RightContent} />
 
-            <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginVertical: 8}}>
+                {/*<TextInput*/}
+                {/*    placeholder='Add Title...'*/}
+                {/*    style={styles.input}*/}
+                {/*    defaultValue={postTitle}*/}
+                {/*    onChangeText={input => setPostTitle(input)}*/}
+                {/*/>*/}
+
                 <TextInput
-                    placeholder='Add Title...'
+                    placeholder="What's your workout of the day?"
+                    multiline={true}
                     style={styles.input}
-                    defaultValue={postTitle}
-                    onChangeText={input => setPostTitle(input)}
+                    textAlignVertical='top'
+                    defaultValue={postBody}
+                    onChangeText={input => setPostBody(input)}
                 />
 
                 <MaterialIcons
@@ -75,15 +84,6 @@ export default function CreatePost({ navigation, route }) {
                     }}
                 />
             </View>
-
-            <TextInput
-                placeholder="What's on your mind?"
-                multiline={true}
-                style={styles.input}
-                textAlignVertical='top'
-                defaultValue={postBody}
-                onChangeText={input => setPostBody(input)}
-            />
 
             <View
                 style={styles.chipContainer}

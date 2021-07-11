@@ -1,6 +1,6 @@
-import {ListItem} from "react-native-elements";
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {globalStyles} from "../styles/global";
+import { ListItem } from "react-native-elements";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { globalStyles } from "../styles/global";
 import Card from "../shared/card";
 import React, { useState, } from "react";
 import * as DB from "../api/database";

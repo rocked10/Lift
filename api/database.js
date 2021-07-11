@@ -49,12 +49,26 @@ export const addSharedWorkout = async (ownUserId, sharedUserId, workoutId, worko
             workoutTitle: workout.workoutTitle,
             sharedBy: ownUserId,
             id: workoutId,
+            unseen: true,
         });
         console.log("Data saved");
     } catch (error) {
         console.log(error);
         console.log("Write failed");
     }
+}
+
+export const seenWorkout = async (userId, workoutId) => {
+    try {
+        const ref = db.ref(`workouts/${userId}/${workoutId}`);
+        await ref.update({
+            unseen: false,
+        });
+    } catch (error) {
+        console.error(error);
+        console.log('Error');
+    }
+
 }
 
 export const editWorkout = async (userId, workoutId, workout) => {
@@ -342,7 +356,7 @@ export const addCommunityPost = async (userId, name, role, postTitle, body, date
     try {
         const ref = db.ref(`community`).push();
         await ref.set({
-            postTitle: postTitle,
+            // postTitle: postTitle,
             body: body,
             date: date,
             workouts: workouts,

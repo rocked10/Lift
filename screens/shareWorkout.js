@@ -72,7 +72,7 @@ export default function ShareWorkout({ shareId }) {
     return (
         <View>
             <Searchbar
-                placeholder='Search email'
+                placeholder='Search for athlete...'
                 onChangeText={onChangeSearch}
                 value={searchQuery}
                 onIconPress={handleSearch}

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, ScrollView, Keyboard, Alert, Button } from "react-native";
+import React, {useEffect, useState} from 'react';
+import { Alert, Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../styles/global";
 import * as DB from '../api/database';
-import { Searchbar, List } from "react-native-paper"
+import { List, Searchbar } from "react-native-paper"
 import { MaterialIcons } from "@expo/vector-icons";
 
 
@@ -53,7 +53,9 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
 
     // const getExerciseBgColor = (item, index) => {
     //     selected[item.category][index] ? 'blue' : 'white'
-    // }
+    // }]
+
+    // Make exercise category bigger
 
     const Render = ({ data }) => {
         let highlight = '';
@@ -160,7 +162,9 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
 
     // Exercise adder
     const handlePress = async () => {
-        DB.addExercise('Cardio', 'Swimming', 'pFN2n7CRqhw').then();
+        // await DB.addExercise('Olympic', 'Power Clean', '-RX9YvX8ZOg');
+        // DB.getExercisesByCategory('Olympic', setOlympic);
+        // DB.addExercise('Cardio', 'Swimming', 'pFN2n7CRqhw').then();
     }
 
     return (
@@ -199,12 +203,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                     }
                 </List.Section>
             </ScrollView>
-
-            {/* <Button onPress={handlePress} title="Add" /> */}
-
         </View>
     );
-
 }
-
-

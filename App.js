@@ -1,10 +1,9 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, LogBox, Keyboard } from 'react-native';
+import React, {useState} from 'react';
+import { Alert, Keyboard, LogBox, StyleSheet } from 'react-native';
 import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
 import firebase from 'firebase';
-import firebaseApp from "./api/firebase";
 import { MenuProvider } from 'react-native-popup-menu';
 import * as Font from 'expo-font'
 import * as Auth from './api/auth';
@@ -59,7 +58,7 @@ export default function App() {
     } else if (loggedIn === '1') {
       return (
             <MenuProvider>
-              <TabStack/>
+              <TabStack />
             </MenuProvider>
       );
     } else {
