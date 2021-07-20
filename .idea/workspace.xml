@@ -5,35 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/__mocks__/firebase.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Community.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/CommunityStack.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Exercises.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/ExercisesStack.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Profile.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/ProfileStack.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Workout.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/WorkoutStack.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/App.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jest/setup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/community.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/loading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/TimerModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/TimerModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +163,7 @@
       <workItem from="1626590292843" duration="150000" />
       <workItem from="1626590464909" duration="15496000" />
       <workItem from="1626708902765" duration="2513000" />
-      <workItem from="1626762426483" duration="15782000" />
+      <workItem from="1626762426483" duration="16091000" />
     </task>
     <servers />
   </component>
