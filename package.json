@@ -5,12 +5,31 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "modulePaths": [
+      "."
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-picker|react-native-wheel-scroll-picker|react-native-wheel-scrollview-picker|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ]
   },
   "dependencies": {
     "@callstack/react-theme-provider": "^3.0.6",
     "@emotion/stylis": "^0.8.5",
     "@expo/vector-icons": "^12.0.5",
+    "@jest/environment": "^27.0.6",
+    "@jest/types": "^27.0.6",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "3.0.3",
     "@react-native-firebase/app": "^12.0.0",
@@ -21,6 +40,7 @@
     "@react-navigation/material-top-tabs": "^5.3.15",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "@testing-library/react-native": "^7.2.0",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.3",
     "expo-constants": "^11.0.1",
@@ -37,14 +57,14 @@
     "react-native-countdown-circle-timer": "^2.5.3",
     "react-native-dotenv": "^2.5.5",
     "react-native-elements": "^3.4.1",
-    "react-native-gesture-handler": "~1.10.2",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-material-menu": "^1.2.0",
     "react-native-pager-view": "^5.2.1",
     "react-native-paper": "^4.9.2",
     "react-native-paper-tabs": "^0.4.2",
     "react-native-picker-select": "^8.0.4",
     "react-native-popup-menu": "^0.15.10",
-    "react-native-reanimated": "~2.1.0",
+    "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-svg": "^12.1.1",
@@ -62,7 +82,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "babel-preset-react-native": "^4.0.1"
+    "@types/jest": "^26.0.24",
+    "babel-preset-expo": "^8.4.0",
+    "babel-preset-react-native": "^4.0.1",
+    "firebase-mock": "^2.3.2",
+    "jest": "^27.0.6",
+    "jest-expo": "^42.0.1",
+    "react-native-testing-library": "^6.0.0",
+    "react-test-renderer": "^16.14.0"
   },
   "private": true
 }

@@ -180,6 +180,7 @@ export default function Workout({ navigation, route }) {
     return (
         <View style={globalStyles.container}>
             <TouchableOpacity
+                testID='Add Workout'
                 style={{ alignItems: 'flex-end' }}
                 onPress={() => navigation.navigate('WorkoutForm', {
                     workout: {

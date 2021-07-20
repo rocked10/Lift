@@ -1,17 +1,22 @@
 import React from 'react';
 
-import Community from "screens/community";
+import Workout from "screens/workout";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
-describe('Community', () => {
-    it('navigates on button press', () => {
-            const navigate = jest.fn();
-        const { getByTestId } = render(<Community navigation={{ navigate }} />);
-        fireEvent.press(getByTestId('Add Post'));
-        expect(navigate).toHaveBeenCalledWith('Create Post', {
-            name: undefined,
-            role: undefined,
-            userId: null,
+describe('Workout', () => {
+    it('navigates to add workout on button press', () => {
+        const navigate = jest.fn();
+        const handleAddWorkout = () => {}
+
+        const { getByTestId } = render(<Workout navigation={{ navigate }} />);
+        fireEvent.press(getByTestId('Add Workout'));
+        expect(navigate).toHaveBeenCalledWith('WorkoutForm', {
+            workout: {
+                workoutTitle: '',
+                    exercises: []
+            },
+            addWorkout: expect.any(Function),
+                createsANewWorkout: true,
         });
     })
 });

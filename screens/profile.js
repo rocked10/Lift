@@ -67,6 +67,7 @@ export default function Profile({ navigation, route }) {
                         userProfile: userProfile
                     })}
                     style={{borderRadius: 10, marginHorizontal: 12}}
+                    testID="Edit Profile Button"
                 >
                     <Text style={{fontFamily: 'karla-bold'}}>EDIT PROFILE</Text>
                 </Button>
@@ -111,7 +112,7 @@ export default function Profile({ navigation, route }) {
         <View style={{padding: 18,}}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
-                    <SignOutButton />
+                    <SignOutButton/>
 
                     <View style={styles.profileImage}>
                         <Image

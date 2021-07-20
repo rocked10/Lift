@@ -1,14 +1,17 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import { act } from "react-native-testing-library";
 
-import { CommunityCard } from 'shared/communityCard';
+import Community from "screens/community";
+import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
-describe('Community Card', () => {
-    it('onPress should trigger accordingly', () => {
-        const card = create(<CommunityCard onPress={() => console.log('Card Pressed')}/>);
-        act(() => card.onPress());
-
-        expect()
+describe('Community', () => {
+    it('navigates to add post on button press', () => {
+        const navigate = jest.fn();
+        const { getByTestId } = render(<Community navigation={{ navigate }} />);
+        fireEvent.press(getByTestId('Add Post'));
+        expect(navigate).toHaveBeenCalledWith('Create Post', {
+            name: undefined,
+            role: undefined,
+            userId: null,
+        });
     })
 });

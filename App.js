@@ -1,5 +1,4 @@
-import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Alert, Keyboard, LogBox, StyleSheet } from 'react-native';
 import Login from "./screens/login";
 import { TabStack } from "./routes/tabStack";
@@ -22,7 +21,7 @@ const getFonts = () => {
   });
 }
 
-export default function App() {
+export default function App({ testLogin=false }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(''); // '': loading, 0: logged out, 1: logged in
 
@@ -50,8 +49,15 @@ export default function App() {
     }
   })
 
+  // Uncomment when testing
+  useEffect(() => {
+    if (testLogin) {
+      setLoggedIn(testLogin);
+    }
+  }, [])
+
   if (fontsLoaded) {
-    if (!loggedIn) {
+    if (! loggedIn) {
       return (
           <Loading/>
       );
@@ -76,12 +82,3 @@ export default function App() {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

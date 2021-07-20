@@ -23,8 +23,6 @@ const firebaseConfig = {
     measurementId: MEASUREMENT_ID
 }
 
-console.log("API");
-
 const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 
 export default firebaseApp;

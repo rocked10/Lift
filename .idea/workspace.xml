@@ -5,8 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/__mocks__/firebase.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/Community.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/CommunityStack.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/Exercises.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/ExercisesStack.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/Profile.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/ProfileStack.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/Workout.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/WorkoutStack.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/App.test.js.snap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jest/setup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/firebase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/profileStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profileStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/workoutStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/workoutStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/TimerModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/TimerModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,17 +59,47 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../App Tutorial/reviews_app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/__tests__" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="discord-project" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift\__tests__" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift\__mocks__" />
+      <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift" />
+      <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift\__tests__" />
       <recent name="C:\Users\shane\OneDrive\Desktop\NUS\Orbital\Lift\screens" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="getConsoleOutput.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build/getConsoleOutput.js" working-dir="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.getConsoleOutput.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,7 +184,14 @@
       <workItem from="1625668915164" duration="7797000" />
       <workItem from="1625736289574" duration="3128000" />
       <workItem from="1625898920380" duration="7968000" />
-      <workItem from="1625990836859" duration="9793000" />
+      <workItem from="1625990836859" duration="11613000" />
+      <workItem from="1626067417748" duration="1321000" />
+      <workItem from="1626346225012" duration="4747000" />
+      <workItem from="1626505227546" duration="7745000" />
+      <workItem from="1626590292843" duration="150000" />
+      <workItem from="1626590464909" duration="15496000" />
+      <workItem from="1626708902765" duration="2513000" />
+      <workItem from="1626762426483" duration="15782000" />
     </task>
     <servers />
   </component>

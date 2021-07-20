@@ -66,7 +66,7 @@ export default function Community({ navigation, route }) {
 
     return (
         <View style={globalStyles.container}>
-            <Button style={{ marginBottom: 20 }} mode='contained' compact={true}
+            <Button style={{ marginBottom: 20 }} mode='contained' compact={true} testID='Add Post'
                 onPress={() => {
                     navigation.navigate('Create Post', {
                         name: userProfile.name,

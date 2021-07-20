@@ -55,7 +55,7 @@ export default function Login({ userDetails }) {
                             />
                         </View>
 
-                        <Button mode="contained" onPress={props.handleSubmit} style={{borderRadius: 10}}>
+                        <Button mode="contained" onPress={props.handleSubmit} style={{borderRadius: 10}} testID="Login Button">
                             <Text style={{fontFamily: 'karla-bold'}}>LOGIN</Text>
                         </Button>
                     </View>

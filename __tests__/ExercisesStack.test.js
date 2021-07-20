@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { TabStack } from "routes/tabStack";
+import ExercisesStack from "../routes/exercisesStack";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
-describe('TabStack', () => {
+describe('ExercisesStack', () => {
     it ('renders the workout screen first', async () => {
         const { getByTestId } = render(
-            <TabStack />
+            <NavigationContainer>
+                <ExercisesStack />
+            </NavigationContainer>
         );
-        await waitFor(() => getByTestId('Add Workout'));
+        await waitFor(() => getByTestId('Search Exercise'));
     });
 });
