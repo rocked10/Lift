@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/shared/TimerModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/TimerModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,19 +53,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="getConsoleOutput.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build/getConsoleOutput.js" working-dir="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build">
       <method v="2" />
     </configuration>
@@ -163,7 +152,8 @@
       <workItem from="1626590292843" duration="150000" />
       <workItem from="1626590464909" duration="15496000" />
       <workItem from="1626708902765" duration="2513000" />
-      <workItem from="1626762426483" duration="16091000" />
+      <workItem from="1626762426483" duration="16664000" />
+      <workItem from="1626932211641" duration="829000" />
     </task>
     <servers />
   </component>
