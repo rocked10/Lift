@@ -11,8 +11,6 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import TimerModal from "../shared/TimerModal"
 
-// REMEMBER TO UNCOMMENT ALL TIMER MODAL CODE!!!!!!!!!!!
-// remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
     const {
         workoutTitle,
@@ -248,7 +246,7 @@ export default function WorkoutDetails({ route, navigation }) {
                 <View style={{ flexDirection: 'row', }}>
                     <ShareButton onPress={() => setShareWorkoutModalOpen(true)} visible={!forViewingOnly} />
                     <DownloadButton onPress={handleDownload} visible={forViewingOnly && forDownload} />
-                    {/* <TimerButton onPress={() => { setTimerModalOpen(true); }} visible={!forViewingOnly} /> */}
+                    <TimerButton onPress={() => { setTimerModalOpen(true); }} visible={!forViewingOnly} />
                     <PlatesCalculatorButton onPress={() => { navigation.navigate('Plates Calculator') }} visible={!forViewingOnly} />
                 </View>
 
@@ -284,10 +282,10 @@ export default function WorkoutDetails({ route, navigation }) {
             //     value={remarks} />}
             />
 
-            {/* <TimerModal
+            <TimerModal
                 isOpen={timerModalOpen}
                 setTimerModalOpen={setTimerModalOpen}
-            /> */}
+            />
             <ShareWorkoutModal />
 
         </View>

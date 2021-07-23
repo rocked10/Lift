@@ -31,13 +31,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
         DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
-    const handleAddCustomExercise = () => {
-        // setCustomExerciseFormOpen(true);
-        navigation.navigate('Custom Exercise', {
-            categoryExercisesSetters: [setOlympic, setLegs, setChest, setBack, setArms, setCardio], 
-        })
-    }
-
     // const f = () => {
     //     let initialSelectedState = {}
     //     exercises.map((category) => {
@@ -160,13 +153,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
         setExpanded({ ...expanded, [title]: !initialState });
     }
 
-    // Exercise adder
-    const handlePress = async () => {
-        // await DB.addExercise('Olympic', 'Power Clean', '-RX9YvX8ZOg');
-        // DB.getExercisesByCategory('Olympic', setOlympic);
-        // DB.addExercise('Cardio', 'Swimming', 'pFN2n7CRqhw').then();
-    }
-
     return (
         <View style={globalStyles.container}>
             <Searchbar
@@ -176,16 +162,22 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 onIconPress={handleSearch}
                 onSubmitEditing={handleSearch}
                 inputStyle={{ fontFamily: 'lato-regular' }}
+                testID='Search Exercise'
             />
             <TouchableOpacity
                 style={{ alignSelf: 'flex-end', marginTop: 12 }}
-                onPress={handleAddCustomExercise}
+                onPress={() => {
+                    navigation.navigate('Custom Exercise', {
+                        categoryExercisesSetters: [setOlympic, setLegs, setChest, setBack, setArms, setCardio],
+                    })
+                }}
+                testID="Add Custom Exercise"
             >
                 <MaterialIcons name='add' size={28} />
             </TouchableOpacity>
 
 
-            <ScrollView showsVerticalScrollIndicator={false} >
+            <ScrollView showsVerticalScrollIndicator={false} testID={'Exercises'}>
                 <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold', marginTop: -6 }}>
                     {
                         exercises.map((exercise, index) => (

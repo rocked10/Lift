@@ -21,8 +21,6 @@ const WorkoutStack = ({ navigation }) => {
         DB.getUserType(setRole);
     }, [role]);
 
-    // headerLeft: ()=> null
-
     return (
         <Navigator screenOptions={navigationStyles} >
             <Screen name='Workout' component={role === 'Coach' ? WorkoutTabs : Workout}

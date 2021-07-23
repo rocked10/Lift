@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Exercise Description Screen Should render 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "padding": 16,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontFamily": "lato-bold",
+        "fontSize": 22,
+        "marginBottom": 16,
+      }
+    }
+  />
+</View>
+`;

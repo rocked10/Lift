@@ -4,7 +4,7 @@ import { Modal, Portal, Provider, } from 'react-native-paper';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-// import ScrollPicker from "react-native-wheel-scroll-picker"; //commented out for testing purposes
+// import ScrollPicker from "react-native-wheel-scroll-picker"; // Comment out when testing
 
 const TimeSelection = ({ type, initialValue, onChange }) => {
     const generateOptions = type =>
