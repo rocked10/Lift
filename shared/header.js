@@ -3,16 +3,17 @@ import { StyleSheet, View, Text } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Header({ navigation, title, displaySettings }) {
-    const openSettings = () => {
-        navigation.navigate('Profile', {
-            screen: 'Settings',
-        });
-    }
 
     const SettingsIcon = () => {
         if (displaySettings) {
             return (
-                <MaterialIcons name='settings' size={26} onPress={openSettings} style={styles.icon}/>
+                <MaterialIcons name='settings' size={26} style={styles.icon} testID='Settings Button'
+                    onPress={() => {
+                        navigation.navigate('Profile', {
+                            screen: 'Settings',
+                        });
+                    }}
+                />
             );
         } else {
             return null;

@@ -5,12 +5,18 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 describe('ProfileStack', () => {
-    it ('renders the profile screen', async () => {
-        const { getByText } = render(
+    const navigate = jest.fn();
+
+    it ('renders the profile screen and tests settings button navigation', async () => {
+        const { getByText, getByTestId } = render(
             <NavigationContainer>
-                <ProfileStack />
+                <ProfileStack navigation={{navigate}} />
             </NavigationContainer>
         );
         await waitFor(() => getByText('Personal Records'));
+
+        // Settings Button Test
+        fireEvent.press(getByTestId('Settings Button'));
+        expect(navigate).toHaveBeenCalledWith('Profile', { screen: 'Settings' });
     });
 });

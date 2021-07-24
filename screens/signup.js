@@ -9,12 +9,12 @@ import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { Button } from 'react-native-paper'
 
 
-export default function Signup() {
+export default function Signup({ handleSubmit, testing=false }) {
     return (
         <View style={loginStyles.container}>
             <Formik
                 initialValues = {{email: '', username: '', password: '', password2: '', role: 'Coach' }}
-                onSubmit={(values, actions) => {
+                onSubmit={testing ? handleSubmit : (values, actions) => {
                     if (values.password !== values.password2) {
                         Alert.alert(
                             "Error",
@@ -100,7 +100,7 @@ export default function Signup() {
                             <SelectPicker.Item label="Athlete" value="Athlete" />
                         </SelectPicker>
 
-                        <Button onPress={props.handleSubmit} mode="contained" style={{marginVertical: 10}}>
+                        <Button onPress={props.handleSubmit} mode="contained" style={{marginVertical: 10}} testID='Sign Up Button'>
                             <Text style={{fontFamily: 'karla-bold'}}>SIGNUP</Text>
                         </Button>
                     </View>

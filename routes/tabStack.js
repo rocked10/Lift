@@ -31,15 +31,18 @@ export const TabStack = () => {
                         name='Profile'
                         component={ProfileStack}
                         options={{
-                            tabBarIcon: 'account-circle'
+                            tabBarIcon: 'account-circle',
+                            tabBarTestID:"Profile Tab"
                         }}
+
                     />
 
                     <Tab.Screen
                         name='Workout'
                         component={WorkoutStack}
                         options={{
-                            tabBarIcon: 'weight-lifter'
+                            tabBarIcon: 'weight-lifter',
+                            tabBarTestID:"Workout Tab"
                         }}
                     />
 
@@ -47,7 +50,8 @@ export const TabStack = () => {
                         name='Exercises'
                         component={ExercisesStack}
                         options={{
-                            tabBarIcon: 'dumbbell'
+                            tabBarIcon: 'dumbbell',
+                            tabBarTestID:"Exercises Tab"
                         }}
                     />
 
@@ -55,7 +59,8 @@ export const TabStack = () => {
                         name='Community'
                         component={CommunityStack}
                         options={{
-                            tabBarIcon: 'account-multiple'
+                            tabBarIcon: 'account-multiple',
+                            tabBarTestID:"Community Tab"
                         }}
                     />
 
