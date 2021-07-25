@@ -450,6 +450,7 @@ exports[`Testing Login Screen Should render 1`] = `
                     },
                   ]
                 }
+                testID="Sign Up Button"
               >
                 <View
                   style={

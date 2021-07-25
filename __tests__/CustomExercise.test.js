@@ -14,7 +14,12 @@ describe('Testing Custom Exercise Screen', () => {
 
     it ("Renders elements", () => {   
         const navigate = jest.fn(); 
-        const { getByTestId, getByText, getByPlaceholderText} = render(<CustomExercise navigation={navigate} route={{params: {categoryExercisesSetters: false}}} />);
+        const { getByTestId, getByText, getByPlaceholderText} = render(
+                <CustomExercise
+                    navigation={navigate}
+                    route={{params: {categoryExercisesSetters: false}}}
+                />
+            );
         getByPlaceholderText('Exercise Name');
         getByPlaceholderText('Youtube Link (Optional)');
         getByTestId('Category Picker');

@@ -21,31 +21,7 @@ exports[`Profile Should render 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          onPress={[Function]}
-          style={
-            Array [
-              Object {
-                "color": "black",
-                "fontSize": 28,
-              },
-              Object {
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              Object {
-                "fontFamily": "entypo",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
+        <Text />
         <View
           style={
             Object {
@@ -260,26 +236,7 @@ exports[`Profile Should render 1`] = `
               }
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": "gold",
-                    "fontSize": 24,
-                  },
-                  undefined,
-                  Object {
-                    "fontFamily": "FontAwesome",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
+            <Text />
             <Text
               style={
                 Object {
@@ -292,26 +249,7 @@ exports[`Profile Should render 1`] = `
             >
               Personal Records
             </Text>
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": "gold",
-                    "fontSize": 24,
-                  },
-                  undefined,
-                  Object {
-                    "fontFamily": "FontAwesome",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
+            <Text />
           </View>
           <Text
             style={

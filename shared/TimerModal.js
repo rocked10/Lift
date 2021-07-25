@@ -4,7 +4,7 @@ import { Modal, Portal, Provider, } from 'react-native-paper';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-// import ScrollPicker from "react-native-wheel-scroll-picker"; // Comment out when testing
+import ScrollPicker from "react-native-wheel-scroll-picker"; // Comment out when testing
 
 const TimeSelection = ({ type, initialValue, onChange }) => {
     const generateOptions = type =>
@@ -94,20 +94,9 @@ const RestartButton = ({ isPlaying, setIsPlaying, duration, setKey, }) => {
     )
 }
 
-function TimerModal({
+export default function TimerModal({
     isOpen,
     setTimerModalOpen,
-    // setTimerModalOpen2,
-    // setKey,
-    // setIsPlaying,
-    // setHours,
-    // setMinutes,
-    // setSeconds,
-    // key3,
-    // isPlaying,
-    // hours,
-    // minutes,
-    // seconds,
 }) {
     const [key, setKey] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -119,9 +108,6 @@ function TimerModal({
         func(val);
         setKey(prev => prev + 1);
     };
-    // const timeSelectionOptions = [
-    //     { type: 'hours', initialValue: , onChange: forceUpdateAfter(setHours) }
-    // ];
 
     return (
         <Provider>

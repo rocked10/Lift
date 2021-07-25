@@ -5,7 +5,7 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 describe('CommunityStack', () => {
-    it ('renders the workout screen', async () => {
+    it ('renders the community screen', async () => {
         const { getByTestId } = render(
             <NavigationContainer>
                 <CommunityStack />

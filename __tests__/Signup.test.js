@@ -5,30 +5,34 @@ import renderer from 'react-test-renderer';
 import Signup from "screens/signup";
 
 describe('Sign up', () => {
-    it('Sign up form submits correctly', async () => {
-        const handleSubmit = jest.fn();
-        const { getByTestId, getByPlaceholderText } = render(<Signup testing={true} handleSubmit={handleSubmit} />);
-        const wrapper = renderer.create(<Signup />);
+    const wrapper = renderer.create(<Signup/>);
 
-        fireEvent.changeText(getByPlaceholderText('Enter your email...'), 'fuck');
-        fireEvent.changeText(getByPlaceholderText('Enter a username...'), 'fuck');
-        fireEvent.changeText(getByPlaceholderText('Enter a password...'), 'fuck');
-        fireEvent.changeText(getByPlaceholderText('Confirm your password...'), 'fuck');
-        fireEvent.changeText(getByPlaceholderText('Enter your email...'), 'fuck');
+    it ('Sign up form submits correctly', async () => {
+        const handleSubmit = jest.fn();
+        const {getByTestId, getByPlaceholderText} = render(<Signup testing={true} handleSubmit={handleSubmit}/>);
+
+        fireEvent.changeText(getByPlaceholderText('Enter your email...'), 'Test Email');
+        fireEvent.changeText(getByPlaceholderText('Enter a username...'), 'Test Username');
+        fireEvent.changeText(getByPlaceholderText('Enter a password...'), 'Test Password');
+        fireEvent.changeText(getByPlaceholderText('Confirm your password...'), 'Test Password');
 
         fireEvent.press(getByTestId('Sign Up Button'));
 
         await waitFor(() => {
-            expect(handleSubmit).toHaveBeenCalledWith({
-                email: 'fuck',
-                password: 'fuck',
-                password2: 'fuck',
-                role: 'Coach',
-                // username: 'fuck'
-            });
+            expect(handleSubmit).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    email: 'Test Email',
+                    password: 'Test Password',
+                    password2: 'Test Password',
+                    role: 'Coach',
+                    username: 'Test Username'
+                }),
+                expect.any(Object),
+            );
         });
+    });
 
-    it('Should render', () => {
+    it ('Should render', () => {
         expect(wrapper.toJSON()).toMatchSnapshot();
     });
 

@@ -5,8 +5,6 @@ import { Searchbar } from 'react-native-paper';
 import * as DB from "../api/database";
 import ProfileCard from "../shared/profileCard";
 
-// fix later!!!!!!!
-
 export default function AthletesWorkouts({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [usersFound, setUsersFound] = useState([]);
@@ -25,9 +23,6 @@ export default function AthletesWorkouts({ navigation }) {
 
     const onSubmitSearch = async () => {
         Keyboard.dismiss();
-        // const user = await DB.findUserId(searchQuery.toLowerCase().trim());
-        // setUserFound(user);
-        // setAthleteId(user.id);
     }
 
     return (

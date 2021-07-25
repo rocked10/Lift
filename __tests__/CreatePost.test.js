@@ -15,7 +15,6 @@ describe('Testing Create Post Screen', () => {
     it ("Renders elements", () => {   
         const navigate = jest.fn(); 
         const { getByTestId, getByPlaceholderText,} = render(<CreatePost navigation={ navigate } route={{params: {name: 'jeremy', role:'coach', userId: '123'}}} />);
-        // getByTestId('Profile Card'); this fails?
         getByPlaceholderText("What's your workout of the day?");
         getByTestId('Attach file icon');
     });

@@ -50,7 +50,7 @@ export default function Settings({ navigation }) {
             <SectionList
                 ItemSeparatorComponent={FlatListItemSeparator}
                 sections={[
-                    { title: 'Account', data: ['Change email', 'Change password', 'Enable workout notifications', 'Delete account'] },
+                    { title: 'Account', data: ['Change email', 'Change password', 'Delete account'] },
                     { title: 'General', data: ['Personal Records'] }
                 ]}
 

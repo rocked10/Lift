@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, FlatList, Alert, } from "react-native";
+import { View, StyleSheet, FlatList, Alert, Keyboard } from "react-native";
 import * as Auth from '../api/auth';
 import * as DB from '../api/database';
 import { Button, TextInput } from "react-native-paper"
@@ -19,18 +19,18 @@ export default function Athletes({ navigation, route }) {
     const [searchQuery, setSearchQuery] = useState('')
 
     const handleAddAthlete = async () => {
-        // Keyboard.dismiss()
+        Keyboard.dismiss()
         const athlete = await DB.findUserByEmail(searchQuery.toLowerCase().trim());
         if (athlete) {
-            DB.addAthlete(coachId, athlete.id).then();
-            Alert.alert(
+            DB.addAthlete(coachId, athlete.id).then(
+                Alert.alert(
                 '',
                 'Athlete added!',
                 [
                     {
                         text: "Ok",
                     }
-                ]
+                ])
             );
             textInputRef.current.clear();
         } else {

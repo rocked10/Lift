@@ -31,25 +31,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
         DB.getExercisesByCategory("Cardio", setCardio);
     }, []);
 
-    // const f = () => {
-    //     let initialSelectedState = {}
-    //     exercises.map((category) => {
-    //         const temp = new Array(category.data.length).fill(false);
-    //         initialSelectedState[category.title] = temp;
-    //     });
-    //     return initialSelectedState
-    // }
-
-    // const [selected, setSelected] = useState(f());
-
-    // console.log(selected)
-
-    // const getExerciseBgColor = (item, index) => {
-    //     selected[item.category][index] ? 'blue' : 'white'
-    // }]
-
-    // Make exercise category bigger
-
     const Render = ({ data }) => {
         let highlight = '';
         const listItems = data.map((item, index) => {
@@ -70,14 +51,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                                 exercise: item,
                             });
                         } else {
-                            // setSelected(prev => {
-                            //     console.log("****8")
-                            //     console.log(prev)
-                            //     const newSelected = { ...prev }
-                            //     // console.log(item.category)
-                            //     newSelected[item.category][index] = true
-                            //     return newSelected
-                            // })
                             if (currentExercisesInForm.map(exercise => exercise.exerciseName).includes(item.exerciseName)) {
                                 Alert.alert(
                                     "Exercise already added!",
@@ -95,7 +68,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                     <List.Item
                         titleStyle={{ fontFamily: 'lato-regular', color: highlight }}
                         title={item.exerciseName}
-                    // style={{ backgroundColor: getExerciseBgColor(item, index) }}
                     />
                 </TouchableOpacity>
             );

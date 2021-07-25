@@ -76,42 +76,7 @@ exports[`Exercises Should render 1`] = `
       }
     >
       <View>
-        <Text
-          accessibilityElementsHidden={true}
-          allowFontScaling={false}
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "rgba(0, 0, 0, 0.54)",
-                "fontSize": 24,
-              },
-              Array [
-                Object {
-                  "lineHeight": 24,
-                  "transform": Array [
-                    Object {
-                      "scaleX": 1,
-                    },
-                  ],
-                },
-                Object {
-                  "backgroundColor": "transparent",
-                },
-              ],
-              Object {
-                "fontFamily": "material-community",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          󰍉
-        </Text>
+        <Text />
       </View>
     </View>
     <TextInput
@@ -201,42 +166,7 @@ exports[`Exercises Should render 1`] = `
       }
     >
       <View>
-        <Text
-          accessibilityElementsHidden={true}
-          allowFontScaling={false}
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "rgba(255, 255, 255, 0)",
-                "fontSize": 24,
-              },
-              Array [
-                Object {
-                  "lineHeight": 24,
-                  "transform": Array [
-                    Object {
-                      "scaleX": 1,
-                    },
-                  ],
-                },
-                Object {
-                  "backgroundColor": "transparent",
-                },
-              ],
-              Object {
-                "fontFamily": "material-community",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          󰅖
-        </Text>
+        <Text />
       </View>
     </View>
   </View>
@@ -259,26 +189,7 @@ exports[`Exercises Should render 1`] = `
     }
     testID="Add Custom Exercise"
   >
-    <Text
-      allowFontScaling={false}
-      style={
-        Array [
-          Object {
-            "color": undefined,
-            "fontSize": 28,
-          },
-          undefined,
-          Object {
-            "fontFamily": "material",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-    >
-      
-    </Text>
+    <Text />
   </View>
   <RCTScrollView
     showsVerticalScrollIndicator={false}
@@ -424,42 +335,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -514,42 +390,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -612,42 +453,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -702,42 +508,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -800,42 +571,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -890,42 +626,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -988,42 +689,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -1078,42 +744,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -1176,42 +807,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -1266,42 +862,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -1364,42 +925,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.54)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰇼
-                  </Text>
+                  <Text />
                 </View>
                 <View
                   style={
@@ -1454,42 +980,7 @@ exports[`Exercises Should render 1`] = `
                     ]
                   }
                 >
-                  <Text
-                    accessibilityElementsHidden={true}
-                    allowFontScaling={false}
-                    importantForAccessibility="no-hide-descendants"
-                    pointerEvents="none"
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgba(0, 0, 0, 0.87)",
-                          "fontSize": 24,
-                        },
-                        Array [
-                          Object {
-                            "lineHeight": 24,
-                            "transform": Array [
-                              Object {
-                                "scaleX": 1,
-                              },
-                            ],
-                          },
-                          Object {
-                            "backgroundColor": "transparent",
-                          },
-                        ],
-                        Object {
-                          "fontFamily": "material-community",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    󰅀
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>

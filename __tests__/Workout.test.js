@@ -6,7 +6,6 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 describe('Workout', () => {
     it('navigates to add workout on button press', () => {
         const navigate = jest.fn();
-        const handleAddWorkout = () => {}
 
         const { getByTestId } = render(<Workout navigation={{ navigate }} />);
         fireEvent.press(getByTestId('Add Workout'));
@@ -18,7 +17,7 @@ describe('Workout', () => {
             addWorkout: expect.any(Function),
                 createsANewWorkout: true,
         });
-    })
+    });
 
     const navigate = jest.fn();
     const wrapper = renderer.create(<Workout navigation={{ navigate }} />); 
