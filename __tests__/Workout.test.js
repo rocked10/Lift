@@ -1,5 +1,5 @@
 import React from 'react';
-
+import renderer from 'react-test-renderer';
 import Workout from "screens/workout";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
@@ -19,4 +19,10 @@ describe('Workout', () => {
                 createsANewWorkout: true,
         });
     })
+
+    const navigate = jest.fn();
+    const wrapper = renderer.create(<Workout navigation={{ navigate }} />); 
+    it('Should render', () => {
+        expect(wrapper.toJSON()).toMatchSnapshot();
+    });
 });

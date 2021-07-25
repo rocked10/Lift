@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler/jestSetup';
+// import '@testing-library/jest-dom';
 
 jest.mock('react-native-reanimated', () => {
     const Reanimated = require('react-native-reanimated/mock');

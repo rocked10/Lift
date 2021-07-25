@@ -14,4 +14,10 @@ describe('Community', () => {
             userId: null,
         });
     })
+
+    it ("Renders elements", () => {    
+        const navigate = jest.fn();
+        const { getByTestId, } = render(<Community navigation={{ navigate }} />);
+        getByTestId('Add Post');
+    });
 });

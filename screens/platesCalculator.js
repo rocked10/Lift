@@ -4,7 +4,7 @@ import { Button, TextInput } from "react-native-paper"
 import { Picker as SelectPicker } from "@react-native-picker/picker";
 import Slider from '@react-native-community/slider';
 
-const FormField = ({ onChangeText, placeholder, val, }) => {
+export const FormField = ({ onChangeText, placeholder, val, }) => {
     return (
         <TextInput
             style={{
@@ -26,7 +26,7 @@ const FormField = ({ onChangeText, placeholder, val, }) => {
     )
 }
 
-const BarbellWeightSelector = ({ barbellWeight, setBarbellWeight }) => {
+export const BarbellWeightSelector = ({ barbellWeight, setBarbellWeight }) => {
     return (
         <View style={{ backgroundColor: 'white', margin: 8 }}>
             <Text style={{ fontSize: 16, margin: 10, fontFamily: 'lato-bold' }} >
@@ -45,7 +45,7 @@ const BarbellWeightSelector = ({ barbellWeight, setBarbellWeight }) => {
     )
 }
 
-function generatePlatesRequired(weightToLoad, platesAvailable) {
+export function generatePlatesRequired(weightToLoad, platesAvailable) {
     // to accommodate decimal weights 
     let dp = new Array(4 * weightToLoad + 4);
     let plates = new Array(4 * weightToLoad * 4);
@@ -193,3 +193,4 @@ export default function PlatesCalculator() {
         </ScrollView>
     )
 }
+

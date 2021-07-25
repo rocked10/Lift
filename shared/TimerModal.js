@@ -94,7 +94,7 @@ const RestartButton = ({ isPlaying, setIsPlaying, duration, setKey, }) => {
     )
 }
 
-export default function TimerModal({
+function TimerModal({
     isOpen,
     setTimerModalOpen,
     // setTimerModalOpen2,
@@ -173,6 +173,14 @@ export default function TimerModal({
             </Portal>
         </Provider>
     )
+}
+
+export {
+    TimerModal, 
+    RestartButton, 
+    PlayAndPauseButton,
+    renderTime, 
+    TimeSelection, 
 }
 
 const styles = StyleSheet.create({

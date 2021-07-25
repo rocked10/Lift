@@ -57,7 +57,7 @@ export default function CreatePost({ navigation, route }) {
 
     return (
         <View style={globalStyles.container}>
-            <ProfileCard title={name} subtitle={role} right={RightContent} />
+            <ProfileCard title={name} subtitle={role} right={RightContent} testID={'Profile Card'} />
 
             <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginVertical: 8}}>
                 {/*<TextInput*/}
@@ -82,6 +82,7 @@ export default function CreatePost({ navigation, route }) {
                     onPress={() => {
                         navigation.navigate('Attach Workout', { onSelect: onSelect })
                     }}
+                    testID='Attach file icon'
                 />
             </View>
 

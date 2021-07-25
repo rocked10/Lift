@@ -20,6 +20,7 @@ export default function Login({ userDetails }) {
             <Image
                 style={styles.tinyLogo}
                 source={pictures.logo}
+                testID={'Lift Logo'}
             />
 
             {/* <Text style={loginStyles.appTitle}>LIFT</Text> */}

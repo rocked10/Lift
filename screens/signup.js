@@ -94,7 +94,7 @@ export default function Signup({ handleSubmit, testing=false }) {
                             onValueChange={(itemValue, itemIndex) =>
                                 props.setFieldValue('role', itemValue)
                             }
-
+                            testID={'Role Picker'}
                         >
                             <SelectPicker.Item label="Coach" value="Coach" />
                             <SelectPicker.Item label="Athlete" value="Athlete" />

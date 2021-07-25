@@ -67,6 +67,7 @@ export default function CustomExercise({ navigation, route }) {
                     setSelectedCategory(itemValue)
                 }
                 prompt='Choose a category'
+                testID={'Category Picker'}
             >
                 <SelectPicker.Item label="Olympic" value="Olympic" fontFamily="lato-regular" />
                 <SelectPicker.Item label="Legs" value="Legs" fontFamily="lato-regular" />

@@ -49,6 +49,7 @@ export default function Profile({ navigation, route }) {
                     mode="contained"
                     onPress={() => navigation.navigate('Athlete List')}
                     style={{ borderRadius: 10, marginHorizontal: 12 }}
+                    testID='Athlete List Button'
                 >
                     <Text style={{ fontFamily: 'karla-bold' }}>ATHLETES</Text>
                 </Button>
@@ -118,12 +119,13 @@ export default function Profile({ navigation, route }) {
                         <Image
                             style={styles.image}
                             source={{ uri: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg' }}
+                            testID={'Profile Picture'}
                         />
                     </View>
 
-                    <Text style={styles.email}>{userProfile.name}</Text>
-                    <Text style={styles.role}>{userProfile.role}</Text>
-                    <Text style={styles.bio}>{userProfile.bio}</Text>
+                    <Text style={styles.email} testID={'name'}>{userProfile.name}</Text>
+                    <Text style={styles.role} testID={'role'}>{userProfile.role}</Text>
+                    <Text style={styles.bio} testID={'bio'}>{userProfile.bio}</Text>
                     <View style={styles.personalRecordsTitle}>
                         <EditProfileButton />
                         <AthleteListButton role={userProfile.role} />

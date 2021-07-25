@@ -177,7 +177,7 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
             </TouchableOpacity>
 
 
-            <ScrollView showsVerticalScrollIndicator={false} >
+            <ScrollView showsVerticalScrollIndicator={false} testID={'Exercises'}>
                 <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold', marginTop: -6 }}>
                     {
                         exercises.map((exercise, index) => (

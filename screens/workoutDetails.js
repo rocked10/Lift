@@ -11,7 +11,6 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import TimerModal from "../shared/TimerModal"
 
-// remarks section added to screen 
 export default function WorkoutDetails({ route, navigation }) {
     const {
         workoutTitle,
