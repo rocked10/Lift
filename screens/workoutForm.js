@@ -42,12 +42,6 @@ export default function WorkoutForm({ route, navigation }) {
         return (
             <View style={{ padding: 8 }}>
                 <Modal visible={modalOpen} animationType='slide' >
-                    {/* <MaterialIcons
-                        name='close'
-                        size={26}
-                        style={{ ...globalStyles.modalToggle, ...globalStyles.modalClose }}
-                        onPress={() => setModalOpen(false)}
-                    /> */}
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={globalStyles.modalContent}>
                             <Exercises

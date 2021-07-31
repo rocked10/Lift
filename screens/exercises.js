@@ -9,6 +9,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 export default function Exercises({ navigation, route, cameFromWorkoutForm, currentExercisesInForm, onSelectExercise, setModalOpen, setFormVisible }) {
     const [searchQuery, setSearchQuery] = useState('');
 
+    // For merging data in handleExercises
+    const [temp, setTemp] = useState([]);
+    const [temp2, setTemp2] = useState([]);
+
     const [olympic, setOlympic] = useState([]);
     const [legs, setLegs] = useState([]);
     const [chest, setChest] = useState([]);
@@ -81,6 +85,26 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
         );
     }
 
+    const AddCustomExerciseButton = ({ visible }) => {
+        if (visible) {
+            return (
+                <TouchableOpacity
+                    style={{ alignSelf: 'flex-end', marginTop: 12 }}
+                    onPress={() => {
+                        navigation.navigate('Custom Exercise', {
+                            categoryExercisesSetters: [setOlympic, setLegs, setChest, setBack, setArms, setCardio],
+                        })
+                    }}
+                    testID="Add Custom Exercise"
+                >
+                    <MaterialIcons name='add' size={28} />
+                </TouchableOpacity>
+            );
+        } else {
+            return null;
+        }
+    }
+
     const onChangeSearch = (query) => {
         setSearchQuery(query);
     }
@@ -88,7 +112,6 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
     const handleSearch = async () => {
         Keyboard.dismiss();
         const exercise = await DB.getExerciseByName(searchQuery.trim());
-        console.log(exercise);
         if (exercise) {
             for (let i in expanded) {
                 expanded[i] = false;
@@ -136,18 +159,8 @@ export default function Exercises({ navigation, route, cameFromWorkoutForm, curr
                 inputStyle={{ fontFamily: 'lato-regular' }}
                 testID='Search Exercise'
             />
-            <TouchableOpacity
-                style={{ alignSelf: 'flex-end', marginTop: 12 }}
-                onPress={() => {
-                    navigation.navigate('Custom Exercise', {
-                        categoryExercisesSetters: [setOlympic, setLegs, setChest, setBack, setArms, setCardio],
-                    })
-                }}
-                testID="Add Custom Exercise"
-            >
-                <MaterialIcons name='add' size={28} />
-            </TouchableOpacity>
 
+            <AddCustomExerciseButton visible={! cameFromWorkoutForm} />
 
             <ScrollView showsVerticalScrollIndicator={false} testID={'Exercises'}>
                 <List.Section title="Exercises" titleStyle={{ fontFamily: 'lato-bold', marginTop: -6 }}>

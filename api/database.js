@@ -315,12 +315,18 @@ export const addExercise = async (exerciseCategory, exerciseName, videoId) => {
 
 export const addCustomExercise = async (exerciseCategory, exerciseName, videoId, userId) => {
     try {
-        const ref = db.ref(`exercises/${exerciseName.toLowerCase()}`);
+        // const ref = db.ref(`exercises/${exerciseName.toLowerCase()}`);
+        // await ref.set({
+        //     category: exerciseCategory,
+        //     exerciseName: exerciseName,
+        //     videoId: videoId,
+        //     userId: userId,
+        // });
+        const ref = db.ref(`exercises/${userId}/${exerciseName.toLowerCase()}`);
         await ref.set({
             category: exerciseCategory,
             exerciseName: exerciseName,
             videoId: videoId,
-            userId: userId,
         });
         console.log("Custom Exercise added!")
     } catch (error) {
@@ -329,23 +335,49 @@ export const addCustomExercise = async (exerciseCategory, exerciseName, videoId,
     }
 }
 
-export const getExercisesByCategory = (category, onValueChanged) => {
-    db.ref('exercises').orderByChild('category').equalTo(category)
+export const getExercisesByCategory = async (category, onValueChanged) => {
+    const customExercises = await getCustomExercisesByCategory(category);
+    await db.ref('exercises').orderByChild('category').equalTo(category)
         .once('value', snapshot => {
             // onValueChanged(Object.values(snapshot.val()));
-            const exercises = Object.values(snapshot.val()).filter(ex => ! ex.userId || ex.userId === Auth.getCurrentUserId());
+            // const exercises = Object.values(snapshot.val()).filter(ex => ! ex.userId || ex.userId === Auth.getCurrentUserId());
+            const exercises = Object.values(snapshot.val()).concat(customExercises);
             onValueChanged(exercises);
         });
+}
+
+export const getCustomExercisesByCategory = async (category) => {
+    let ref = [];
+    await db.ref(`exercises/${Auth.getCurrentUserId()}`).orderByChild('category').equalTo(category)
+        .once('value', snapshot => {
+            if (snapshot.val()) {
+                ref = Object.values(snapshot.val());
+            }
+        });
+    return ref;
 }
 
 export const getExerciseByName = async (name) => {
     try {
         let ref = '';
+        let ans = '';
         await db.ref(`exercises`).orderByKey().equalTo(name.toLowerCase())
             .once('value', snapshot => {
                 ref = snapshot.val();
-            })
-        return ref[name.toLowerCase()];
+                if (ref) {
+                    ans = ref[name.toLowerCase()];
+                }
+            });
+        if (! ans) {
+            await db.ref(`exercises/${Auth.getCurrentUserId()}`).orderByKey().equalTo(name.toLowerCase())
+                .once('value', snapshot => {
+                   ref = snapshot.val();
+                   if (ref) {
+                       ans = ref[name.toLowerCase()];
+                   }
+                });
+        }
+        return ans;
     } catch (error) {
         console.log(error);
     }

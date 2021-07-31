@@ -31,7 +31,7 @@ export default function CustomExercise({ navigation, route }) {
     const { categoryExercisesSetters } = route.params;
     const [userId, setUserId] = useState(Auth.getCurrentUserId());
     const [name, setName] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('Olympic');
     const [url, setUrl] = useState('');
 
     const submissionHandler = async (selectedCategory, name, url, userId) => {
@@ -42,16 +42,24 @@ export default function CustomExercise({ navigation, route }) {
                 url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
                 return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
             }
-            const videoId = YouTubeGetID(url); 
-            DB.addCustomExercise(selectedCategory, name, videoId, userId);
-            
-            const categoryNames = ['Olympic', 'Legs', 'Chest', 'Back', 'Arms', 'Cardio'];
-            categoryExercisesSetters[categoryNames.indexOf(selectedCategory)](prev => {
-                const newCategoryExercises = [... prev];
-                newCategoryExercises.push({ category: selectedCategory, exerciseName: name, userId: userId, videoId: videoId})
-                return newCategoryExercises;  
-            })
-            navigation.goBack();
+            const videoId = YouTubeGetID(url);
+
+            // Verify if exercise already exists in database
+            const verifyExercise = await DB.getExerciseByName(name.toLowerCase());
+            console.log(verifyExercise);
+            if (verifyExercise) {
+                Alert.alert('', 'The exercise you want to add is already in the database!')
+            } else {
+                DB.addCustomExercise(selectedCategory, name, videoId, userId);
+
+                const categoryNames = ['Olympic', 'Legs', 'Chest', 'Back', 'Arms', 'Cardio'];
+                categoryExercisesSetters[categoryNames.indexOf(selectedCategory)](prev => {
+                    const newCategoryExercises = [... prev];
+                    newCategoryExercises.push({ category: selectedCategory, exerciseName: name, userId: userId, videoId: videoId})
+                    return newCategoryExercises;
+                })
+                navigation.goBack();
+            }
         }
     }
 

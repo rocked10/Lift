@@ -5,50 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02977ac-95ef-4d57-b8c1-7dd70e28447a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/__tests__/CreatePost.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/CustomExercise.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/EditProfile.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/ExerciseDescription.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Login.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/PersonalRecords.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/PlatesCalculator.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/Settings.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/ShareWorkout.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/CreatePost.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/CustomExercise.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/EditProfile.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/ExerciseDescription.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Exercises.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Login.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/PersonalRecords.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/PlatesCalculator.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Profile.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Settings.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/ShareWorkout.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Signup.test.js.snap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__tests__/__snapshots__/Workout.test.js.snap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Community.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Community.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/CommunityStack.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/CommunityStack.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Exercises.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Exercises.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Profile.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Profile.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Signup.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Signup.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/TabStack.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/TabStack.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/Workout.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/Workout.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jest/setup.js" beforeDir="false" afterPath="$PROJECT_DIR$/jest/setup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/notifications.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/notifications.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athletes.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/athletesWorkouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/athletesWorkouts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/createPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/createPost.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/customExercise.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/customExercise.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/exercises.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/exercises.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/platesCalculator.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/platesCalculator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/workoutDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/TimerModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/TimerModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workout.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/workoutForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/workoutForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,19 +59,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="getConsoleOutput.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build/getConsoleOutput.js" working-dir="$PROJECT_DIR$/node_modules/@jest/reporters/node_modules/@jest/console/build">
       <method v="2" />
     </configuration>
@@ -212,7 +163,13 @@
       <workItem from="1626951102023" duration="5931000" />
       <workItem from="1627050885231" duration="686000" />
       <workItem from="1627127844989" duration="5907000" />
-      <workItem from="1627205450477" duration="5293000" />
+      <workItem from="1627205450477" duration="8133000" />
+      <workItem from="1627222724896" duration="4843000" />
+      <workItem from="1627281403095" duration="1660000" />
+      <workItem from="1627298436259" duration="1866000" />
+      <workItem from="1627304954323" duration="2365000" />
+      <workItem from="1627554296684" duration="1645000" />
+      <workItem from="1627709233203" duration="6403000" />
     </task>
     <servers />
   </component>
