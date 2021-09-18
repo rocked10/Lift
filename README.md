@@ -2,4 +2,7 @@
 
 Workout Tracker
 
-Important: Connect to web firebase and add firebaseConfig
+Download Expo Go on your phone, and follow the instructions in the link given.
+
+Link: https://expo.dev/@liftapp/Lift
+
